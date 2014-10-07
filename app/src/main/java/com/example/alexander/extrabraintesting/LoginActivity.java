@@ -35,6 +35,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -265,10 +266,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             mPassword = password;
         }
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
+        private void oldConnect()
+        {
             HttpClient httpClient = AndroidHttpClient.newInstance("Extrabrain android client");
             HttpPost httpPost = new HttpPost("http://android-extrabrain.macchiato.standout.se/android_api/session");
             httpPost.setHeader("Content-type", "application/json");
@@ -305,13 +304,26 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             ResponseHandler responseHandler = new BasicResponseHandler();
             try
             {
-                HttpResponse response = (HttpResponse) httpClient.execute(httpPost, responseHandler);
-                Log.d("lskdjflsdjfls", ""+responseHandler.handleResponse(response));
+                String response = (String) httpClient.execute(httpPost, responseHandler);
+                JSONObject jsonObject = new JSONObject(response);
+                Log.d("lskdjflsdjfls", response);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+            oldConnect();
+
 
             try {
                 // Simulate network access.
