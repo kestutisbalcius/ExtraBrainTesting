@@ -9,7 +9,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -20,7 +19,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,24 +31,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -264,53 +256,66 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
         private final String mEmail;
         private final String mPassword;
+        private HttpClient httpClient;
+        private HttpPost httpPost;
+        private ResponseHandler<String> responseHandler;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
+            responseHandler = new BasicResponseHandler();
         }
 
-        private void oldConnect()
+        private HttpPost createJSONPost(String url)
         {
-            HttpClient httpClient = AndroidHttpClient.newInstance("Extrabrain android client");
-            HttpPost httpPost = new HttpPost("http://android-extrabrain.macchiato.standout.se/android_api/session");
+            httpPost = new HttpPost(url);
             httpPost.setHeader("Content-type", "application/json");
             httpPost.setHeader("Accept", "application/json");
 
+            httpPost.setEntity(getSessionEntity());
 
-            JSONObject session = new JSONObject();
-            JSONObject userLogin = new JSONObject();
+            return httpPost;
+        }
+
+        private StringEntity getSessionEntity()
+        {
             try
             {
+                // Create session object
+                JSONObject userLogin = new JSONObject();
                 userLogin.put("login",mEmail);
                 userLogin.put("password",mPassword);
-                session.put("session",userLogin);
+
+                // Create empty object
+                JSONObject session = new JSONObject();
+                // Store session object in property "session"
+                session.put("session", userLogin);
+
+                // Convert to StringEntity to fit in HttpPost object
+                return new StringEntity(session.toString());
             }
             catch (JSONException e)
             {
                 e.printStackTrace();
-            }
-
-            StringEntity stringEntity;
-
-            try
-            {
-                stringEntity = new StringEntity(userLogin.toString());
-                httpPost.setEntity(stringEntity);
             }
             catch (UnsupportedEncodingException e)
             {
                 e.printStackTrace();
             }
 
+            return null;
+        }
 
+        private void requestLogin()
+        {
+            httpClient = AndroidHttpClient.newInstance("Extrabrain android client");
+            httpPost = createJSONPost("http://android-extrabrain.macchiato.standout.se/android_api/session");
 
-            ResponseHandler responseHandler = new BasicResponseHandler();
             try
             {
-                String response = (String) httpClient.execute(httpPost, responseHandler);
+                String response = httpClient.execute(httpPost, responseHandler);
                 JSONObject jsonObject = new JSONObject(response);
-                Log.d("lskdjflsdjfls", response);
+                Log.d("Response string", response);
             }
             catch (IOException e)
             {
@@ -326,15 +331,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            oldConnect();
-
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+            requestLogin();
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
