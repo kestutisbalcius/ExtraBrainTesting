@@ -1,3 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">ExtraBrainTesting</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_Time">Time 1</string>
+    <string name="title_Tasks">Tasks 2</string>
+    <string name="title_Projects">Projects 3</string>
+    <string name="title_Contacts">Contacts 4</string>
+    <string name="title_Invoices">Invoices 5</string>
+    <string name="title_Statistics">Statistics 6</string>
+    <string name="title_Estimates">Estimates 7</string>
+    <string name="title_Team">Team 8</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

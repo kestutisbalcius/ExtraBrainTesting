@@ -1,22 +1,23 @@
 package com.example.alexander.extrabraintesting;
 
-// You cant get me out now
-// All over again
-// You cant get me out now 2th
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,18 +30,21 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
 
 /**
  * A login screen that offers login via email/password.
@@ -59,13 +63,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    SharedPreferences sh_Pref;
+    SharedPreferences.Editor toEdit;
+    EditText userinput, passinput;
+    String username, password;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,12 +105,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
-
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
     }
-
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -153,8 +157,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             mAuthTask.execute((Void) null);
         }
     }
-
-
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -190,7 +192,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
@@ -207,7 +208,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 // a primary email address if the user hasn't specified one.
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
-
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         List<String> emails = new ArrayList<String>();
@@ -219,12 +219,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
         addEmailsToAutoComplete(emails);
     }
-
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
-
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -234,8 +232,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
-
-
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
@@ -244,7 +240,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
         mEmailView.setAdapter(adapter);
     }
-
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -253,7 +248,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
         private final String mEmail;
         private final String mPassword;
-        private HttpClient httpClient;
+        private AndroidHttpClient httpClient;
         private HttpPost httpPost;
         private ResponseHandler<String> responseHandler;
 
@@ -268,9 +263,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             httpPost = new HttpPost(url);
             httpPost.setHeader("Content-type", "application/json");
             httpPost.setHeader("Accept", "application/json");
-
             httpPost.setEntity(getSessionEntity());
-
             return httpPost;
         }
 
@@ -299,7 +292,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             {
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -307,23 +299,68 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         {
             httpClient = AndroidHttpClient.newInstance("Extrabrain android client");
             httpPost = createJSONPost("http://android-extrabrain.macchiato.standout.se/android_api/session");
-
             try
             {
                 String response = httpClient.execute(httpPost, responseHandler);
                 JSONObject jsonObject = new JSONObject(response);
                 Log.d("Response string", response);
+                Log.d("JSONObject jsonObject = new JSONObject(response);", response);
+
+                // jsonObject USER
+                JSONObject user = jsonObject.getJSONObject("user");
+                // String id =  user.getString("id");
+                String api_key =  user.getString("api_key");
+                String email =  user.getString("email");
+                String username =  user.getString("username");
+                String first_name =  user.getString("first_name");
+                String last_name =  user.getString("last_name");
+                String avatar_color =  user.getString("avatar_color");
+                String initials_color =  user.getString("initials_color");
+                String initials =  user.getString("initials");
+
+                // jsonObject TEAMS
+                JSONArray teams = user.getJSONArray("teams");
+                JSONObject team = teams.getJSONObject(0);
+                String subdomain =  team.getString("subdomain");
+                String id =  team.getString("id");
+                String currency_code =  team.getString("currency_code");
+                String name =  team.getString("name");
+
+                Log.d("JSONObject_team", String.valueOf(team));
+                Log.d("JSONObject_id", id);
+                Log.d("JSONObject_api_key", api_key);
+                Log.d("JSONObject_email", email);
+                Log.d("JSONObject_username", username);
+                Log.d("JSONObject_first_name", first_name);
+                Log.d("JSONObject_last_name", last_name);
+                Log.d("JSONObject_avatar_color", avatar_color);
+                Log.d("JSONObject_initials_color", initials_color);
+                Log.d("JSONObject_initials", initials);
+
+                sh_Pref = getSharedPreferences("Login Credentials", MODE_PRIVATE);
+                toEdit = sh_Pref.edit();
+                toEdit.putString("Id", id);
+                toEdit.putString("Api_key", api_key);
+                toEdit.putString("Email", email);
+                toEdit.putString("Username", username);
+                toEdit.putString("First_name", first_name);
+                toEdit.putString("Last_name", last_name);
+                toEdit.putString("Avatar_color", avatar_color);
+                toEdit.putString("Initials_color", initials_color);
+                toEdit.putString("Initials", initials);
+                toEdit.commit();
             }
             catch (IOException e)
-            {
-                e.printStackTrace();
+            {                e.printStackTrace();
             }
             catch (JSONException e)
             {
                 e.printStackTrace();
             }
+            finally {
+                httpClient.close();
+            }
         }
-
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
@@ -341,21 +378,19 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             // TODO: register the new account here.
             return true;
         }
-
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
             if (success) {
-                Log.d("sdlkfjsld","Sluut");
-                finish();
+            Log.d("if success","finish");
+                Intent IntentSuccess = new Intent(LoginActivity.this, MainActivity.class); // where you want to go with the intent "MainActivity"
+                startActivity(IntentSuccess);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
         }
-
         @Override
         protected void onCancelled() {
             mAuthTask = null;
