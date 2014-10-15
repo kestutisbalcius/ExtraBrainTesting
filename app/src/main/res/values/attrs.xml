@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WeekView">
+        <attr name="android:entries" />
+    </declare-styleable>
+
+    // Only used for stand-alone button creation
+    <declare-styleable name="DayButton">
+        <attr name="weekday" format="enum">
+            <enum name="monday" value="0" />
+            <enum name="tuesday" value="1" />
+            <enum name="wednesday" value="2" />
+            <enum name="thursday" value="3" />
+            <enum name="friday" value="4" />
+            <enum name="saturday" value="5" />
+            <enum name="sunday" value="6" />
+        </attr>
+    </declare-styleable>
+</resources>
