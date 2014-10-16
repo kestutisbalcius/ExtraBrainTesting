@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">ExtraBrainTesting</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_time">TimeActivity</string>
     <string name="title_Time">Time 1</string>
     <string name="title_Tasks">Tasks 2</string>
     <string name="title_Projects">Projects 3</string>
@@ -15,5 +15,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string-array name="day_names">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
 
 </resources>
