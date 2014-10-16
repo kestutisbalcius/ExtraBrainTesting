@@ -1,15 +1,11 @@
-package com.example.alexander.extrabraintesting;
+package com.example.alexander.extrabraintesting.Models;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.LinearLayout;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
+import com.example.alexander.extrabraintesting.Models.DayButton;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

@@ -1,17 +1,12 @@
-package com.example.alexander.extrabraintesting;
+package com.example.alexander.extrabraintesting.Activity;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CalendarView;
-import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.List;
+import com.example.alexander.extrabraintesting.R;
 
 
 public class TimeActivity extends ListActivity

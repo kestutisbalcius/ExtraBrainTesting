@@ -1,7 +1,6 @@
-package com.example.alexander.extrabraintesting;
+package com.example.alexander.extrabraintesting.Models;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.text.Layout;
@@ -10,10 +9,8 @@ import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.style.RelativeSizeSpan;
-import android.util.AttributeSet;
 import android.widget.Button;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
