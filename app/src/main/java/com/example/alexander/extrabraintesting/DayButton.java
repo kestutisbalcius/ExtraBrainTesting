@@ -13,6 +13,10 @@ import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.widget.Button;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 /**
  * Created by Alexander on 2014-10-08.
@@ -21,12 +25,12 @@ public class DayButton extends Button
 {
     private StaticLayout dayLayout;
 
-    public DayButton(Context context, String dayName)
+    public DayButton(Context context, Date dayDate)
     {
         super(context);
 
         setBackgroundColor(getResources().getColor(android.R.color.white));
-        dayLayout = getTextLayout(dayName);
+        dayLayout = getTextLayout(dayDate);
     }
 
     @Override
@@ -40,12 +44,18 @@ public class DayButton extends Button
         canvas.restore();
     }
 
-    private StaticLayout getTextLayout(String dayName)
+    private StaticLayout getTextLayout(Date date)
     {
+        SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("c");
+        SimpleDateFormat dayOfMonthFormat = new SimpleDateFormat("d MMM");
+
+        String dayName = dayOfWeekFormat.format(date);
+        String dayOfMonth = dayOfMonthFormat.format(date);
+
         // Create styled text
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder(dayName);
         stringBuilder.setSpan(new RelativeSizeSpan(2f), 0, dayName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        stringBuilder.append("\n18 sep");
+        stringBuilder.append("\n" + dayOfMonth);
 
         // Draw text with smooth edges
         TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);

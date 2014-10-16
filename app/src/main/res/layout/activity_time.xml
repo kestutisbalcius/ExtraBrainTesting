@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:custom="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -7,62 +6,7 @@
 
     <com.example.alexander.extrabraintesting.WeekView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/day_names" />
-
-
-    <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!-->-->
-
-
-
-        <!--<com.example.alexander.extrabraintesting.DayButton-->
-            <!--custom:weekday="monday"-->
-            <!--android:onClick="onDayClick"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-
-        <!--<com.example.alexander.extrabraintesting.DayButton-->
-            <!--custom:weekday="tuesday"-->
-            <!--android:onClick="onDayClick"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
-
-        <!--<com.example.alexander.extrabraintesting.DayButton-->
-            <!--custom:weekday="wednesday"-->
-            <!--android:onClick="onDayClick"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
-
-        <!--<com.example.alexander.extrabraintesting.DayButton-->
-            <!--custom:weekday="thursday"-->
-            <!--android:onClick="onDayClick"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
-
-        <!--<com.example.alexander.extrabraintesting.DayButton-->
-            <!--custom:weekday="friday"-->
-            <!--android:onClick="onDayClick"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
-
-        <!--<com.example.alexander.extrabraintesting.DayButton-->
-            <!--custom:weekday="saturday"-->
-            <!--android:onClick="onDayClick"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
-
-        <!--<com.example.alexander.extrabraintesting.DayButton-->
-            <!--custom:weekday="sunday"-->
-            <!--android:onClick="onDayClick"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
-
-
-    <!--</LinearLayout>-->
+        android:layout_height="wrap_content" />
 
     <ListView
             android:layout_width="wrap_content"

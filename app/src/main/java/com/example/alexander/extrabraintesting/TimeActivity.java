@@ -43,8 +43,4 @@ public class TimeActivity extends ListActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void onDayClick(View view)
-    {
-    }
 }

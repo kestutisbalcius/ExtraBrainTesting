@@ -3,7 +3,17 @@ package com.example.alexander.extrabraintesting;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.LinearLayout;
+
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Alexander on 2014-10-13.
@@ -18,31 +28,42 @@ public class WeekView extends LinearLayout
         super(context, attrs);
         this.context = context;
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.WeekView, 0, 0);
-        try
-        {
-            // Get day names given in XML-attribute
-            CharSequence[] dayNames = a.getTextArray(R.styleable.WeekView_android_entries);
-            if (dayNames != null)
-            {
-                createButtons(dayNames);
-            }
-        }
-        finally
-        {
-            a.recycle();
-        }
+        createButtons();
     }
 
-    private void createButtons(CharSequence[] dayNames)
+    private ArrayList<Date> getWeekDates(Date... date)
     {
+        GregorianCalendar calendar = new GregorianCalendar();
+
+        // If a date argument is given...
+        if (date.length == 1)
+        {
+            // use it to set the calendar
+            calendar.setTime(date[0]);
+        }
+
+        calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+
+        ArrayList<Date> weekDates = new ArrayList<Date>(7);
+        for (int day = 0; day < 7; day++)
+        {
+            weekDates.add(calendar.getTime());
+            calendar.roll(Calendar.DAY_OF_MONTH,true);
+        }
+
+        return weekDates;
+    }
+
+    private void createButtons()
+    {
+        ArrayList<Date> weekDates = getWeekDates();
         DayButton dayButton;
         for (int day = 0; day < 7; day++)
         {
-            dayButton = new DayButton(context, dayNames[day].toString());
+            dayButton = new DayButton(context, weekDates.get(day));
             addView(dayButton);
 
-            // Set Layout parameters
+            // Set button layout in LinearLayout
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) dayButton.getLayoutParams();
             layoutParams.width = 0;
             layoutParams.weight = 1;
