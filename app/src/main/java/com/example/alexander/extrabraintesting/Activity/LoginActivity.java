@@ -28,8 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.alexander.extrabraintesting.Models.Team;
-import com.example.alexander.extrabraintesting.Models.TimeEntries;
+
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
@@ -50,10 +49,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
+    public static final String EMPTY = "No response value stored";
 
     private UserLoginTask mAuthTask = null;
     private static final String MyPREFERENCES = "MyPrefs" ;
-    SharedPreferences sh_Pref;
+    public static SharedPreferences preferences;
     SharedPreferences.Editor toEdit;
     EditText userinput, passinput;
     String username, password;
@@ -65,6 +65,29 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Clear preferences
+//        getSharedPreferences(MyPREFERENCES,MODE_PRIVATE).edit().clear().apply();
+
+
+        // Make shared preferences available to non-activities
+        preferences = getPreferences(MODE_PRIVATE);
+
+       // Bypass login screen if the API-key preference exists
+       // String userString = preferences.getString("current_user");
+       // if (userString != null) {
+       //     JSONObject json = new JSONObject(userString);
+       //     User.loadUser(json);
+       //     Go to next activity
+       // }
+
+        Log.d("API response in preference",preferences.getString(User.API_RESPONSE, ""));
+//        Bypass login if a user is successfully loaded from preferences
+        if (User.loadUser(preferences.getString(User.API_RESPONSE, "")))
+        {
+            startMain();
+            Log.d("Hej hopp","san sa");
+        }
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mLoginFormView = findViewById(R.id.login_form);
@@ -219,6 +242,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      */
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+        public static final String USER = "JSON API Response User";
         private final String mEmail;
         private final String mPassword;
             private AndroidHttpClient httpClient;
@@ -243,15 +267,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         {
             try
             {
-                // Create session object
+                // Create session object details
                 JSONObject userLogin = new JSONObject();
-                Log.d("Response string userLogin", String.valueOf(userLogin));
-
                 userLogin.put("login",mEmail);
                 userLogin.put("password",mPassword);
-                // Create empty object
+                // Create empty container object
                 JSONObject session = new JSONObject();
-                // Store session object in property "session"
+                // Store session details in property "session"
                 session.put("session", userLogin);
                 // Convert to StringEntity to fit in HttpPost object
                 return new StringEntity(session.toString());
@@ -273,30 +295,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             httpPost = createJSONPost("http://android-extrabrain.macchiato.standout.se/android_api/session");
             try
             {
-                String response = httpClient.execute(httpPost, responseHandler);
-                JSONObject jsonObject = new JSONObject(response);
-                Log.d("Response string jsonObject", response);
-
-                User.setUser(jsonObject , getSharedPreferences(MyPREFERENCES, 1));
-                Team.setTeam(jsonObject);
-                TimeEntries.getTimeEntries(jsonObject);
-                httpPost.setEntity(getSessionEntity());
-/*
-                Log.d("Response string user", String.valueOf(user));
-                JSONArray teams = user.getJSONArray("teams");
-                Log.d("Response string teams", String.valueOf(teams));
-                JSONObject Object = new JSONObject();
-                JSONArray Teams = Object.getJSONArray("teams");
-                Log.d("JSONArray Teams", String.valueOf(Teams));
-*/
+                Log.d("Just before request","sdjfoisj");
+                String rawTextResponse = httpClient.execute(httpPost, responseHandler);
+                Log.d("Response string jsonObject", rawTextResponse);
+                User.loadUser(rawTextResponse);
             }
             catch (IOException e)
-            { e.printStackTrace();
-            }
-            catch (JSONException e)
             {
                 e.printStackTrace();
             }
+
             finally {
                 httpClient.close();
             }
@@ -320,9 +328,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             mAuthTask = null;
             showProgress(false);
             if (success) {
-            Log.d("if success","finish");
-                Intent IntentSuccess = new Intent(LoginActivity.this, MainActivity.class); // where you want to go with the intent "TimeActivity"
-                startActivity(IntentSuccess);
+                startMain();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -333,6 +339,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    private void startMain()
+    {
+        Intent IntentSuccess = new Intent(this, MainActivity.class);
+        startActivity(IntentSuccess);
     }
 }
 
