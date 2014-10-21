@@ -4,20 +4,16 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.alexander.extrabraintesting.Fragment.Content.TimeFragment;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
+import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
 
@@ -101,7 +97,6 @@ public class MainActivity extends Activity
         actionBar.setTitle(mTitle);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -131,57 +126,11 @@ public class MainActivity extends Activity
                 return true;
 
             case R.id.Logout:
-                SharedPreferences sh_Pref = getSharedPreferences("loginPrefs Logout" , Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sh_Pref.edit();
-                editor.clear();
-                editor.apply();
+                User.logOut();
                 finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

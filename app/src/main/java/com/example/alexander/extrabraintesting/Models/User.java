@@ -69,9 +69,9 @@ public class User
         return true;
     }
 
-    public void logOut()
+    public static void logOut()
     {
-        LoginActivity.preferences.edit().clear();
+        LoginActivity.preferences.edit().clear().apply();
     }
 
     public static boolean isLoggedIn()
