@@ -14,18 +14,12 @@ import android.widget.Button;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-/**
- * Created by Alexander on 2014-10-08.
- */
 public class DayButton extends Button
 {
     private StaticLayout dayLayout;
-
     public DayButton(Context context, Date dayDate)
     {
         super(context);
-
         setBackgroundColor(getResources().getColor(android.R.color.white));
         dayLayout = getTextLayout(dayDate);
     }

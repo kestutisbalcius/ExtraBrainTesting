@@ -1,15 +1,12 @@
 package com.example.alexander.extrabraintesting.Models;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User {
-    private static final String MyPREFERENCES = "MyPrefs" ;
     public static SharedPreferences.Editor toEdit;
     public static int id;
     public static String api_key;
