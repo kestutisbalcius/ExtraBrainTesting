@@ -27,16 +27,19 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.example.alexander.extrabraintesting.Models.Team;
 import com.example.alexander.extrabraintesting.Models.TimeEntries;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
+
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -218,10 +221,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
         private final String mEmail;
         private final String mPassword;
-        private AndroidHttpClient httpClient;
-        private HttpPost httpPost;
-        private ResponseHandler<String> responseHandler;
-        UserLoginTask(String email, String password) {
+            private AndroidHttpClient httpClient;
+            private HttpPost httpPost;
+            private ResponseHandler<String> responseHandler;
+            UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
             responseHandler = new BasicResponseHandler();
@@ -300,12 +303,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         }
         @Override
         protected Boolean doInBackground(Void... params) {
-// TODO: attempt authentication against a network service.
+        // TODO: attempt authentication against a network service.
             requestLogin();
             for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-// Account exists, return true if the password matches.
+            String[] pieces = credential.split(":");
+            if (pieces[0].equals(mEmail)) {
+        // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
             }
@@ -318,7 +321,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(false);
             if (success) {
             Log.d("if success","finish");
-                Intent IntentSuccess = new Intent(LoginActivity.this, TimeActivity.class); // where you want to go with the intent "TimeActivity"
+                Intent IntentSuccess = new Intent(LoginActivity.this, MainActivity.class); // where you want to go with the intent "TimeActivity"
                 startActivity(IntentSuccess);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

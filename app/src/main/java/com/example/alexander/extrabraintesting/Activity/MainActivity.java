@@ -4,7 +4,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -13,13 +14,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.alexander.extrabraintesting.Fragment.NavigationDrawerFragment;
+import com.example.alexander.extrabraintesting.Fragment.Content.TimeFragment;
+import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
 import com.example.alexander.extrabraintesting.R;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -35,26 +39,22 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
-
     }
-
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
+        TimeFragment timeFragment = new TimeFragment();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, timeFragment)
                 .commit();
     }
 
@@ -62,49 +62,25 @@ public class MainActivity extends Activity
         switch (number) {
             case 1:
                 mTitle = getString(R.string.title_Time);
-                Log.d("if success", "finish");
-                Intent IntentSuccess = new Intent(MainActivity.this, MainActivity.class); // where you want to go with the intent "MainActivity"
-                startActivity(IntentSuccess);
                 break;
             case 2:
                 mTitle = getString(R.string.title_Tasks);
-                Log.d("if success","finish");
-                IntentSuccess = new Intent(this, MainActivity.class);
-                startActivity(IntentSuccess);
                 break;
             case 3:
                 mTitle = getString(R.string.title_Projects);
-                Log.d("if success","finish");
-                IntentSuccess = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(IntentSuccess);
             case 4:
                 mTitle = getString(R.string.title_Contacts);
-                Log.d("if success","finish");
-                IntentSuccess = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(IntentSuccess);
                 break;
             case 5:
                 mTitle = getString(R.string.title_Invoices);
-                Log.d("if success","finish");
-                IntentSuccess = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(IntentSuccess);
                 break;
             case 6:
                 mTitle = getString(R.string.title_Statistics);
-                Log.d("if success","finish");
-                IntentSuccess = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(IntentSuccess);
             case 7:
                 mTitle = getString(R.string.title_Estimates);
-                Log.d("if success","finish");
-                IntentSuccess = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(IntentSuccess);
                 break;
             case 8:
                 mTitle = getString(R.string.title_Team);
-                Log.d("if success","finish");
-                IntentSuccess = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(IntentSuccess);
                 break;
         }
     }
@@ -135,11 +111,26 @@ public class MainActivity extends Activity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Toast.makeText(getBaseContext(), "Example action TimeEntries.", Toast.LENGTH_SHORT).show();
+                Log.d("if success", "finish");
+                return true;
+
+            case R.id.Profile:
+                Toast.makeText(getBaseContext(), "Example action Profile.", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Logout:
+                SharedPreferences sh_Pref = getSharedPreferences("loginPrefs Logout" , Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sh_Pref.edit();
+                editor.clear();
+                editor.apply();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -155,7 +146,7 @@ public class MainActivity extends Activity
         /**
          * Returns a new instance of this fragment for the given section
          * number.
-         */
+  sFSf       */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
