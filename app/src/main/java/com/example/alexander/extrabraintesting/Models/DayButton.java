@@ -2,37 +2,67 @@ package com.example.alexander.extrabraintesting.Models;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.StateListDrawable;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.text.format.DateUtils;
 import android.text.style.RelativeSizeSpan;
-import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import com.example.alexander.extrabraintesting.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DayButton extends Button
+public class DayButton extends RadioButton
 {
     private StaticLayout dayLayout;
-    public DayButton(Context context, Date dayDate)
+    private int lastlineDescent;
+    private Date day;
+
+    public DayButton(Context context, Date day)
     {
         super(context);
-        setBackgroundColor(getResources().getColor(android.R.color.white));
-        dayLayout = getTextLayout(dayDate);
+
+        setDay(day);
+
+        // Removes the radioButton image (setting null doesn't suffice for that)
+        setButtonDrawable(new StateListDrawable());
+        // Assign background color depending on checked state
+        setBackgroundResource(R.drawable.daybutton_states);
+        // Each button should fill up equal space
+        setLayoutParams(new RadioGroup.LayoutParams(0, 55, 1));
+    }
+
+    private boolean isToday()
+    {
+        DateUtils dateUtils = new DateUtils();
+        return dateUtils.isToday(day.getTime());
+    }
+
+    public void setDay(Date day)
+    {
+        this.day = day;
+        // Update the textLayout with the Date
+        dayLayout = getTextLayout(day);
+    }
+
+    public Date getDay()
+    {
+        return day;
     }
 
     @Override
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-
-        // Draw canvas beneath top padding
-        canvas.translate(0, getPaddingTop());
         dayLayout.draw(canvas);
-        canvas.restore();
     }
 
     private StaticLayout getTextLayout(Date date)
@@ -50,8 +80,10 @@ public class DayButton extends Button
 
         // Draw text with smooth edges
         TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        if (isToday()) { textPaint.setColor(Color.BLUE); }
 
         // Create a text layout that won't be changed once created
         return new StaticLayout(stringBuilder, textPaint, 75, Layout.Alignment.ALIGN_CENTER, 1, 1, true);
+
     }
 }
