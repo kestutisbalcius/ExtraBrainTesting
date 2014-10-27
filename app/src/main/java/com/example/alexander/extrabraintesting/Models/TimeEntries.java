@@ -1,7 +1,5 @@
 package com.example.alexander.extrabraintesting.Models;
 
-import android.content.SharedPreferences;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,6 +11,7 @@ public class TimeEntries {
        public static String project_title;
        public static String title;
        public static String charging;
+
     public static void getTimeEntries(JSONObject jsonObject) {
         try {
             task_id = jsonObject.getInt("task_id");
