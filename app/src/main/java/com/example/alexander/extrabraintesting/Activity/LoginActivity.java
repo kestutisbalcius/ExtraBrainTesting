@@ -27,17 +27,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
-
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -64,6 +60,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        Clear preferences
+//        getSharedPreferences(MyPREFERENCES,MODE_PRIVATE).edit().clear().apply();
 
         // Make shared preferences available to non-activities
         preferences = getPreferences(MODE_PRIVATE);
@@ -128,19 +127,19 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             focusView = mEmailView;
             cancel = true;
         }
-// Check for a email address.
+        // Check for a email address.
         if (TextUtils.isEmpty(password)) {
                 mEmailView.setError(getString(R.string.error_field_required));
                 focusView = mEmailView;
                 cancel = true;
         }
         if (cancel) {
-// There was an error; don't attempt login and focus the first
-// form field with an error.
+        // There was an error; don't attempt login and focus the first
+        // form field with an error.
             focusView.requestFocus();
         } else {
-// Show a progress spinner, and kick off a background task to
-// perform the user login attempt.
+        // Show a progress spinner, and kick off a background task to
+        // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
@@ -222,6 +221,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                     android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
                     mEmailView.setAdapter(adapter);
     }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.

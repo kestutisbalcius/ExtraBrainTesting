@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ExtraBrainTesting</string>
+    <string name="app_create_new_entries">Create new entries</string>
+    <string name="app_change_current_entries">Change current entries</string>
+    <string name="app_entries_Delete">Delete</string>
+    <string name="app_name">ExtraBrain</string>
     <string name="title_activity_time">TimeActivity</string>
     <string name="title_Time">Time 1</string>
     <string name="title_Tasks">Tasks 2</string>
@@ -27,5 +30,6 @@
     <string name="exception_implement_interface">The class is not implementing the required listener</string>
     <string name="team_selector">Select Team</string>
     <string name="action_switch_team">Switch team</string>
+
 
 </resources>
