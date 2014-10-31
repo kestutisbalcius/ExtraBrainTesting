@@ -21,11 +21,11 @@ public class User
     private static int colorAvatar;
 
     // Stored preference name
-    public static final String API_RESPONSE = "JSON API Response";
+    public static final String STORED_API_RESPONSE = "JSON API Response";
 
     // JSONObject property names
     private static final String USER = "user";
-    private static String ID = "id";
+    private static final String ID = "id";
     private static final String API_KEY = "api_key";
     private static final String EMAIL = "email";
     private static final String USERNAME = "username";
@@ -37,7 +37,6 @@ public class User
 
     public static boolean loadUser(String apiResponse)
     {
-        Log.d("api string in loaduser", "Testing string");
         Log.d("api string in loaduser", apiResponse);
         if (apiResponse.isEmpty())
         {
@@ -64,7 +63,7 @@ public class User
             e.printStackTrace();
         }
 
-        LoginActivity.preferences.edit().putString(API_RESPONSE,apiResponse).apply();
+        LoginActivity.preferences.edit().putString(STORED_API_RESPONSE,apiResponse).apply();
 
         return true;
     }

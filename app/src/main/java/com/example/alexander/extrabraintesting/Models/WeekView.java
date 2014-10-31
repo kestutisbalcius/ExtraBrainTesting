@@ -9,13 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by Alexander on 2014-10-13.
- */
 public class WeekView extends RadioGroup
 {
     private final ArrayList<DayButton> dayButtons = new ArrayList<DayButton>(7);
-    Context context;
+    final Context context;
 
     // XML-constructor
     public WeekView(Context context, AttributeSet attrs)
