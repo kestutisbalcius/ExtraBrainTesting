@@ -54,7 +54,34 @@ public class MainActivity extends Activity
             default: return new Fragment();
         }
     }
-    public void restoreActionBar() {
+    public void onSectionAttached(int number) {
+        switch (number) {
+            case 1:
+                mTitle = getString(R.string.title_Time);
+                break;
+            case 2:
+                mTitle = getString(R.string.title_Tasks);
+                break;
+            case 3:
+                mTitle = getString(R.string.title_Projects);
+            case 4:
+                mTitle = getString(R.string.title_Contacts);
+                break;
+            case 5:
+                mTitle = getString(R.string.title_Invoices);
+                break;
+            case 6:
+                mTitle = getString(R.string.title_Statistics);
+            case 7:
+                mTitle = getString(R.string.title_Estimates);
+                break;
+            case 8:
+                mTitle = getString(R.string.title_Team);
+                break;
+        }
+    }
+
+    void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);

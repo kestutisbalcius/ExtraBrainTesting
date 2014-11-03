@@ -29,7 +29,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -58,24 +57,14 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //  Clear preferences
-        //  getSharedPreferences(MyPREFERENCES,MODE_PRIVATE).edit().clear().apply();
-        //  Make shared preferences available to non-activities
-        preferences = getPreferences(MODE_PRIVATE);
-        //   Bypass login screen if the API-key preference exists
-        //   String userString = preferences.getString("current_user");
-        //   if (userString != null) {
-        //   JSONObject json = new JSONObject(userString);
-        //   User.loadUser(json);
-        //   Go to next activity
-        // }
 
-        Log.d("API response in preference",preferences.getString(User.API_RESPONSE, ""));
-        //  Bypass login if a user is successfully loaded from preferences
-        if (User.loadUser(preferences.getString(User.API_RESPONSE, "")))
+        // Make shared preferences available to non-activities
+        preferences = getPreferences(MODE_PRIVATE);
+
+        // Bypass login if a user is successfully loaded from preferences
+        if (User.loadUser(preferences.getString(User.STORED_API_RESPONSE, "")))
         {
             startMain();
-            Log.d("Hej hopp","san sa");
         }
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -111,7 +100,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptLogin() {
+    void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
@@ -151,7 +140,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      * Shows the progress UI and hides the login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
+    void showProgress(final boolean show) {
 // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
 // for very easy animations. If available, use these APIs to fade-in
 // the progress spinner.
@@ -232,11 +221,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         private final String mPassword;
             private AndroidHttpClient httpClient;
             private HttpPost httpPost;
-            private ResponseHandler<String> responseHandler;
             UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
-            responseHandler = new BasicResponseHandler();
         }
         private HttpPost createJSONPost(String url)
         {
@@ -279,8 +266,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             httpPost = createJSONPost("http://android-extrabrain.macchiato.standout.se/android_api/session");
             try
             {
-                Log.d("Just before request","sdjfoisj");
-                String rawTextResponse = httpClient.execute(httpPost, responseHandler);
+                Log.d("Just before login request","sdjfoisj");
+                String rawTextResponse = httpClient.execute(httpPost, new BasicResponseHandler());
                 Log.d("Response string jsonObject", rawTextResponse);
                 User.loadUser(rawTextResponse);
             }
