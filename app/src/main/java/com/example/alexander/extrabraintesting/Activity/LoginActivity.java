@@ -40,18 +40,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
-
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    public static final String EMPTY = "No response value stored";
-
-    private UserLoginTask mAuthTask = null;
     private static final String MyPREFERENCES = "MyPrefs" ;
-    public static SharedPreferences preferences;
+    public static final String EMPTY = "No response value stored";
     SharedPreferences.Editor toEdit;
     EditText userinput, passinput;
     String username, password;
+
+    private static final String[] DUMMY_CREDENTIALS = new String[]{"foo@example.com:hello", "bar@example.com:world"};
+    private UserLoginTask mAuthTask = null;
+    public static SharedPreferences preferences;
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -61,9 +58,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Clear preferences
-//        getSharedPreferences(MyPREFERENCES,MODE_PRIVATE).edit().clear().apply();
-
+        // Clear preferences
+        // getSharedPreferences(MyPREFERENCES,MODE_PRIVATE).edit().clear().apply();
         // Make shared preferences available to non-activities
         preferences = getPreferences(MODE_PRIVATE);
 
@@ -72,15 +68,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         {
             startTeamChooser();
         }
-
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
         populateAutoComplete();
-
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -181,15 +174,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
-// Retrieve data rows for the device user's 'profile' contact.
+                // Retrieve data rows for the device user's 'profile' contact.
                 Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-// Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-// Show primary email addresses first. Note that there won't be
-// a primary email address if the user hasn't specified one.
+                ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
+                // Select only email addresses.
+                ContactsContract.Contacts.Data.MIMETYPE +" = ?", new String[]{ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE},
+                // Show primary email addresses first. Note that there won't be
+                // a primary email address if the user hasn't specified one.
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
     @Override
@@ -226,7 +217,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
         public static final String USER = "JSON API Response User";
         private final String mEmail;
@@ -243,7 +233,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             httpPost.setHeader("Content-type", "application/json");
             httpPost.setHeader("Accept", "application/json");
             httpPost.setEntity(getSessionEntity());
-
             return httpPost;
         }
 
@@ -288,7 +277,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             {
                 e.printStackTrace();
             }
-
             finally {
                 httpClient.close();
             }
@@ -300,11 +288,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             for (String credential : DUMMY_CREDENTIALS) {
             String[] pieces = credential.split(":");
             if (pieces[0].equals(mEmail)) {
-        // Account exists, return true if the password matches.
+            // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
             }
-// TODO: register the new account here.
+            // TODO: register the new account here.
             return true;
         }
         @Override

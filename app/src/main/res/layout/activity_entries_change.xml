@@ -11,7 +11,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:inputType="text" />
 
     <EditText
         android:layout_width="230dp"
@@ -20,7 +21,8 @@
         android:layout_below="@+id/createTitle"
         android:layout_alignLeft="@+id/createTitle"
         android:layout_alignStart="@+id/createTitle"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:inputType="text"/>
 
     <EditText
         android:layout_width="230dp"
@@ -29,7 +31,8 @@
         android:layout_marginTop="30dp"
         android:layout_below="@+id/createTask"
         android:layout_alignLeft="@+id/createTask"
-        android:layout_alignStart="@+id/createTask" />
+        android:layout_alignStart="@+id/createTask"
+        android:inputType="" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -57,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Title:"
+        android:text="@string/textViewTitle"
         android:id="@+id/TextTitle"
         android:layout_alignBottom="@+id/createTitle"
         android:layout_alignParentLeft="true"
@@ -71,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Task:"
+        android:text="@string/textViewTask"
         android:id="@+id/TextTask"
         android:layout_toStartOf="@+id/createTask"
         android:layout_alignBottom="@+id/createTask"
@@ -85,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Duration:"
+        android:text="@string/textViewDuration"
         android:id="@+id/TextDuartion"
         android:layout_toStartOf="@+id/createDuration"
         android:layout_alignTop="@+id/createDuration"
@@ -99,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Project:"
+        android:text="@string/textViewProject"
         android:id="@+id/TextProject"
         android:layout_toStartOf="@+id/createProject"
         android:layout_alignTop="@+id/createProject"
@@ -113,7 +116,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Charging"
+        android:text="@string/textViewCharging"
         android:id="@+id/TextCharging"
         android:layout_toStartOf="@+id/createCharging"
         android:layout_alignTop="@+id/createCharging"
