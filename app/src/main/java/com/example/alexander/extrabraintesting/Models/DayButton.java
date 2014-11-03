@@ -20,7 +20,7 @@ import com.example.alexander.extrabraintesting.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DayButton extends RadioButton
+class DayButton extends RadioButton
 {
     private StaticLayout dayLayout;
     private int lastlineDescent;
@@ -42,8 +42,7 @@ public class DayButton extends RadioButton
 
     private boolean isToday()
     {
-        DateUtils dateUtils = new DateUtils();
-        return dateUtils.isToday(day.getTime());
+        return DateUtils.isToday(day.getTime());
     }
 
     public void setDay(Date day)
@@ -76,7 +75,8 @@ public class DayButton extends RadioButton
         // Create styled text
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder(dayName);
         stringBuilder.setSpan(new RelativeSizeSpan(2f), 0, dayName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        stringBuilder.append("\n" + dayOfMonth);
+        stringBuilder.append("\n");
+        stringBuilder.append(dayOfMonth);
 
         // Draw text with smooth edges
         TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);

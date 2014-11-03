@@ -48,7 +48,6 @@ public class MainActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        TimeFragment timeFragment = new TimeFragment();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, getSelectedFragment(position))
                 .commit();
@@ -90,7 +89,7 @@ public class MainActivity extends Activity
         }
     }
 
-    public void restoreActionBar() {
+    void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
