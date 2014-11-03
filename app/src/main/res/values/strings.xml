@@ -24,5 +24,6 @@
     <string name="action_Profile">Profile</string>
     <string name="title_entries_list">Items</string>
     <string name="title_entries_detail">Entries Detail</string>
+    <string name="exception_implement_interface">The class is not implementing the required listener</string>
 
 </resources>

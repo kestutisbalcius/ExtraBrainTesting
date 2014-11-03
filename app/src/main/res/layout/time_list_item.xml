@@ -20,14 +20,14 @@
             android:layout_marginTop="8dp"
             android:text="03:25"
             android:textAppearance="?android:attr/textAppearanceListItem"
-            android:id="@+id/textView2"/>
+            android:id="@+id/textViewDuration"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fixed Price"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/textView3"
+            android:id="@+id/textViewCharging"
             android:background="@android:color/holo_orange_light" />
     </LinearLayout>
 
@@ -43,14 +43,14 @@
             android:layout_marginTop="8dp"
             android:text="Gtech Sweden Interactive"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textView4"/>
+            android:id="@+id/textViewTitle"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Consultant, Alexander Ross"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textView5"
+            android:id="@+id/textViewProjectName"
             android:textColor="@android:color/secondary_text_light"/>
 
     </LinearLayout>
