@@ -16,20 +16,24 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class TimeEntriesHandler extends AsyncTask<URL,Integer,ArrayList<TimeEntry>>
+public class TimeEntryHandler extends AsyncTask<URL,Integer,ArrayList<TimeEntry>>
 {
     private final OnTimeEntriesReady listener;
+    private final String dateString;
 
     public interface OnTimeEntriesReady
     {
         public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList);
     }
 
-    public TimeEntriesHandler(OnTimeEntriesReady listener)
+    public TimeEntryHandler(OnTimeEntriesReady listener, Date day)
     {
         this.listener = listener;
+        dateString = getFormattedDate(day);
     }
 
     // Identifier of an API resource
@@ -41,9 +45,15 @@ public class TimeEntriesHandler extends AsyncTask<URL,Integer,ArrayList<TimeEntr
                .authority("praktikanter.android-extrabrain.macchiato.standout.se")
                .appendPath("android_api")
                .appendPath("time_entries")
-               .appendQueryParameter("day", "2014-10-29");
+               .appendQueryParameter("day", dateString);
 
        return builder.build().toString();
+    }
+
+    private String getFormattedDate(Date day)
+    {
+        SimpleDateFormat iso8601 = new SimpleDateFormat("yyyy-MM-dd");
+        return iso8601.format(day);
     }
 
     private HttpGet getHttpGet(String apiResourcePath)

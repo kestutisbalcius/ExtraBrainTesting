@@ -20,7 +20,7 @@ import com.example.alexander.extrabraintesting.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class DayButton extends RadioButton
+public class DayButton extends RadioButton
 {
     private StaticLayout dayLayout;
     private int lastlineDescent;
