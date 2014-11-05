@@ -34,7 +34,6 @@ public class User
     private static final String INITIALS = "initials";
     private static final String COLOR_INITIALS = "initials_color";
     private static final String COLOR_AVATAR = "avatar_color";
-
     public static boolean loadUser(String apiResponse)
     {
         Log.d("api string in loaduser", apiResponse);
@@ -42,12 +41,10 @@ public class User
         {
             return false;
         }
-
         try
         {
             JSONObject response = new JSONObject(apiResponse);
             JSONObject user = response.getJSONObject(USER);
-
             id = user.getInt(ID);
             apiKey = user.getString(API_KEY);
             email = user.getString(EMAIL);
@@ -62,21 +59,11 @@ public class User
         {
             e.printStackTrace();
         }
-
         LoginActivity.preferences.edit().putString(STORED_API_RESPONSE,apiResponse).apply();
-
         return true;
     }
 
-    public static void logOut()
-    {
-        LoginActivity.preferences.edit().clear().apply();
-    }
-
-    public static boolean isLoggedIn()
-    {
-        return LoginActivity.preferences.contains(API_KEY);
-    }
+    public static void logOut(){LoginActivity.preferences.edit().clear().apply();}
 
     public static int getId() {
         return id;
@@ -84,6 +71,11 @@ public class User
 
     public static String getApiKey() {
         return apiKey;
+    }
+
+    public static boolean isLoggedIn()
+    {
+        return LoginActivity.preferences.contains(API_KEY);
     }
 
     public static String getEmail() {

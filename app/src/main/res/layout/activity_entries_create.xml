@@ -102,13 +102,6 @@
         android:gravity="center_vertical|center_horizontal" />
 
 
-    <NumberPicker
-    android:id="@+id/Hours"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:width="200dip"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -149,6 +142,29 @@
         android:layout_alignRight="@+id/Minutes"
         android:layout_alignEnd="@+id/Minutes" />
 
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Duration on project"
+        android:id="@+id/textView4"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_above="@+id/textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <NumberPicker
+        android:id="@+id/Hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="200dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
     <NumberPicker
         android:id="@+id/Minutes"
         android:layout_width="wrap_content"
@@ -166,19 +182,6 @@
         android:layout_alignTop="@+id/Hours"
         android:layout_toLeftOf="@+id/Hours"
         android:layout_toStartOf="@+id/Hours" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Duration on project"
-        android:id="@+id/textView4"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_above="@+id/textView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

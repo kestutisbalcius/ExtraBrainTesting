@@ -27,13 +27,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
+
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -57,6 +60,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         // Make shared preferences available to non-activities
         preferences = getPreferences(MODE_PRIVATE);
@@ -104,15 +109,15 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         if (mAuthTask != null) {
             return;
         }
-// Reset errors.
+        // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
-// Store values at the time of the login attempt.
+        // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         boolean cancel = false;
         View focusView = null;
-// Check for a valid email address.
+        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -141,9 +146,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     void showProgress(final boolean show) {
-// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-// for very easy animations. If available, use these APIs to fade-in
-// the progress spinner.
+    // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+    // for very easy animations. If available, use these APIs to fade-in
+    // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
@@ -163,8 +168,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 }
             });
         } else {
-// The ViewPropertyAnimator APIs are not available, so simply show
-// and hide the relevant UI components.
+        // The ViewPropertyAnimator APIs are not available, so simply show
+        // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
@@ -204,7 +209,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         int IS_PRIMARY = 1;
     }
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-//Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+    //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(LoginActivity.this,
                     android.R.layout.simple_dropdown_item_1line, emailAddressCollection);

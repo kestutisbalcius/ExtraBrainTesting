@@ -15,12 +15,10 @@ import java.util.ArrayList;
 
 public class TimeFragment extends ListFragment implements TimeEntriesHandler.OnTimeEntriesReady
 {
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         TimeEntriesHandler handler = new TimeEntriesHandler(this);
         handler.execute();
     }
