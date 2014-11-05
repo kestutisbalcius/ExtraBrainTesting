@@ -6,7 +6,8 @@ import org.json.JSONArray;
         import org.json.JSONException;
         import org.json.JSONObject;
 
-class Team {
+class Team
+{
     public static JSONObject data;
     public static void setTeam(JSONObject jsonObject)     {
         try {

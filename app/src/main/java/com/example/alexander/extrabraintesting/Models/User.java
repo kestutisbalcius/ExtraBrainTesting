@@ -36,7 +36,6 @@ public class User
     private static final String COLOR_AVATAR = "avatar_color";
     public static boolean loadUser(String apiResponse)
     {
-        Log.d("api string in loaduser", apiResponse);
         if (apiResponse.isEmpty())
         {
             return false;

@@ -31,6 +31,7 @@
     <string name="action_Profile">Profile</string>
     <string name="title_entries_list">Items</string>
     <string name="title_entries_detail">Entries Detail</string>
+<<<<<<< HEAD
     <string name="title_entriesactivity_list">Items</string>
     <string name="title_entriesactivity_detail">EntriesActivity Detail</string>
     <string name="save_changes_entries">save changes to entries</string>
@@ -51,5 +52,8 @@
         <item>Internal: Support</item>
     </string-array>
 
+=======
+    <string name="exception_implement_interface">The class is not implementing the required listener</string>
+>>>>>>> upstream/master
 
 </resources>
