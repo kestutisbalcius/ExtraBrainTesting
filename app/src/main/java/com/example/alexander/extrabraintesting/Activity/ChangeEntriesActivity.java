@@ -2,11 +2,11 @@ package com.example.alexander.extrabraintesting.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -17,42 +17,44 @@ import com.example.alexander.extrabraintesting.R;
 import java.util.ArrayList;
 
 public class ChangeEntriesActivity extends Activity {
-    android.widget.RelativeLayout RelativeLayout;
-    // Input text
-    EditText CreateTitle, CreateTask, CreateDuration;
-    // Spinner element
-    Spinner CreateProject, CreateCharging;
-    //Add items into spinner dynamically
-    ArrayList<String> chargingList = new ArrayList<String>();
-    ArrayList<String> projectList = new ArrayList<String>();
-
+    RelativeLayout RelativeLayout;
+    EditText ChangeTitle, ChangeTask;
+    Spinner ChangeProject, ChangeCharging;
+    NumberPicker ChangeDays, ChangeHours, ChangeMinutes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entries_create);
-        RelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-        CreateTitle = (EditText) findViewById(R.id.createTitle);            // Input createTitle
-        CreateTask = (EditText) findViewById(R.id.createTask);              // Input createTask
-        CreateDuration = (EditText) findViewById(R.id.createDuration);      // Input createDuration
-        CreateProject = (Spinner) findViewById(R.id.createProject);         // Spinner createProject
-        CreateCharging = (Spinner) findViewById(R.id.createCharging);       // Spinner createCharging
+        setContentView(R.layout.activity_entries_change);
 
-        //Add items into spinner dynamically
+        RelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);// findViewById RelativeLayout RelativeLayout
+        ChangeTitle = (EditText) findViewById(R.id.createTitle);            // findViewById EditText ChangeTitle
+        ChangeTask = (EditText) findViewById(R.id.createTask);              // findViewById EditText ChangeTask
+        ChangeProject = (Spinner) findViewById(R.id.createProject);         // findViewById Spinner ChangeProject
+        ChangeCharging = (Spinner) findViewById(R.id.createCharging);       // findViewById Spinner ChangeCharging
+        ChangeDays = (NumberPicker) findViewById(R.id.Days);                // findViewById NumberPicker ChangeDays
+        ChangeHours = (NumberPicker) findViewById(R.id.Hours);              // findViewById NumberPicker ChangeHours
+        ChangeMinutes = (NumberPicker) findViewById(R.id.Minutes);          // findViewById NumberPicker ChangeMinutes
+
+        ChangeDays.setMaxValue(365);                                        // setMaxValue(365); NumberPicker ChangeDays
+        ChangeHours.setMaxValue(23);                                        // setMaxValue(23); NumberPicker ChangeHours
+        ChangeMinutes.setMaxValue(59);                                      // setMaxValue(59); NumberPicker ChangeMinutes
+
+        ArrayList<String> chargingList = new ArrayList<String>();           // ArrayList<String> chargingList = new ArrayList<String>();
         chargingList.add("Project 1");
         chargingList.add("Project 2");
         chargingList.add("Project 3");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ChangeCharging.setAdapter(dataAdapter);
+
+        ArrayList<String> projectList = new ArrayList<String>();                 //Add items into spinner projectList
         projectList.add("Project 1");
         projectList.add("Project 2");
         projectList.add("Project 3");
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        CreateCharging.setAdapter(dataAdapter);
-
         dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, projectList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        CreateProject.setAdapter(dataAdapter);
+        ChangeProject.setAdapter(dataAdapter);
     }
 
     @Override
@@ -69,33 +71,31 @@ public class ChangeEntriesActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
-                if(CreateTitle.getText().toString().isEmpty() ||CreateTask.getText().toString().isEmpty() ||
-                    // CreateDuration.getText().toString().isEmpty() ||
-                    CreateProject.getSelectedItem().toString().isEmpty() ||CreateCharging.getSelectedItem().toString().isEmpty())
+                if (
+                    ChangeTitle.getText().toString().isEmpty() ||
+                    ChangeTask.getText().toString().isEmpty() ||
+                    ChangeProject.getSelectedItem().toString().isEmpty() ||
+                    ChangeCharging.getSelectedItem().toString().isEmpty())
                 {
                     //If field is empty, make toast
-                    Toast.makeText(this, "isEmpty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "They are empty field", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    //Get all edit text values and set them to a new Contact
-                    String saveTitle = CreateTitle.getText().toString();
-                    String saveTask = CreateTask.getText().toString();
-                    String saveDuration = CreateDuration.getText().toString();
-                    String saveProject = CreateProject.getSelectedItem().toString();
-                    String saveCharging = CreateCharging.getSelectedItem().toString();
-                    //Get all logs of entries text values
-                    Log.d("CreateTitle.getText().toString()", saveTitle);
-                    Log.d("CreateTask.getText().toString();", saveTask);
-                    Log.d("CreateDuration.getText().toString();", saveDuration);
-                    Log.d("CreateProject.getSelectedItem().toString();", saveProject);
-                    Log.d("CreateCharging.getSelectedItem().toString();", saveCharging);
+                    String getTextTitle = ChangeTask.getText().toString();
+                    String getTextTask = ChangeTask.getText().toString();
+                    String getTextProject = ChangeProject.getSelectedItem().toString();
+                    String getTextCharging = ChangeCharging.getSelectedItem().toString();
+                    double valueOfDays = ChangeDays.getValue();
+                    double valueOfHours = ChangeHours.getValue();
+                    double valueOfMinutes = ChangeMinutes.getValue();
+                    double secondsDuration = valueOfDays * 24 * 60 * 60 + valueOfHours * 60 * 60 + valueOfMinutes * 60;
+                    double minutesDuration = secondsDuration / 60;
+                    double hoursDuration = secondsDuration / 60 / 60;
+                    double daysDuration = secondsDuration / 60 / 60 / 24;
+                    finish();
                 }
-                // save and make a new TimeEntries with value from editext
-                Toast.makeText(getBaseContext(), "Save and make a new TimeEntries with value from EditText and spinners", Toast.LENGTH_SHORT).show();
-                finish();
                 return true;
-
             case R.id.Logout:
                 // LogOut from the app to get back to the login screen.
                 Toast.makeText(getBaseContext(), "LogOut from the app to get back to the login screen.", Toast.LENGTH_SHORT).show();

@@ -1,11 +1,9 @@
 package com.example.alexander.extrabraintesting.Models;
 
 import android.graphics.Color;
-import android.util.Log;
 
 import com.example.alexander.extrabraintesting.Activity.LoginActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,33 +38,16 @@ public class User
     private static final String COLOR_INITIALS = "initials_color";
     private static final String COLOR_AVATAR = "avatar_color";
 
-    private static final String TEAMS = "teams";
-
     public static boolean loadUser(String apiResponse)
     {
         if (apiResponse.isEmpty())
         {
             return false;
         }
-
-        Log.d("User - API Response",apiResponse);
-
         try
         {
             JSONObject response = new JSONObject(apiResponse);
             JSONObject user = response.getJSONObject(USER);
-            JSONArray teamList = user.getJSONArray(TEAMS);
-
-            Log.d("Teamlist length", String.valueOf(teamList.length()));
-            User.teamList = new ArrayList<Team>();
-            for (int position = 0; position < teamList.length(); position++)
-            {
-                JSONObject team = teamList.getJSONObject(position);
-                User.teamList.add(new Team(team));
-                Log.d("Team Id", User.teamList.get(position).getSubdomain());
-            }
-
-
             id = user.getInt(ID);
             apiKey = user.getString(API_KEY);
             email = user.getString(EMAIL);
@@ -81,21 +62,11 @@ public class User
         {
             e.printStackTrace();
         }
-
         LoginActivity.preferences.edit().putString(STORED_API_RESPONSE,apiResponse).apply();
-
         return true;
     }
 
-    public static void logOut()
-    {
-        LoginActivity.preferences.edit().clear().apply();
-    }
-
-    public static boolean isLoggedIn()
-    {
-        return LoginActivity.preferences.contains(API_KEY);
-    }
+    public static void logOut(){LoginActivity.preferences.edit().clear().apply();}
 
     public static int getId() {
         return id;
@@ -103,6 +74,11 @@ public class User
 
     public static String getApiKey() {
         return apiKey;
+    }
+
+    public static boolean isLoggedIn()
+    {
+        return LoginActivity.preferences.contains(API_KEY);
     }
 
     public static String getEmail() {

@@ -24,7 +24,6 @@ import java.util.Date;
 
 public class TimeFragment extends ListFragment implements OnTimeEntriesReady, OnTimeEntryDeleted, RadioGroup.OnCheckedChangeListener
 {
-
     private ArrayList<TimeEntry> timeEntryList;
     private TimeEntryAdapter timeEntryAdapter;
 
@@ -32,8 +31,8 @@ public class TimeFragment extends ListFragment implements OnTimeEntriesReady, On
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         requestTimeEntries(new Date());
+
     }
 
     @Override
