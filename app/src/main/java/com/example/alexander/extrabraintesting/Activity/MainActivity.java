@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -124,9 +125,15 @@ public class MainActivity extends Activity
                 Toast.makeText(getBaseContext(), "Example action Profile.", Toast.LENGTH_SHORT).show();
                 return true;
 
+            case R.id.action_switch_team:
+                Intent switchTeam = new Intent(this, TeamSwitcherActivity.class);
+                startActivity(switchTeam);
+                return true;
+
             case R.id.Logout:
                 User.logOut();
-                finish();
+                Intent login = new Intent(this, LoginActivity.class);
+                startActivity(login);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

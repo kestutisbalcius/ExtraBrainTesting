@@ -5,8 +5,11 @@ import android.util.Log;
 
 import com.example.alexander.extrabraintesting.Activity.LoginActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class User
 {
@@ -19,6 +22,8 @@ public class User
     private static String initials;
     private static int colorInitials;
     private static int colorAvatar;
+    private static ArrayList<Team> teamList;
+    private static Team selectedTeam;
 
     // Stored preference name
     public static final String STORED_API_RESPONSE = "JSON API Response";
@@ -35,6 +40,8 @@ public class User
     private static final String COLOR_INITIALS = "initials_color";
     private static final String COLOR_AVATAR = "avatar_color";
 
+    private static final String TEAMS = "teams";
+
     public static boolean loadUser(String apiResponse)
     {
         if (apiResponse.isEmpty())
@@ -42,10 +49,23 @@ public class User
             return false;
         }
 
+        Log.d("User - API Response",apiResponse);
+
         try
         {
             JSONObject response = new JSONObject(apiResponse);
             JSONObject user = response.getJSONObject(USER);
+            JSONArray teamList = user.getJSONArray(TEAMS);
+
+            Log.d("Teamlist length", String.valueOf(teamList.length()));
+            User.teamList = new ArrayList<Team>();
+            for (int position = 0; position < teamList.length(); position++)
+            {
+                JSONObject team = teamList.getJSONObject(position);
+                User.teamList.add(new Team(team));
+                Log.d("Team Id", User.teamList.get(position).getSubdomain());
+            }
+
 
             id = user.getInt(ID);
             apiKey = user.getString(API_KEY);
@@ -114,5 +134,25 @@ public class User
     public static int getColorAvatar()
     {
         return colorAvatar;
+    }
+
+    public static ArrayList<Team> getTeamList()
+    {
+        return teamList;
+    }
+
+    public static void setSelectedTeam(Team selectedTeam)
+    {
+        User.selectedTeam = selectedTeam;
+    }
+
+    public static Team getSelectedTeam()
+    {
+        return selectedTeam;
+    }
+
+    public static String getSubDomain()
+    {
+        return getSelectedTeam().getSubdomain();
     }
 }
