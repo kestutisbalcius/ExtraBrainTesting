@@ -71,7 +71,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         // Bypass login if a user is successfully loaded from preferences
         if (User.loadUser(preferences.getString(User.STORED_API_RESPONSE, "")))
         {
-            startMain();
+            startTeamChooser();
         }
 
         setContentView(R.layout.activity_login);
@@ -312,7 +312,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             mAuthTask = null;
             showProgress(false);
             if (success) {
-                startMain();
+                startTeamChooser();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -325,9 +325,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         }
     }
 
-    private void startMain()
+    private void startTeamChooser()
     {
-        Intent IntentSuccess = new Intent(this, MainActivity.class);
+        Intent IntentSuccess = new Intent(this, TeamSwitcherActivity.class);
         startActivity(IntentSuccess);
     }
 }

@@ -6,17 +6,38 @@ import org.json.JSONArray;
         import org.json.JSONException;
         import org.json.JSONObject;
 
-class Team
+public class Team
 {
-    public static JSONObject data;
-    public static void setTeam(JSONObject jsonObject)     {
-        try {
-            JSONObject user = jsonObject.getJSONObject("user");
-            JSONArray teams = user.getJSONArray("teams");
-            Log.d("JSONObject teams_data ", String.valueOf(teams));
+    private int id;
+    private String name;
+    private String subdomain;
+
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String SUBDOMAIN = "subdomain";
+
+    public Team(JSONObject team)
+    {
+        try
+        {
+            id = team.getInt(ID);
+            name = team.getString(NAME);
+            subdomain = team.getString(SUBDOMAIN);
         }
-        catch (JSONException e) {
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
+    }
+
+    public String getSubdomain()
+    {
+        return subdomain;
+    }
+
+    @Override
+    public String toString()
+    {
+        return name;
     }
 }
