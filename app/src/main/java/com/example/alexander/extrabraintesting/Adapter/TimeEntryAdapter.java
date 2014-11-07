@@ -52,7 +52,7 @@ public class TimeEntryAdapter extends ArrayAdapter<TimeEntry>
 
         viewHolder.title.setText(timeEntry.getTitle());
         viewHolder.project.setText(timeEntry.getProject());
-        viewHolder.duration.setText(timeEntry.getDuration());
+        viewHolder.duration.setText(timeEntry.getFormattedDuration());
         viewHolder.charging.setText(timeEntry.getCharging());
 
         return convertView;
