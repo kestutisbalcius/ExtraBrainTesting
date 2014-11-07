@@ -6,20 +6,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import com.example.alexander.extrabraintesting.Adapter.TimeEntryAdapter;
-import com.example.alexander.extrabraintesting.Handlers.TimeEntryHandler;
-import com.example.alexander.extrabraintesting.Models.DayButton;
+import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
+import com.example.alexander.extrabraintesting.Handlers.TimeEntriesRead;
+import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
+import com.example.alexander.extrabraintesting.Handlers.TimeEntryDelete;
+import com.example.alexander.extrabraintesting.Views.DayButton;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
-import com.example.alexander.extrabraintesting.Models.WeekView;
+import com.example.alexander.extrabraintesting.Views.WeekView;
 import com.example.alexander.extrabraintesting.R;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TimeFragment extends ListFragment implements TimeEntryHandler.OnTimeEntriesReady, RadioGroup.OnCheckedChangeListener
+public class TimeFragment extends ListFragment implements OnTimeEntriesReady, OnTimeEntryDeleted, RadioGroup.OnCheckedChangeListener
 {
+
+    private ArrayList<TimeEntry> timeEntryList;
+    private TimeEntryAdapter timeEntryAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -49,13 +56,37 @@ public class TimeFragment extends ListFragment implements TimeEntryHandler.OnTim
 
     private void requestTimeEntries(Date day)
     {
-        TimeEntryHandler handler = new TimeEntryHandler(this, day);
+        TimeEntriesRead handler = new TimeEntriesRead(this, day);
         handler.execute();
     }
 
     @Override
     public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList)
     {
-        setListAdapter(new TimeEntryAdapter(getActivity(), timeEntryList));
+        this.timeEntryList = timeEntryList;
+        timeEntryAdapter = new TimeEntryAdapter(getActivity(), timeEntryList);
+        setListAdapter(timeEntryAdapter);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id)
+    {
+        super.onListItemClick(l, v, position, id);
+        TimeEntry selectedTimeEntry = timeEntryList.get(position);
+        TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this, selectedTimeEntry.getId());
+        timeEntryDelete.execute();
+    }
+
+    @Override
+    public void onTimeEntryDeleted(int idDeleted)
+    {
+        for (TimeEntry timeEntry : timeEntryList)
+        {
+            if (idDeleted == timeEntry.getId())
+            {
+                timeEntryList.remove(timeEntry);
+                timeEntryAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

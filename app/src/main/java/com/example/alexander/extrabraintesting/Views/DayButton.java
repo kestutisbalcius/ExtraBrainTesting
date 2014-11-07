@@ -1,4 +1,4 @@
-package com.example.alexander.extrabraintesting.Models;
+package com.example.alexander.extrabraintesting.Views;
 
 import android.content.Context;
 import android.graphics.Canvas;

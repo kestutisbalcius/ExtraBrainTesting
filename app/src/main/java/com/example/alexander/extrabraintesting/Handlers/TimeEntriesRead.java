@@ -5,6 +5,7 @@ import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Base64;
 
+import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 
@@ -20,17 +21,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TimeEntryHandler extends AsyncTask<URL,Integer,ArrayList<TimeEntry>>
+public class TimeEntriesRead extends AsyncTask<URL,Integer,ArrayList<TimeEntry>>
 {
     private final OnTimeEntriesReady listener;
     private final String dateString;
 
-    public interface OnTimeEntriesReady
-    {
-        public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList);
-    }
-
-    public TimeEntryHandler(OnTimeEntriesReady listener, Date day)
+    public TimeEntriesRead(OnTimeEntriesReady listener, Date day)
     {
         this.listener = listener;
         dateString = getFormattedDate(day);
@@ -42,7 +38,7 @@ public class TimeEntryHandler extends AsyncTask<URL,Integer,ArrayList<TimeEntry>
         Uri.Builder builder = new Uri.Builder();
 
         builder.scheme("http")
-               .authority("praktikanter.android-extrabrain.macchiato.standout.se")
+               .authority(User.getSelectedTeam().getSubdomain() + ".android-extrabrain.macchiato.standout.se")
                .appendPath("android_api")
                .appendPath("time_entries")
                .appendQueryParameter("day", dateString);
@@ -56,14 +52,6 @@ public class TimeEntryHandler extends AsyncTask<URL,Integer,ArrayList<TimeEntry>
         return iso8601.format(day);
     }
 
-    private HttpGet getHttpGet(String apiResourcePath)
-    {
-        HttpGet httpGet = new HttpGet(apiResourcePath);
-        httpGet.setHeader("Accept", "application/json");
-        httpGet.setHeader("Authorization", getAuthorizationToken());
-
-        return httpGet;
-    }
 
     private String getAuthorizationToken()
     {
@@ -76,7 +64,11 @@ public class TimeEntryHandler extends AsyncTask<URL,Integer,ArrayList<TimeEntry>
     private ArrayList<TimeEntry> requestTimeEntries()
     {
         AndroidHttpClient httpClient = AndroidHttpClient.newInstance("Extrabrain android client");
-        HttpGet httpGet = getHttpGet(getResourceId());
+
+        HttpGet httpGet = new HttpGet(getResourceId());
+        httpGet.setHeader("Accept", "application/json");
+        httpGet.setHeader("Authorization", getAuthorizationToken());
+
         ArrayList<TimeEntry> timeEntryList = new ArrayList<TimeEntry>();
 
         try
