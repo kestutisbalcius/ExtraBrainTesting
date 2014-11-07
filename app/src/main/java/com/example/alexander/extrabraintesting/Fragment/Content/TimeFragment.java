@@ -1,6 +1,5 @@
 package com.example.alexander.extrabraintesting.Fragment.Content;
 
-
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import com.example.alexander.extrabraintesting.R;
 
 import java.util.ArrayList;
 import java.util.Date;
-
 public class TimeFragment extends ListFragment implements OnTimeEntriesReady, OnTimeEntryDeleted, RadioGroup.OnCheckedChangeListener
 {
     private ArrayList<TimeEntry> timeEntryList;
@@ -32,7 +30,6 @@ public class TimeFragment extends ListFragment implements OnTimeEntriesReady, On
     {
         super.onCreate(savedInstanceState);
         requestTimeEntries(new Date());
-
     }
 
     @Override
