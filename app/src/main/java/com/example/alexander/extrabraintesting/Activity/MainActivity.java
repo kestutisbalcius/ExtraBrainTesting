@@ -41,6 +41,11 @@ public class MainActivity extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+    if (position == 8 ) {
+        User.logOut();
+        Intent IntentSuccess = new Intent(this, LoginActivity.class);
+        startActivity(IntentSuccess);
+    }
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         TimeFragment timeFragment = new TimeFragment();
@@ -109,8 +114,9 @@ public class MainActivity extends Activity
         switch (item.getItemId()) {
             case R.id.action_add:
                 Toast.makeText(getBaseContext(), "Example action TimeEntries.", Toast.LENGTH_SHORT).show();
+
                 Intent IntentSuccess = new Intent(this, CreateEntriesActivity.class);
-                startActivity(IntentSuccess);
+                startActivityForResult(IntentSuccess);
                 return true;
 
             case R.id.Profile:
@@ -124,5 +130,8 @@ public class MainActivity extends Activity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void startActivityForResult(Intent intent) {
+
     }
 }

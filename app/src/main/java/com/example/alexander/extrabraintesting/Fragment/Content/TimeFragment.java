@@ -24,13 +24,7 @@ public class TimeFragment extends ListFragment implements TimeEntryHandler.OnTim
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-        TimeEntriesHandler handler = new TimeEntriesHandler(this);
-        handler.execute();
-=======
-
         requestTimeEntries(new Date());
->>>>>>> upstream/master
     }
 
     @Override

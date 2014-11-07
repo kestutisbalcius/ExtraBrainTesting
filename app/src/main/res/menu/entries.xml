@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.alexander.extrabraintesting.Activity.CreateEntriesActivity" >
 
-    <item android:id="@+id/save_changes_entries"
-        android:title="@string/action_example"
-        android:icon="@drawable/ic_action_accept"
+    <item android:id="@+id/remove_entry"
+        android:title="@string/action_delete_entries"
+        android:icon="@drawable/ic_action_cancel"
         android:showAsAction="withText|ifRoom"/>
 
-    <item android:id="@+id/Logout"
-        android:title="@string/action_sign_out"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+    <item android:id="@+id/save_changes_entries"
+        android:title="@string/action_save_changes"
+        android:icon="@drawable/ic_action_accept"
+        android:showAsAction="withText|ifRoom"/>
 </menu>

@@ -48,7 +48,7 @@ public class ChangeEntriesActivity extends Activity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ChangeCharging.setAdapter(dataAdapter);
 
-        ArrayList<String> projectList = new ArrayList<String>();                 //Add items into spinner projectList
+        ArrayList<String> projectList = new ArrayList<String>();            //Add items into spinner projectList
         projectList.add("Project 1");
         projectList.add("Project 2");
         projectList.add("Project 3");
@@ -57,12 +57,7 @@ public class ChangeEntriesActivity extends Activity {
         ChangeProject.setAdapter(dataAdapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.entries, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -95,6 +90,9 @@ public class ChangeEntriesActivity extends Activity {
                     double daysDuration = secondsDuration / 60 / 60 / 24;
                     finish();
                 }
+
+            case R.id.remove_entry:
+
                 return true;
             case R.id.Logout:
                 // LogOut from the app to get back to the login screen.
@@ -105,5 +103,11 @@ public class ChangeEntriesActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.entries, menu);
+        return true;
     }
 }
