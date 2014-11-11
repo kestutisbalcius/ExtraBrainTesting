@@ -1,14 +1,14 @@
 package com.example.alexander.extrabraintesting.Models;
 
-import android.util.Log;
-
-import com.example.alexander.extrabraintesting.Handlers.TimeEntryDelete;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TimeEntry
+public class TimeEntry implements Parcelable
 {
+
     private int id;
     private int duration;
     private String project;
@@ -21,7 +21,9 @@ public class TimeEntry
     private static final String TITLE = "title";
     private static final String CHARGING = "charging";
 
-    public TimeEntry(JSONObject timeEntry)
+    public static final String PARCELABLE_TIME_ENTRY ="PARCELABLE_TIME_ENTRY";
+
+    public TimeEntry(JSONObject timeEntry )
     {
         try
         {
@@ -59,30 +61,94 @@ public class TimeEntry
         int minutes = minutesTotal % HOUR;
 
         // Whole days in total
-//        int daysTotal = hoursTotal / DAY;
+        int daysTotal = hoursTotal / DAY;
         // Hours remaining
         int hours = hoursTotal % DAY;
 
-        return String.format("%02d:%02d", hours, minutes);
+        return String.format("%02d:%02d:%02d", daysTotal, hours, minutes );
     }
-
-    public String getProject()
-    {
-        return project;
-    }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
     public String getCharging()
     {
         return charging;
     }
-
+    public String getProject()
+    {
+        return project;
+    }
+    public String getTitle()
+    {
+        return title;
+    }
+    public int getDuration()
+    {
+        return duration;
+    }
     public int getId()
     {
         return id;
     }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+    public void setDuration(int duration)
+    {
+        this.duration = duration;
+    }
+    public void setProject(String project)
+    {
+        this.project = project;
+    }
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+    public void setCharging(String charging)
+    {
+        this.charging = charging;
+    }
+
+      /* everything below here is for implementing Parcelable */
+    // 99.9% of the time you can just ignore this
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    // write your object's data to the passed-in Parcel
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeInt(getId());
+        dest.writeInt(getDuration());
+        dest.writeString(getTitle());
+        dest.writeString(getProject());
+        dest.writeString(getCharging());
+    }
+
+    // example constructor that takes a Parcel and gives you an object populated with it's values
+    private TimeEntry(Parcel in)
+    {
+        setId(in.readInt());
+        setDuration(in.readInt());
+        setTitle(in.readString());
+        setProject(in.readString());
+        setCharging(in.readString());
+    }
+
+    public static final Parcelable.Creator<TimeEntry> CREATOR = new Parcelable.Creator<TimeEntry>()
+    {
+
+        @Override
+        public TimeEntry createFromParcel(Parcel source) {
+            return new TimeEntry(source);
+        }
+
+        @Override
+        public TimeEntry[] newArray(int size) {
+            return new TimeEntry[size];
+        }
+    };
 }

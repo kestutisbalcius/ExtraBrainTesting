@@ -9,7 +9,6 @@ import android.util.Log;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
 import com.example.alexander.extrabraintesting.Models.User;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 
