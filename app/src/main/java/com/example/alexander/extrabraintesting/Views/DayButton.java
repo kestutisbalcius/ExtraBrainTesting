@@ -37,7 +37,9 @@ public class DayButton extends RadioButton
         // Assign background color depending on checked state
         setBackgroundResource(R.drawable.daybutton_states);
         // Each button should fill up equal space
-        setLayoutParams(new RadioGroup.LayoutParams(0, 55, 1));
+        setLayoutParams(new RadioGroup.LayoutParams(0, 120, 1));
+
+        this.setPadding(0,20,0,0);
     }
 
     private boolean isToday()
@@ -66,7 +68,7 @@ public class DayButton extends RadioButton
 
     private StaticLayout getTextLayout(Date date)
     {
-        SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("c");
+        SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("EEE");
         SimpleDateFormat dayOfMonthFormat = new SimpleDateFormat("d MMM");
 
         String dayName = dayOfWeekFormat.format(date);
@@ -74,16 +76,20 @@ public class DayButton extends RadioButton
 
         // Create styled text
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder(dayName);
-        stringBuilder.setSpan(new RelativeSizeSpan(2f), 0, dayName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        stringBuilder.setSpan(new RelativeSizeSpan(3f), 0, dayName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         stringBuilder.append("\n");
         stringBuilder.append(dayOfMonth);
 
         // Draw text with smooth edges
         TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        if (isToday()) { textPaint.setColor(Color.BLUE); }
+        if (isToday())
+        {
+            textPaint.setColor(Color.rgb(4, 156, 219));
+            setChecked(true);
+        }
 
         // Create a text layout that won't be changed once created
-        return new StaticLayout(stringBuilder, textPaint, 75, Layout.Alignment.ALIGN_CENTER, 1, 1, true);
+        return new StaticLayout(stringBuilder, textPaint, 100, Layout.Alignment.ALIGN_CENTER, 1, 1, true);
 
     }
 }

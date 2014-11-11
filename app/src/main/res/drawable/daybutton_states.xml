@@ -7,12 +7,12 @@
             <gradient
                 android:type="radial"
                 android:gradientRadius="115"
-                android:startColor="@android:color/white"
-                android:endColor="@android:color/holo_blue_light"
+                android:startColor="@color/standoutGray"
+                android:endColor="@color/standoutSelectedGray"
                 android:centerX="0.35" android:centerY="0.3"/>
         </shape>
     </item>
     <item android:state_checked="false" >
-        <shape><solid android:color="@color/standoutGray"/></shape>
+        <shape><solid android:color="@color/standoutGray" /></shape>
     </item>
 </selector>
