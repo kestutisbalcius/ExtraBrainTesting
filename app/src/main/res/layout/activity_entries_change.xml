@@ -3,40 +3,36 @@
     android:layout_height="fill_parent"
     android:id="@+id/relativeLayout"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <EditText
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:id="@+id/createTask"
-        android:layout_below="@+id/createTitle"
-        android:layout_alignLeft="@+id/createTitle"
-        android:layout_alignStart="@+id/createTitle"
+        android:id="@+id/changeTask"
+        android:layout_below="@+id/changeTitle"
+        android:layout_alignLeft="@+id/changeTitle"
+        android:layout_alignStart="@+id/changeTitle"
         android:layout_marginTop="30dp" />
-
     <EditText
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:id="@+id/createTitle"
+        android:id="@+id/changeTitle"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Title:"
         android:id="@+id/TextTitle"
-        android:layout_alignBottom="@+id/createTitle"
+        android:layout_alignBottom="@+id/changeTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/createTitle"
-        android:layout_toLeftOf="@+id/createTitle"
-        android:layout_toStartOf="@+id/createTitle"
+        android:layout_alignTop="@+id/changeTitle"
+        android:layout_toLeftOf="@+id/changeTitle"
+        android:layout_toStartOf="@+id/changeTitle"
         android:gravity="center_vertical|center_horizontal" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,63 +42,56 @@
         android:gravity="center_vertical|center_horizontal"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/createCharging"
-        android:layout_alignBottom="@+id/createCharging"
-        android:layout_toLeftOf="@+id/createCharging"
-        android:layout_toStartOf="@+id/createCharging" />
-
+        android:layout_alignTop="@+id/changeCharging"
+        android:layout_alignBottom="@+id/changeCharging"
+        android:layout_toLeftOf="@+id/changeCharging"
+        android:layout_toStartOf="@+id/changeCharging" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Project:"
         android:id="@+id/TextProject"
-        android:layout_toStartOf="@+id/createProject"
-        android:layout_alignTop="@+id/createProject"
+        android:layout_toStartOf="@+id/changeProject"
+        android:layout_alignTop="@+id/changeProject"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/createProject"
-        android:layout_toLeftOf="@+id/createProject"
+        android:layout_alignBottom="@+id/changeProject"
+        android:layout_toLeftOf="@+id/changeProject"
         android:gravity="center_vertical|center_horizontal" />
-
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/createCharging"
-        android:layout_below="@+id/createProject"
+        android:id="@+id/changeCharging"
+        android:layout_below="@+id/changeProject"
         android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/TextProject"
         android:layout_toEndOf="@+id/TextProject"
-        android:layout_alignRight="@+id/createTask"
-        android:layout_alignEnd="@+id/createTask" />
-
+        android:layout_alignRight="@+id/changeTask"
+        android:layout_alignEnd="@+id/changeTask" />
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/createProject"
-        android:layout_below="@+id/createTask"
+        android:id="@+id/changeProject"
+        android:layout_below="@+id/changeTask"
         android:layout_toRightOf="@+id/TextTask"
         android:layout_toEndOf="@+id/TextTask"
         android:layout_marginTop="20dp"
-        android:layout_alignRight="@+id/createTask"
-        android:layout_alignEnd="@+id/createTask" />
-
+        android:layout_alignRight="@+id/changeTask"
+        android:layout_alignEnd="@+id/changeTask" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Task:"
         android:id="@+id/TextTask"
-        android:layout_toStartOf="@+id/createTask"
-        android:layout_alignBottom="@+id/createTask"
-        android:layout_toLeftOf="@+id/createTask"
+        android:layout_toStartOf="@+id/changeTask"
+        android:layout_alignBottom="@+id/changeTask"
+        android:layout_toLeftOf="@+id/changeTask"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/createTask"
+        android:layout_alignTop="@+id/changeTask"
         android:gravity="center_vertical|center_horizontal" />
-
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,12 +99,11 @@
         android:text="D"
         android:id="@+id/textView"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_above="@+id/Days"
-        android:layout_alignLeft="@+id/Days"
-        android:layout_alignStart="@+id/Days"
+        android:layout_above="@+id/changeDays"
+        android:layout_alignLeft="@+id/changeDays"
+        android:layout_alignStart="@+id/changeDays"
         android:layout_toStartOf="@+id/textView2"
         android:layout_toLeftOf="@+id/textView2" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -123,12 +111,11 @@
         android:text="H"
         android:id="@+id/textView2"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_above="@+id/Hours"
-        android:layout_alignLeft="@+id/Hours"
-        android:layout_alignStart="@+id/Hours"
-        android:layout_alignRight="@+id/Hours"
-        android:layout_alignEnd="@+id/Hours" />
-
+        android:layout_above="@+id/changeHours"
+        android:layout_alignLeft="@+id/changeHours"
+        android:layout_alignStart="@+id/changeHours"
+        android:layout_alignRight="@+id/changeHours"
+        android:layout_alignEnd="@+id/changeHours" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,14 +123,11 @@
         android:text="M"
         android:id="@+id/textView3"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_above="@+id/Minutes"
-        android:layout_alignLeft="@+id/Minutes"
-        android:layout_alignStart="@+id/Minutes"
-        android:layout_alignRight="@+id/Minutes"
-        android:layout_alignEnd="@+id/Minutes" />
-
-
-
+        android:layout_above="@+id/changeMinutes"
+        android:layout_alignLeft="@+id/changeMinutes"
+        android:layout_alignStart="@+id/changeMinutes"
+        android:layout_alignRight="@+id/changeMinutes"
+        android:layout_alignEnd="@+id/changeMinutes" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -156,32 +140,27 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
     <NumberPicker
-        android:id="@+id/Hours"
+        android:id="@+id/changeHours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="200dip"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
     <NumberPicker
-        android:id="@+id/Minutes"
+        android:id="@+id/changeMinutes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="200dip"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/Hours"
-        android:layout_toEndOf="@+id/Hours" />
-
+        android:layout_toRightOf="@+id/changeHours"
+        android:layout_toEndOf="@+id/changeHours" />
     <NumberPicker
-        android:id="@+id/Days"
+        android:id="@+id/changeDays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="200dip"
-        android:layout_alignTop="@+id/Hours"
-        android:layout_toLeftOf="@+id/Hours"
-        android:layout_toStartOf="@+id/Hours" />
-
-
+        android:layout_alignTop="@+id/changeHours"
+        android:layout_toLeftOf="@+id/changeHours"
+        android:layout_toStartOf="@+id/changeHours" />
 </RelativeLayout>

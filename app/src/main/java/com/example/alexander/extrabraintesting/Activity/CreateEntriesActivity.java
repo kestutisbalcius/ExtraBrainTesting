@@ -25,15 +25,15 @@ public class CreateEntriesActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entries_create);
+        // setContentView(R.layout.activity_entries_create);
         RelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-        CreateTitle = (EditText) findViewById(R.id.createTitle);            // Input createTitle
-        CreateTask = (EditText) findViewById(R.id.createTask);              // Input createTask
-        CreateProject = (Spinner) findViewById(R.id.createProject);         // Spinner createProject
-        CreateCharging = (Spinner) findViewById(R.id.createCharging);       // Spinner createCharging
-        days = (NumberPicker) findViewById(R.id.Days);                      // NumberPicker Days
-        hours = (NumberPicker) findViewById(R.id.Hours);                    // NumberPicker Hours
-        minutes = (NumberPicker) findViewById(R.id.Minutes);                // NumberPicker Minutes
+        CreateTitle = (EditText) findViewById(R.id.changeTitle);            // Input createTitle
+        CreateTask = (EditText) findViewById(R.id.changeTask);              // Input createTask
+        CreateProject = (Spinner) findViewById(R.id.changeProject);         // Spinner createProject
+        CreateCharging = (Spinner) findViewById(R.id.changeCharging);       // Spinner createCharging
+        days = (NumberPicker) findViewById(R.id.changeDays);                      // NumberPicker Days
+        hours = (NumberPicker) findViewById(R.id.changeHours);                    // NumberPicker Hours
+        minutes = (NumberPicker) findViewById(R.id.changeMinutes);                // NumberPicker Minutes
         days.setMaxValue(365);
         hours.setMaxValue(23);
         minutes.setMaxValue(59);

@@ -1,63 +1,89 @@
 package com.example.alexander.extrabraintesting.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
+import com.example.alexander.extrabraintesting.Handlers.TimeEntryDelete;
+import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
 import java.util.ArrayList;
 
-public class ChangeEntriesActivity extends Activity {
-    RelativeLayout RelativeLayout;
-    EditText ChangeTitle, ChangeTask;
-    Spinner ChangeProject, ChangeCharging;
-    NumberPicker ChangeDays, ChangeHours, ChangeMinutes;
-
+public class ChangeEntriesActivity extends Activity implements OnTimeEntryDeleted {
+    EditText changeTitle, changeTask;
+    Spinner changeProject, changeCharging;
+    NumberPicker changeDays, changeHours, changeMinutes;
+    public static final int EDIT_OR_REMOVE_TIME_ENTRY = 77;
+    public static final String REMOVING_TIME_ENTRY = "Removing the timeEntry";
+    public static final String REMOVED_THIS_TIME_ENTRY_ID = "Remove this TimeEntry";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TimeEntry activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
         setContentView(R.layout.activity_entries_change);
+        // EditText
+        changeTitle = (EditText) findViewById(R.id.changeTitle);            // findViewById EditText ChangeTitle
+        changeTask = (EditText) findViewById(R.id.changeTask);              // findViewById EditText ChangeTask
+        // Spinner
+        changeProject = (Spinner) findViewById(R.id.changeProject);         // findViewById Spinner ChangeProject
+        changeCharging = (Spinner) findViewById(R.id.changeCharging);       // findViewById Spinner ChangeCharging
 
-        RelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);// findViewById RelativeLayout RelativeLayout
-        ChangeTitle = (EditText) findViewById(R.id.createTitle);            // findViewById EditText ChangeTitle
-        ChangeTask = (EditText) findViewById(R.id.createTask);              // findViewById EditText ChangeTask
-        ChangeProject = (Spinner) findViewById(R.id.createProject);         // findViewById Spinner ChangeProject
-        ChangeCharging = (Spinner) findViewById(R.id.createCharging);       // findViewById Spinner ChangeCharging
-        ChangeDays = (NumberPicker) findViewById(R.id.Days);                // findViewById NumberPicker ChangeDays
-        ChangeHours = (NumberPicker) findViewById(R.id.Hours);              // findViewById NumberPicker ChangeHours
-        ChangeMinutes = (NumberPicker) findViewById(R.id.Minutes);          // findViewById NumberPicker ChangeMinutes
+        timeDurationConversion(activityEntry.getDuration());
+        changeTitle.setText(activityEntry.getTitle());
+        activityEntry.setTitle(changeTitle.getText().toString());
 
-        ChangeDays.setMaxValue(365);                                        // setMaxValue(365); NumberPicker ChangeDays
-        ChangeHours.setMaxValue(23);                                        // setMaxValue(23); NumberPicker ChangeHours
-        ChangeMinutes.setMaxValue(59);                                      // setMaxValue(59); NumberPicker ChangeMinutes
-
-        ArrayList<String> chargingList = new ArrayList<String>();           // ArrayList<String> chargingList = new ArrayList<String>();
+        ArrayList<String> chargingList = new ArrayList<String>();
         chargingList.add("Project 1");
         chargingList.add("Project 2");
         chargingList.add("Project 3");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ChangeCharging.setAdapter(dataAdapter);
+        changeCharging.setAdapter(dataAdapter);
 
-        ArrayList<String> projectList = new ArrayList<String>();            //Add items into spinner projectList
+        ArrayList<String> projectList = new ArrayList<String>();
         projectList.add("Project 1");
         projectList.add("Project 2");
         projectList.add("Project 3");
         dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, projectList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ChangeProject.setAdapter(dataAdapter);
+        changeProject.setAdapter(dataAdapter);
     }
 
+    private void timeDurationConversion(int seconds) {
+        final int HOUR_IN_AN_Days = 24;
+        final int MINUTES_IN_AN_HOUR = 60;
+        final int SECONDS_IN_A_MINUTE = 60;
 
+        int minutes = seconds / SECONDS_IN_A_MINUTE;
+//        seconds -= minutes * SECONDS_IN_A_MINUTE;
+        int hours = minutes / MINUTES_IN_AN_HOUR;
+        minutes -= hours * MINUTES_IN_AN_HOUR;
+
+        int days = hours / HOUR_IN_AN_Days;
+        hours -= days * HOUR_IN_AN_Days;
+
+        // NumberPicker
+        changeDays = (NumberPicker) findViewById(R.id.changeDays);          // findViewById NumberPicker ChangeDays
+        changeHours = (NumberPicker) findViewById(R.id.changeHours);        // findViewById NumberPicker ChangeHours
+        changeMinutes = (NumberPicker) findViewById(R.id.changeMinutes);    // findViewById NumberPicker ChangeMinutes
+        // setMaxValue maybe change it to 23-24 and 59-60
+        changeDays.setMaxValue(365);                                        // setMaxValue(365); NumberPicker ChangeDays
+        changeHours.setMaxValue(23);                                        // setMaxValue(23); NumberPicker ChangeHours
+        changeMinutes.setMaxValue(59);                                      // setMaxValue(59); NumberPicker ChangeMinutes
+        changeDays.setValue(days);
+        changeHours.setValue(hours);
+        changeMinutes.setValue(minutes);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -66,39 +92,31 @@ public class ChangeEntriesActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
-                if (
-                    ChangeTitle.getText().toString().isEmpty() ||
-                    ChangeTask.getText().toString().isEmpty() ||
-                    ChangeProject.getSelectedItem().toString().isEmpty() ||
-                    ChangeCharging.getSelectedItem().toString().isEmpty())
-                {
-                    //If field is empty, make toast
-                    Toast.makeText(getBaseContext(), "They are empty field", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    String getTextTitle = ChangeTask.getText().toString();
-                    String getTextTask = ChangeTask.getText().toString();
-                    String getTextProject = ChangeProject.getSelectedItem().toString();
-                    String getTextCharging = ChangeCharging.getSelectedItem().toString();
-                    double valueOfDays = ChangeDays.getValue();
-                    double valueOfHours = ChangeHours.getValue();
-                    double valueOfMinutes = ChangeMinutes.getValue();
-                    double secondsDuration = valueOfDays * 24 * 60 * 60 + valueOfHours * 60 * 60 + valueOfMinutes * 60;
-                    double minutesDuration = secondsDuration / 60;
-                    double hoursDuration = secondsDuration / 60 / 60;
-                    double daysDuration = secondsDuration / 60 / 60 / 24;
+//                    String getTextTitle = changeTask.getText().toString();
+//                    String getTextTask = changeTask.getText().toString();
+//                    String getTextProject = changeProject.getSelectedItem().toString();
+//                    String getTextCharging = changeCharging.getSelectedItem().toString();
+//                    double valueOfDays = changeDays.getValue();
+//                    double valueOfHours = changeHours.getValue();
+//                    double valueOfMinutes = changeMinutes.getValue();
+//                    double secondsDuration = valueOfDays * 24 * 60 * 60 + valueOfHours * 60 * 60 + valueOfMinutes * 60;
+//                    double minutesDuration = secondsDuration / 60;
+//                    double hoursDuration = secondsDuration / 60 / 60;
+//                    double daysDuration = secondsDuration / 60 / 60 / 24;
                     finish();
-                }
 
             case R.id.remove_entry:
+                TimeEntry activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
+                TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
+                timeEntryDelete.execute();
 
                 return true;
             case R.id.Logout:
                 // LogOut from the app to get back to the login screen.
                 Toast.makeText(getBaseContext(), "LogOut from the app to get back to the login screen.", Toast.LENGTH_SHORT).show();
                 User.logOut();
-                finish();
+                Intent IntentlogOut = new Intent(this, LoginActivity.class);
+                startActivity(IntentlogOut);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -109,5 +127,15 @@ public class ChangeEntriesActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.entries, menu);
         return true;
+    }
+
+    @Override
+    public void onTimeEntryDeleted(int deleted)
+    {
+        Intent deletedResult = getIntent();
+        deletedResult.putExtra(REMOVING_TIME_ENTRY, true);
+        deletedResult.putExtra(REMOVED_THIS_TIME_ENTRY_ID, deleted);
+        setResult(RESULT_OK, deletedResult);
+        finish();
     }
 }

@@ -27,16 +27,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
-
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -48,7 +45,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     SharedPreferences.Editor toEdit;
     EditText userinput, passinput;
     String username, password;
-
     private static final String[] DUMMY_CREDENTIALS = new String[]{"foo@example.com:hello", "bar@example.com:world"};
     private UserLoginTask mAuthTask = null;
     public static SharedPreferences preferences;
@@ -60,10 +56,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Make shared preferences available to non-activities
         preferences = getPreferences(MODE_PRIVATE);
-
         // Bypass login if a user is successfully loaded from preferences
         if (User.loadUser(preferences.getString(User.STORED_API_RESPONSE, "")))
         {
@@ -251,7 +245,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 session.put("session", userLogin);
                 // Convert to StringEntity to fit in HttpPost object
                 return new StringEntity(session.toString());
-
             }
             catch (JSONException e)
             {
@@ -313,7 +306,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(false);
         }
     }
-
     private void startTeamChooser()
     {
         Intent IntentSuccess = new Intent(this, TeamSwitcherActivity.class);

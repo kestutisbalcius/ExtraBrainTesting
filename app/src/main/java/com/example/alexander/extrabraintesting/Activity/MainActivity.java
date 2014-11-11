@@ -89,10 +89,8 @@ public class MainActivity extends Activity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_add:
-                Toast.makeText(getBaseContext(), "Example action TimeEntries.", Toast.LENGTH_SHORT).show();
-
                 Intent IntentSuccess = new Intent(this, CreateEntriesActivity.class);
-                startActivityForResult(IntentSuccess);
+                startActivity(IntentSuccess);
                 return true;
 
             case R.id.Profile:
@@ -112,8 +110,5 @@ public class MainActivity extends Activity
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-    private void startActivityForResult(Intent intent) {
-
     }
 }

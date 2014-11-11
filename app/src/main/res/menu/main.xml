@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
 <item android:id="@+id/action_add"
-    android:title="@string/app_create_new_entries"
+    android:title="@string/action_create_entries"
     android:icon="@drawable/ic_action_new"
     android:showAsAction="withText|ifRoom"/>
 <item

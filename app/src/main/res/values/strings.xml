@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="title_activity_entries">EntriesActivity</string>
+    <string name="title_activity_entries">Save changes entries</string>
+    <string name="action_delete_entries">Delete entries</string>
+    <string name="action_save_changes">Save changes entries</string>
+    <string name="action_create_entries">Save changes entries</string>
+
+    <string name="app_create_new_entries">Create new entries</string>
+    <string name="app_change_current_entries">Change current entries</string>
+    <string name="app_name">ExtraBrain</string>
+    <string name="title_activity_main">MainActivity</string>
 
     <string name="title_Time">Time 1</string>
     <string name="title_Tasks">Tasks 2</string>
@@ -51,5 +59,10 @@
         <item>Internal: Sales</item>
         <item>Internal: Support</item>
     </string-array>
+
+
+
+
+
 
 </resources>
