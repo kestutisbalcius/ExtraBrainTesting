@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
 import com.example.alexander.extrabraintesting.Handlers.TimeEntryDelete;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
+
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
@@ -85,6 +86,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         changeMinutes.setValue(minutes);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -92,24 +94,12 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
-//                    String getTextTitle = changeTask.getText().toString();
-//                    String getTextTask = changeTask.getText().toString();
-//                    String getTextProject = changeProject.getSelectedItem().toString();
-//                    String getTextCharging = changeCharging.getSelectedItem().toString();
-//                    double valueOfDays = changeDays.getValue();
-//                    double valueOfHours = changeHours.getValue();
-//                    double valueOfMinutes = changeMinutes.getValue();
-//                    double secondsDuration = valueOfDays * 24 * 60 * 60 + valueOfHours * 60 * 60 + valueOfMinutes * 60;
-//                    double minutesDuration = secondsDuration / 60;
-//                    double hoursDuration = secondsDuration / 60 / 60;
-//                    double daysDuration = secondsDuration / 60 / 60 / 24;
                     finish();
 
             case R.id.remove_entry:
                 TimeEntry activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
                 TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
                 timeEntryDelete.execute();
-
                 return true;
             case R.id.Logout:
                 // LogOut from the app to get back to the login screen.

@@ -111,4 +111,7 @@ public class MainActivity extends Activity
                 return super.onOptionsItemSelected(item);
         }
     }
+    private void startActivityForResult(Intent intent) {
+
+    }
 }

@@ -31,9 +31,10 @@ public class CreateEntriesActivity extends Activity {
         CreateTask = (EditText) findViewById(R.id.changeTask);              // Input createTask
         CreateProject = (Spinner) findViewById(R.id.changeProject);         // Spinner createProject
         CreateCharging = (Spinner) findViewById(R.id.changeCharging);       // Spinner createCharging
-        days = (NumberPicker) findViewById(R.id.changeDays);                      // NumberPicker Days
-        hours = (NumberPicker) findViewById(R.id.changeHours);                    // NumberPicker Hours
-        minutes = (NumberPicker) findViewById(R.id.changeMinutes);                // NumberPicker Minutes
+        days = (NumberPicker) findViewById(R.id.changeDays);                // NumberPicker Days
+        hours = (NumberPicker) findViewById(R.id.changeHours);              // NumberPicker Hours
+        minutes = (NumberPicker) findViewById(R.id.changeMinutes);          // NumberPicker Minutes
+
         days.setMaxValue(365);
         hours.setMaxValue(23);
         minutes.setMaxValue(59);

@@ -15,6 +15,7 @@
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:id="@+id/changeTitle"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -33,6 +34,7 @@
         android:layout_toLeftOf="@+id/changeTitle"
         android:layout_toStartOf="@+id/changeTitle"
         android:gravity="center_vertical|center_horizontal" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,6 +81,29 @@
         android:layout_marginTop="20dp"
         android:layout_alignRight="@+id/changeTask"
         android:layout_alignEnd="@+id/changeTask" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createCharging"
+        android:layout_below="@+id/createProject"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/TextProject"
+        android:layout_toEndOf="@+id/TextProject"
+        android:layout_alignRight="@+id/createTask"
+        android:layout_alignEnd="@+id/createTask" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createProject"
+        android:layout_below="@+id/createTask"
+        android:layout_toRightOf="@+id/TextTask"
+        android:layout_toEndOf="@+id/TextTask"
+        android:layout_marginTop="20dp"
+        android:layout_alignRight="@+id/createTask"
+        android:layout_alignEnd="@+id/createTask" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,6 +129,7 @@
         android:layout_alignStart="@+id/changeDays"
         android:layout_toStartOf="@+id/textView2"
         android:layout_toLeftOf="@+id/textView2" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -116,6 +142,7 @@
         android:layout_alignStart="@+id/changeHours"
         android:layout_alignRight="@+id/changeHours"
         android:layout_alignEnd="@+id/changeHours" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -128,6 +155,7 @@
         android:layout_alignStart="@+id/changeMinutes"
         android:layout_alignRight="@+id/changeMinutes"
         android:layout_alignEnd="@+id/changeMinutes" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

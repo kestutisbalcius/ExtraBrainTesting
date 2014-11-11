@@ -27,6 +27,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 import org.apache.http.client.methods.HttpPost;
@@ -45,6 +46,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     SharedPreferences.Editor toEdit;
     EditText userinput, passinput;
     String username, password;
+
     private static final String[] DUMMY_CREDENTIALS = new String[]{"foo@example.com:hello", "bar@example.com:world"};
     private UserLoginTask mAuthTask = null;
     public static SharedPreferences preferences;

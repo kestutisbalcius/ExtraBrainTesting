@@ -26,6 +26,7 @@ public class TimeFragment extends ListFragment implements OnTimeEntriesReady, Ra
 {
     private ArrayList<TimeEntry> timeEntryList;
     private TimeEntryAdapter timeEntryAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {

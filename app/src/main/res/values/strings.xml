@@ -11,6 +11,7 @@
     <string name="app_name">ExtraBrain</string>
     <string name="title_activity_main">MainActivity</string>
 
+
     <string name="title_Time">Time 1</string>
     <string name="title_Tasks">Tasks 2</string>
     <string name="title_Projects">Projects 3</string>
@@ -44,6 +45,7 @@
     <string name="title_entriesactivity_detail">EntriesActivity Detail</string>
     <string name="save_changes_entries">save changes to entries</string>
 
+
     <string name="textViewTitle">Title:</string>
     <string name="textViewTask">Task:</string>
     <string name="textViewDuration">Duration:</string>
@@ -59,10 +61,5 @@
         <item>Internal: Sales</item>
         <item>Internal: Support</item>
     </string-array>
-
-
-
-
-
 
 </resources>

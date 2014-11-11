@@ -33,6 +33,7 @@ public class User
     private static final String COLOR_INITIALS = "initials_color";
     private static final String COLOR_AVATAR = "avatar_color";
     private static final String TEAMS = "teams";
+
     public static boolean loadUser(String apiResponse)
     {
         if (apiResponse.isEmpty())
@@ -53,6 +54,7 @@ public class User
                 User.teamList.add(new Team(team));
                 Log.d("Team Id", User.teamList.get(position).getSubdomain());
             }
+
             id = user.getInt(ID);
             apiKey = user.getString(API_KEY);
             email = user.getString(EMAIL);
@@ -74,16 +76,14 @@ public class User
     {
         LoginActivity.preferences.edit().clear().apply();
     }
-    public static boolean isLoggedIn()
-    {
-        return LoginActivity.preferences.contains(API_KEY);
-    }
+
     public static int getId() {
         return id;
     }
     public static String getApiKey() {
         return apiKey;
     }
+
     public static String getEmail() {
         return email;
     }
