@@ -7,29 +7,24 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.example.alexander.extrabraintesting.Fragment.Content.TimeFragment;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
-
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-
-    /**
+   /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
+     **/
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
+     **/
     private CharSequence mTitle;
 
     @Override
@@ -39,12 +34,18 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
         getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+    if (position == 8 ) {
+        User.logOut();
+        Intent IntentSuccess = new Intent(this, LoginActivity.class);
+        startActivity(IntentSuccess);
+    }
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -53,7 +54,6 @@ public class MainActivity extends Activity
     }
 
     private Fragment getSelectedFragment(int drawerPosition){
-
         switch (drawerPosition)
         {
             case 0: return new TimeFragment();
@@ -61,34 +61,7 @@ public class MainActivity extends Activity
         }
     }
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_Time);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_Tasks);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_Projects);
-            case 4:
-                mTitle = getString(R.string.title_Contacts);
-                break;
-            case 5:
-                mTitle = getString(R.string.title_Invoices);
-                break;
-            case 6:
-                mTitle = getString(R.string.title_Statistics);
-            case 7:
-                mTitle = getString(R.string.title_Estimates);
-                break;
-            case 8:
-                mTitle = getString(R.string.title_Team);
-                break;
-        }
-    }
-
-    void restoreActionBar() {
+    public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
@@ -115,8 +88,8 @@ public class MainActivity extends Activity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_add:
-                Toast.makeText(getBaseContext(), "Example action TimeEntries.", Toast.LENGTH_SHORT).show();
-                Log.d("if success", "finish");
+                Intent IntentSuccess = new Intent(this, CreateEntriesActivity.class);
+                startActivity(IntentSuccess);
                 return true;
 
             case R.id.Profile:
@@ -136,5 +109,8 @@ public class MainActivity extends Activity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void startActivityForResult(Intent intent) {
+
     }
 }
