@@ -4,19 +4,33 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
+
+import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Fragment.Content.TimeFragment;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
+import com.example.alexander.extrabraintesting.Handlers.TimeEntriesRead;
+import com.example.alexander.extrabraintesting.Handlers.TimeEntryUpdate;
+import com.example.alexander.extrabraintesting.Models.SwipeDetector;
+import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener, OnTimeEntriesReady
+{
 
    /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -27,6 +41,10 @@ public class MainActivity extends Activity
      **/
     private CharSequence mTitle;
 
+
+    SwipeDetector swipeDetector;
+    Date currentDate = new Date();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,30 +54,62 @@ public class MainActivity extends Activity
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
+
+        // Setup swipe detection
+        swipeDetector = new SwipeDetector();
+
+        View container = findViewById(R.id.container);
+        requestTimeEntries(currentDate);
+
+        container.setOnTouchListener(swipeDetector);
+        container.setOnClickListener(this);
+
+//        TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(17);
+//        timeEntryUpdate.execute();
     }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-    if (position == 8 ) {
-        User.logOut();
-        Intent IntentSuccess = new Intent(this, LoginActivity.class);
-        startActivity(IntentSuccess);
+    private void requestTimeEntries(Date day)
+    {
+        TimeEntriesRead handler = new TimeEntriesRead(this, day);
+        handler.execute();
     }
+
+    // Callback method when an entry is ready and loaded
+    @Override
+    public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(TimeFragment.PARCEL_TIME_ENTRY_LIST, timeEntryList);
+
+        TimeFragment timeFragment = new TimeFragment();
+        timeFragment.setArguments(bundle);
+
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, getSelectedFragment(position))
+                .replace(R.id.container, timeFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
     }
 
-    private Fragment getSelectedFragment(int drawerPosition){
-        switch (drawerPosition)
+    @Override
+    public void onNavigationDrawerItemSelected(int position)
+    {
+        switch (position)
         {
-            case 0: return new TimeFragment();
-            default: return new Fragment();
+            case 0:
+                requestTimeEntries(new Date());
+                break;
+            case 8:
+                User.logOut();
+                Intent IntentSuccess = new Intent(this, LoginActivity.class);
+                startActivity(IntentSuccess);
+                break;
         }
     }
+
+
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
@@ -110,7 +160,32 @@ public class MainActivity extends Activity
                 return super.onOptionsItemSelected(item);
         }
     }
-    private void startActivityForResult(Intent intent) {
 
+    @Override
+    public void onClick(View view) {
+        if (swipeDetector.getAction() == SwipeDetector.Action.LR) {
+            Toast.makeText(this, "Swipe RIGHT!", Toast.LENGTH_LONG).show();
+
+            Calendar c = Calendar.getInstance();
+            c.setTime(currentDate);
+            c.add(Calendar.DATE, -1);
+            currentDate = c.getTime();
+
+            requestTimeEntries(currentDate);
+
+        }
+        else if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
+            Toast.makeText(this, "Swipe LEFT!", Toast.LENGTH_LONG).show();
+
+            Calendar c = Calendar.getInstance();
+            c.setTime(currentDate);
+            c.add(Calendar.DATE, 1);
+            currentDate = c.getTime();
+
+            requestTimeEntries(currentDate);
+        }
+        else if (swipeDetector.getAction() == SwipeDetector.Action.TB) {
+            Toast.makeText(this, "Swipe TOP!", Toast.LENGTH_LONG).show();
+        }
     }
 }

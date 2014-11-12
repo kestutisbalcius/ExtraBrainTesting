@@ -10,10 +10,10 @@ public class TimeEntry implements Parcelable
 {
 
     private int id;
-    private int duration;
-    private String project;
     private String title;
+    private int duration;
     private String charging;
+    private String project;
 
     private static final String ID = "id";
     private static final String DURATION = "duration";
@@ -23,13 +23,22 @@ public class TimeEntry implements Parcelable
 
     public static final String PARCELABLE_TIME_ENTRY ="PARCELABLE_TIME_ENTRY";
 
+    public TimeEntry(int id, String title, int duration, String charging, String project)
+    {
+        this.id = id;
+        this.title = title;
+        this.duration = duration;
+        this.charging = charging;
+        this.project = project;
+    }
+
     public TimeEntry(JSONObject timeEntry )
     {
         try
         {
             id = timeEntry.getInt(ID);
-            duration = timeEntry.getInt(DURATION);
             title = timeEntry.getString(TITLE);
+            duration = timeEntry.getInt(DURATION);
             charging = timeEntry.getString(CHARGING);
 
             // Sets NULL if no value

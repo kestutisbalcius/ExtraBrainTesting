@@ -27,6 +27,7 @@ public class SwipeDetector implements OnTouchListener {
     }
 
     // On touch method calculating user gesture
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
 
