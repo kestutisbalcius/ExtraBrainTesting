@@ -7,6 +7,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Fragment.Content.TimeFragment;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
@@ -28,8 +31,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener, OnTimeEntriesReady
+public class MainActivity extends FragmentActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTimeEntriesReady
 {
 
    /**
@@ -42,7 +45,7 @@ public class MainActivity extends Activity
     private CharSequence mTitle;
 
 
-    SwipeDetector swipeDetector;
+//    SwipeDetector swipeDetector;
     Date currentDate = new Date();
 
     @Override
@@ -57,16 +60,16 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
 
         // Setup swipe detection
-        swipeDetector = new SwipeDetector();
+//        swipeDetector = new SwipeDetector();
 
-        View container = findViewById(R.id.container);
+//        View container = findViewById(R.id.container);
         requestTimeEntries(currentDate);
 
-        container.setOnTouchListener(swipeDetector);
-        container.setOnClickListener(this);
+//        container.setOnTouchListener(swipeDetector);
+//        container.setOnClickListener(this);
 
-//        TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(17);
-//        timeEntryUpdate.execute();
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager()));
     }
 
     private void requestTimeEntries(Date day)
@@ -82,15 +85,6 @@ public class MainActivity extends Activity
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(TimeFragment.PARCEL_TIME_ENTRY_LIST, timeEntryList);
 
-        TimeFragment timeFragment = new TimeFragment();
-        timeFragment.setArguments(bundle);
-
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, timeFragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit();
     }
 
     @Override
@@ -161,31 +155,31 @@ public class MainActivity extends Activity
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        if (swipeDetector.getAction() == SwipeDetector.Action.LR) {
-            Toast.makeText(this, "Swipe RIGHT!", Toast.LENGTH_LONG).show();
-
-            Calendar c = Calendar.getInstance();
-            c.setTime(currentDate);
-            c.add(Calendar.DATE, -1);
-            currentDate = c.getTime();
-
-            requestTimeEntries(currentDate);
-
-        }
-        else if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
-            Toast.makeText(this, "Swipe LEFT!", Toast.LENGTH_LONG).show();
-
-            Calendar c = Calendar.getInstance();
-            c.setTime(currentDate);
-            c.add(Calendar.DATE, 1);
-            currentDate = c.getTime();
-
-            requestTimeEntries(currentDate);
-        }
-        else if (swipeDetector.getAction() == SwipeDetector.Action.TB) {
-            Toast.makeText(this, "Swipe TOP!", Toast.LENGTH_LONG).show();
-        }
-    }
+//    @Override
+//    public void onClick(View view) {
+//        if (swipeDetector.getAction() == SwipeDetector.Action.LR) {
+//            Toast.makeText(this, "Swipe RIGHT!", Toast.LENGTH_LONG).show();
+//
+//            Calendar c = Calendar.getInstance();
+//            c.setTime(currentDate);
+//            c.add(Calendar.DATE, -1);
+//            currentDate = c.getTime();
+//
+//            requestTimeEntries(currentDate);
+//
+//        }
+//        else if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
+//            Toast.makeText(this, "Swipe LEFT!", Toast.LENGTH_LONG).show();
+//
+//            Calendar c = Calendar.getInstance();
+//            c.setTime(currentDate);
+//            c.add(Calendar.DATE, 1);
+//            currentDate = c.getTime();
+//
+//            requestTimeEntries(currentDate);
+//        }
+//        else if (swipeDetector.getAction() == SwipeDetector.Action.TB) {
+//            Toast.makeText(this, "Swipe TOP!", Toast.LENGTH_LONG).show();
+//        }
+//    }
 }

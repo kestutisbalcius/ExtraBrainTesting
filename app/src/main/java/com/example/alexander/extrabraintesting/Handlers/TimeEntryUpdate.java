@@ -6,23 +6,31 @@ import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 
-import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
 import com.example.alexander.extrabraintesting.Models.User;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPatch;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class TimeEntryUpdate extends AsyncTask<URL,Integer,Integer>
 {
-    private final int timeEntryId;
+    private int timeEntryId;
 
-    public TimeEntryUpdate(int timeEntryId)
+    public TimeEntryUpdate(JSONObject updatedTimeEntry)
     {
-        this.timeEntryId = timeEntryId;
+        // TimeEntry in, getJSON
+        try
+        {
+            this.timeEntryId = updatedTimeEntry.getInt("id");
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     // Identifier of an API resource
@@ -47,7 +55,7 @@ public class TimeEntryUpdate extends AsyncTask<URL,Integer,Integer>
         return "Basic " + encodedString;
     }
 
-    private int requestDeletion()
+    private int requestUpdate()
     {
         AndroidHttpClient httpClient = AndroidHttpClient.newInstance("Extrabrain android client");
 
@@ -55,7 +63,7 @@ public class TimeEntryUpdate extends AsyncTask<URL,Integer,Integer>
         httpPatch.setHeader("Authorization", getAuthorizationToken());
         // Apparently required by the Ruby on Rails server, gives "HTTP Error 406 Not acceptable" without it.
         httpPatch.setHeader("Accept","application/json");
-        httpPatch.setHeader("Content-Type","application/json-patch+json");
+        httpPatch.setHeader("Content-Type","application/json");
 
         HttpResponse response;
         int statusCode = 0;
@@ -81,7 +89,7 @@ public class TimeEntryUpdate extends AsyncTask<URL,Integer,Integer>
     @Override
     protected Integer doInBackground(URL... params)
     {
-        return requestDeletion();
+        return requestUpdate();
     }
 
     @Override

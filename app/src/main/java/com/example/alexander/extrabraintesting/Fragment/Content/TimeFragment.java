@@ -1,9 +1,9 @@
 package com.example.alexander.extrabraintesting.Fragment.Content;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +30,21 @@ public class TimeFragment extends ListFragment
     {
         super.onCreate(savedInstanceState);
 
+        Log.d("Inside","TimeFragment");
         // Get the timeEntryList sent in with arguments
         timeEntryList = getArguments().getParcelableArrayList(PARCEL_TIME_ENTRY_LIST);
+        if (timeEntryList == null)
+        {
+            Log.d("We've come up empty: ", "No timeEntryList");
+        }
+
         timeEntryAdapter = new TimeEntryAdapter(getActivity(), timeEntryList);
-        setListAdapter(timeEntryAdapter);
+
+        if (timeEntryAdapter == null)
+        {
+            Log.d("We've come up empty: ", "No adapter");
+        }
+//        setListAdapter(timeEntryAdapter);
     }
 
     @Override

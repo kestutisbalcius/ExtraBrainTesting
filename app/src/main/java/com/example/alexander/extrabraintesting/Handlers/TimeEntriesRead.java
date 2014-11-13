@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Base64;
+import android.util.Log;
+
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
@@ -59,6 +61,7 @@ public class TimeEntriesRead extends AsyncTask<URL,Integer,ArrayList<TimeEntry>>
         {
             String rawTextResponse = httpClient.execute(httpGet, new BasicResponseHandler());
             JSONObject response = new JSONObject(rawTextResponse);
+            Log.d("JSON response object",response.toString());
             JSONArray jsonTimeEntries = response.getJSONArray("time_entries");
             for (int pos = 0; pos < jsonTimeEntries.length(); pos++)
             {
