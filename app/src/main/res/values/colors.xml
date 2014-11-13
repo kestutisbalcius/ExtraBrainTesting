@@ -3,4 +3,5 @@
     <color name="standoutGray">#f9f9f9</color>
     <color name="standoutSelectedGray">#e6e6e6</color>
     <color name="standoutSelectedBlack">#555555</color>
+    <color name="standoutGreen">#5fc073</color>
 </resources>

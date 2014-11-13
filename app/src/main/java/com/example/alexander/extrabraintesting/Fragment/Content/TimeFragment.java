@@ -23,28 +23,17 @@ public class TimeFragment extends ListFragment
     public static final String PARCEL_TIME_ENTRY_LIST = "time entry list";
     private ArrayList<TimeEntry> timeEntryList;
     private TimeEntryAdapter timeEntryAdapter;
-    private View.OnClickListener activityOnClickListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        Log.d("Inside","TimeFragment");
         // Get the timeEntryList sent in with arguments
         timeEntryList = getArguments().getParcelableArrayList(PARCEL_TIME_ENTRY_LIST);
-        if (timeEntryList == null)
-        {
-            Log.d("We've come up empty: ", "No timeEntryList");
-        }
-
         timeEntryAdapter = new TimeEntryAdapter(getActivity(), timeEntryList);
 
-        if (timeEntryAdapter == null)
-        {
-            Log.d("We've come up empty: ", "No adapter");
-        }
-//        setListAdapter(timeEntryAdapter);
+        setListAdapter(timeEntryAdapter);
     }
 
     @Override
@@ -61,9 +50,6 @@ public class TimeFragment extends ListFragment
     {
         View timeFragmentView = inflater.inflate(R.layout.fragment_time,container,false);
 
-        // Use the listener from the activity to send back click events to
-//        timeFragmentView.setOnClickListener(activityOnClickListener);
-
         return timeFragmentView;
     }
 
@@ -78,14 +64,12 @@ public class TimeFragment extends ListFragment
         Intent changeEntry = new Intent(getActivity(), ChangeEntriesActivity.class);
         changeEntry.putExtra(TimeEntry.PARCELABLE_TIME_ENTRY, selectedTimeEntry);
         startActivityForResult(changeEntry, ChangeEntriesActivity.EDIT_OR_REMOVE_TIME_ENTRY);
-
-        // TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this, selectedTimeEntry.getId());
-        // timeEntryDelete.execute();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         // default values Don't Trust
         Boolean shouldBeRemoved;
         int myTimeEntry;

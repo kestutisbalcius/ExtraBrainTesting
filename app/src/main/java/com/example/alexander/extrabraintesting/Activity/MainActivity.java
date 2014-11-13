@@ -26,15 +26,14 @@ import com.example.alexander.extrabraintesting.Models.SwipeDetector;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
+import com.example.alexander.extrabraintesting.Transformation.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTimeEntriesReady
+public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTimeEntriesReady
 {
-
    /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      **/
@@ -44,8 +43,6 @@ public class MainActivity extends FragmentActivity
      **/
     private CharSequence mTitle;
 
-
-//    SwipeDetector swipeDetector;
     Date currentDate = new Date();
 
     @Override
@@ -59,17 +56,8 @@ public class MainActivity extends FragmentActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
 
-        // Setup swipe detection
-//        swipeDetector = new SwipeDetector();
-
-//        View container = findViewById(R.id.container);
         requestTimeEntries(currentDate);
 
-//        container.setOnTouchListener(swipeDetector);
-//        container.setOnClickListener(this);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager()));
     }
 
     private void requestTimeEntries(Date day)
@@ -82,9 +70,11 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList)
     {
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(TimeFragment.PARCEL_TIME_ENTRY_LIST, timeEntryList);
-
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        int center = 5000;//timeEntryList.size() / 2;
+        viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager(), timeEntryList));
+        viewPager.setCurrentItem(center);
     }
 
     @Override
@@ -102,8 +92,6 @@ public class MainActivity extends FragmentActivity
                 break;
         }
     }
-
-
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();

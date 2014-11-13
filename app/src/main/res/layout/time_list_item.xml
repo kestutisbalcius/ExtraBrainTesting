@@ -4,7 +4,8 @@
               android:orientation="horizontal"
               android:minHeight="?android:attr/listPreferredItemHeight"
               android:layout_width="fill_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:background="@color/standoutGreen">
 
     <LinearLayout
         android:orientation="vertical"

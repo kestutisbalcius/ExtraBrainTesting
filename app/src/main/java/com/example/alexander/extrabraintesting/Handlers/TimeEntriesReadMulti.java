@@ -86,10 +86,7 @@ public class TimeEntriesReadMulti extends AsyncTask<URL,Integer,ArrayList<TimeEn
     @Override
     protected ArrayList<TimeEntry> doInBackground(URL... params)
     {
-        requestTimeEntries();
-        requestTimeEntries();
-        requestTimeEntries();
-        return
+        return requestTimeEntries(new Date());
     }
     @Override
     protected void onPostExecute(ArrayList<TimeEntry> timeEntries)
