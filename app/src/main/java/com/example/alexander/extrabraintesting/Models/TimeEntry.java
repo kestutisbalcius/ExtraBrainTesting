@@ -9,6 +9,8 @@ import org.json.JSONObject;
 public class TimeEntry implements Parcelable
 {
 
+    public static final String DAY = "day";
+    private String day;
     private int id;
     private String title;
     private int duration;
@@ -40,6 +42,7 @@ public class TimeEntry implements Parcelable
             title = timeEntry.getString(TITLE);
             duration = timeEntry.getInt(DURATION);
             charging = timeEntry.getString(CHARGING);
+            day = timeEntry.getString(DAY);
 
             // Sets NULL if no value
             project = timeEntry.optString(PROJECT_TITLE);
@@ -97,6 +100,11 @@ public class TimeEntry implements Parcelable
         return id;
     }
 
+    public String getDay()
+    {
+        return day;
+    }
+
     public void setId(int id)
     {
         this.id = id;
@@ -117,8 +125,12 @@ public class TimeEntry implements Parcelable
     {
         this.charging = charging;
     }
+    public void setDay(String day)
+    {
+        this.day = day;
+    }
 
-      /* everything below here is for implementing Parcelable */
+    /* everything below here is for implementing Parcelable */
     // 99.9% of the time you can just ignore this
     @Override
     public int describeContents()
@@ -135,6 +147,7 @@ public class TimeEntry implements Parcelable
         dest.writeString(getTitle());
         dest.writeString(getProject());
         dest.writeString(getCharging());
+        dest.writeString(getDay());
     }
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
@@ -145,6 +158,7 @@ public class TimeEntry implements Parcelable
         setTitle(in.readString());
         setProject(in.readString());
         setCharging(in.readString());
+        setDay(in.readString());
     }
 
     public static final Parcelable.Creator<TimeEntry> CREATOR = new Parcelable.Creator<TimeEntry>()

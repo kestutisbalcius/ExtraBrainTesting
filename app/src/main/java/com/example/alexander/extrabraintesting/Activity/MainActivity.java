@@ -1,28 +1,20 @@
 package com.example.alexander.extrabraintesting.Activity;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
-import com.example.alexander.extrabraintesting.Fragment.Content.TimeFragment;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
-import com.example.alexander.extrabraintesting.Handlers.TimeEntriesRead;
-import com.example.alexander.extrabraintesting.Handlers.TimeEntryUpdate;
-import com.example.alexander.extrabraintesting.Models.SwipeDetector;
+import com.example.alexander.extrabraintesting.Handlers.TimeEntriesReadMulti;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
@@ -31,6 +23,7 @@ import com.example.alexander.extrabraintesting.Transformation.ZoomOutPageTransfo
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTimeEntriesReady
 {
@@ -44,6 +37,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
     private CharSequence mTitle;
 
     Date currentDate = new Date();
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +50,37 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
 
-        requestTimeEntries(currentDate);
-
+        requestTimeEntries(getDayList());
     }
 
-    private void requestTimeEntries(Date day)
+    private ArrayList<Date> getDayList()
     {
-        TimeEntriesRead handler = new TimeEntriesRead(this, day);
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(currentDate);
+
+        ArrayList<Date> dayList = new ArrayList<Date>();
+        for (int i = 0; i < 2; i++)
+        {
+            dayList.add(calendar.getTime());
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return dayList;
+    }
+
+    private void requestTimeEntries(ArrayList<Date> dayList)
+    {
+        TimeEntriesReadMulti handler = new TimeEntriesReadMulti(this, dayList);
         handler.execute();
     }
 
     // Callback method when an entry is ready and loaded
+//    @Override
+//    public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList)
+//    {
+//
+//    }
+
     @Override
     public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList)
     {
@@ -83,7 +97,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         switch (position)
         {
             case 0:
-                requestTimeEntries(new Date());
+                requestTimeEntries(getDayList());
                 break;
             case 8:
                 User.logOut();
@@ -142,6 +156,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
 //    @Override
 //    public void onClick(View view) {

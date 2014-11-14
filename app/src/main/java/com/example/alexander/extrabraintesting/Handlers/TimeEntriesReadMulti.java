@@ -22,36 +22,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TimeEntriesReadMulti extends AsyncTask<URL,Integer,ArrayList<TimeEntry>>
+public class TimeEntriesReadMulti extends AsyncTask<URL, Integer, ArrayList<TimeEntry>>
 {
     private final OnTimeEntriesReady listener;
-    public TimeEntriesReadMulti(OnTimeEntriesReady listener, Date day)
+    private ArrayList<Date> dayList;
+
+    public TimeEntriesReadMulti(OnTimeEntriesReady listener, ArrayList<Date> dayList)
     {
         this.listener = listener;
+        this.dayList = dayList;
     }
-    // Identifier of an API resource
-    private String getResourceId(Date day)
+
+    @Override
+    protected ArrayList<TimeEntry> doInBackground(URL... params)
     {
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http")
-                .authority(User.getSelectedTeam().getSubdomain() + ".android-extrabrain.macchiato.standout.se")
-                .appendPath("android_api")
-                .appendPath("time_entries")
-                .appendQueryParameter("day", getFormattedDate(day));
-        return builder.build().toString();
+        return requestTimeEntries(dayList);
     }
-    private String getFormattedDate(Date day)
-    {
-        SimpleDateFormat iso8601 = new SimpleDateFormat("yyyy-MM-dd");
-        return iso8601.format(day);
-    }
-    private String getAuthorizationToken()
-    {
-        String stringToEncode = User.getId() + ":" + User.getApiKey();
-        String encodedString = Base64.encodeToString(stringToEncode.getBytes(), Base64.NO_WRAP);
-        return "Basic " + encodedString;
-    }
-    private ArrayList<TimeEntry> requestTimeEntries(Date day)
+
+    private ArrayList<TimeEntry> requestTimeEntries(ArrayList<Date> day)
     {
         AndroidHttpClient httpClient = AndroidHttpClient.newInstance("Extrabrain android client");
         HttpGet httpGet = new HttpGet(getResourceId(day));
@@ -83,11 +71,35 @@ public class TimeEntriesReadMulti extends AsyncTask<URL,Integer,ArrayList<TimeEn
         }
         return timeEntryList;
     }
-    @Override
-    protected ArrayList<TimeEntry> doInBackground(URL... params)
+
+    private String getAuthorizationToken()
     {
-        return requestTimeEntries(new Date());
+        String stringToEncode = User.getId() + ":" + User.getApiKey();
+        String encodedString = Base64.encodeToString(stringToEncode.getBytes(), Base64.NO_WRAP);
+        return "Basic " + encodedString;
     }
+
+    // Identifier of an API resource
+    private String getResourceId(ArrayList<Date> dayList)
+    {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http")
+                .authority(User.getSelectedTeam().getSubdomain() + ".android-extrabrain.macchiato.standout.se")
+                .appendPath("android_api")
+                .appendPath("time_entries");
+                for (Date day : dayList)
+                {
+                    builder.appendQueryParameter("day[]", getFormattedDate(day));
+                }
+        return builder.build().toString();
+    }
+
+    private String getFormattedDate(Date day)
+    {
+        SimpleDateFormat iso8601 = new SimpleDateFormat("yyyy-MM-dd");
+        return iso8601.format(day);
+    }
+
     @Override
     protected void onPostExecute(ArrayList<TimeEntry> timeEntries)
     {
