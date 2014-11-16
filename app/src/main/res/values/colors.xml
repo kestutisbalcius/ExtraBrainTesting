@@ -4,4 +4,7 @@
     <color name="standoutSelectedGray">#e6e6e6</color>
     <color name="standoutSelectedBlack">#555555</color>
     <color name="standoutGreen">#5fc073</color>
+    <color name="standoutBlue">#148cd3</color>
+    <color name="standoutBlack">#303642</color>
+    <color name="standoutGrayh">#cfd4da</color>
 </resources>

@@ -3,8 +3,10 @@ package com.example.alexander.extrabraintesting.Fragment.Content;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TimeFragment extends ListFragment implements View.OnClickListener
-{
+public class TimeFragment extends ListFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     public static final String PARCEL_TIME_ENTRY_LIST = "time entry list";
     private PagerDate pagerDate;
     private TimeEntryAdapter timeEntryAdapter;
@@ -40,6 +41,7 @@ public class TimeFragment extends ListFragment implements View.OnClickListener
     ImageButton nextDayBtn;
 
     ViewPager viewPager;
+    SwipeRefreshLayout swipeLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -54,7 +56,6 @@ public class TimeFragment extends ListFragment implements View.OnClickListener
         viewPager  = ((MainActivity)getActivity()).getPager();
 
         setListAdapter(timeEntryAdapter);
-        getListView().up
     }
 
     @Override
@@ -73,6 +74,13 @@ public class TimeFragment extends ListFragment implements View.OnClickListener
         nextDayBtn = (ImageButton)timeFragmentView.findViewById(R.id.nextDayBtn);
         previousDayBtn.setOnClickListener(this);
         nextDayBtn.setOnClickListener(this);
+
+        swipeLayout = (SwipeRefreshLayout) timeFragmentView.findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorSchemeColors(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         return timeFragmentView;
     }
@@ -140,4 +148,12 @@ public class TimeFragment extends ListFragment implements View.OnClickListener
         }
     }
 
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                swipeLayout.setRefreshing(false);
+            }
+        }, 5000);
+    }
 }
