@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
-import com.example.alexander.extrabraintesting.Handlers.TimeEntryDelete;
+import com.example.alexander.extrabraintesting.Handler.TimeEntryDelete;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 
 import com.example.alexander.extrabraintesting.Models.User;

@@ -14,26 +14,24 @@ import android.widget.Toast;
 import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
-import com.example.alexander.extrabraintesting.Handlers.TimeEntriesReadMulti;
+import com.example.alexander.extrabraintesting.Handler.TimeEntriesReadMulti;
+import com.example.alexander.extrabraintesting.Helper.DateHelper;
+import com.example.alexander.extrabraintesting.Models.PagerDate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 import com.example.alexander.extrabraintesting.Transformation.ZoomOutPageTransformer;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class MainActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTimeEntriesReady
 {
-   /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     **/
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     **/
     private CharSequence mTitle;
 
     Date currentDate = new Date();
@@ -43,8 +41,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-        getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
@@ -74,22 +71,25 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         handler.execute();
     }
 
-    // Callback method when an entry is ready and loaded
-//    @Override
-//    public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList)
-//    {
-//
-//    }
-
     @Override
-    public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList)
+    public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntries)
     {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        int center = 5000;//timeEntryList.size() / 2;
-        viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager(), timeEntryList));
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        //viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        DateHelper dateHelper = new DateHelper();
+        List<PagerDate> pagerDates = null;
+        pagerDates = dateHelper.CalculateDayFromToday(timeEntries);
+
+        int center = pagerDates.size() / 2;
+        viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager(), pagerDates));
         viewPager.setCurrentItem(center);
     }
+
+    public ViewPager getPager(){
+        return viewPager;
+    }
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position)

@@ -1,15 +1,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
-              android:layout_width="match_parent"
+              android:layout_width="fill_parent"
               android:layout_height="match_parent">
 
-    <ListView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:background="@color/standoutGray"
+        android:layout_height="40dp">
+
+        <ImageButton
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/standoutGray"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_action_previous_item"
+            android:clickable="true"
+            android:id="@+id/previousDayBtn"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sat, 15 Nov 2014"
+            android:textColor="@color/standoutSelectedBlack"
+            android:layout_centerInParent="true"
+            android:id="@+id/dateTv" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/standoutGray"
+            android:src="@drawable/ic_action_next_item"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:id="@+id/nextDayBtn"/>
+
+    </RelativeLayout>
+
+    <ListView
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@android:id/list"
             android:layout_gravity="center"
-
             tools:listitem="@layout/time_list_item"/>
 
  </LinearLayout>

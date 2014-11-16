@@ -4,61 +4,84 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.example.alexander.extrabraintesting.Activity.ChangeEntriesActivity;
+import com.example.alexander.extrabraintesting.Activity.MainActivity;
 import com.example.alexander.extrabraintesting.Adapter.TimeEntryAdapter;
+import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
+import com.example.alexander.extrabraintesting.Helper.DateHelper;
+import com.example.alexander.extrabraintesting.Models.PagerDate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TimeFragment extends ListFragment
+public class TimeFragment extends ListFragment implements View.OnClickListener
 {
     public static final String PARCEL_TIME_ENTRY_LIST = "time entry list";
-    private ArrayList<TimeEntry> timeEntryList;
+    private PagerDate pagerDate;
     private TimeEntryAdapter timeEntryAdapter;
+    private SimpleDateFormat formatter;
+
+    ImageButton previousDayBtn;
+    ImageButton nextDayBtn;
+
+    ViewPager viewPager;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        formatter = new SimpleDateFormat("EEE, d MMM yyyy");
         // Get the timeEntryList sent in with arguments
-        timeEntryList = getArguments().getParcelableArrayList(PARCEL_TIME_ENTRY_LIST);
-        timeEntryAdapter = new TimeEntryAdapter(getActivity(), timeEntryList);
+        pagerDate = getArguments().getParcelable(PARCEL_TIME_ENTRY_LIST);
+        timeEntryAdapter = new TimeEntryAdapter(getActivity(), pagerDate.getTimeEntries());
+
+        // Get the pager to change page when user clicks on listener.
+        viewPager  = ((MainActivity)getActivity()).getPager();
 
         setListAdapter(timeEntryAdapter);
+        getListView().up
     }
 
     @Override
-    public void onAttach(Activity activity)
-    {
-        super.onAttach(activity);
-        // When the fragment is attached to the activity, save it's listener.
-//        activityOnClickListener = (View.OnClickListener) activity;
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View timeFragmentView = inflater.inflate(R.layout.fragment_time,container,false);
+
+        TextView dateTv = (TextView)timeFragmentView.findViewById(R.id.dateTv);
+        String formattedDay = DateHelper.isOneDayNear(pagerDate.getDay());
+
+        if(formattedDay == "") {
+            formattedDay = formatter.format(pagerDate.getDay());
+        }
+        dateTv.setText(formattedDay);
+
+        previousDayBtn = (ImageButton)timeFragmentView.findViewById(R.id.previousDayBtn);
+        nextDayBtn = (ImageButton)timeFragmentView.findViewById(R.id.nextDayBtn);
+        previousDayBtn.setOnClickListener(this);
+        nextDayBtn.setOnClickListener(this);
 
         return timeFragmentView;
     }
 
     // On click item in list, deletes it server side
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id)
-    {
+    public void onListItemClick(ListView l, View v, int position, long id){
         super.onListItemClick(l, v, position, id);
-        TimeEntry selectedTimeEntry = timeEntryList.get(position);
+        TimeEntry selectedTimeEntry = pagerDate.getTimeEntries().get(position);
 
         // Removes entry from the list locally
         Intent changeEntry = new Intent(getActivity(), ChangeEntriesActivity.class);
@@ -90,13 +113,12 @@ public class TimeFragment extends ListFragment
         }
     }
 
-    public void removeTimeEntryFromListById(int id)
-    {
-        for (TimeEntry timeEntry : timeEntryList)
+    public void removeTimeEntryFromListById(int id){
+        for (TimeEntry timeEntry : pagerDate.getTimeEntries())
         {
             if (id == timeEntry.getId())
             {
-                timeEntryList.remove(timeEntry);
+                pagerDate.getTimeEntries().remove(timeEntry);
                 timeEntryAdapter.notifyDataSetChanged();
 
                 // Breaks the loop when done. Prevents crash on next loop because the list is modified...
@@ -105,5 +127,17 @@ public class TimeFragment extends ListFragment
         }
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.previousDayBtn:
+                viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                break;
+            case R.id.nextDayBtn:
+                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                break;
+        }
+    }
 
 }

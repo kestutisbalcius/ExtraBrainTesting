@@ -1,4 +1,4 @@
-package com.example.alexander.extrabraintesting.Handlers;
+package com.example.alexander.extrabraintesting.Handler;
 
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
@@ -6,31 +6,24 @@ import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 
+import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
 import com.example.alexander.extrabraintesting.Models.User;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPatch;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.apache.http.client.methods.HttpDelete;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class TimeEntryUpdate extends AsyncTask<URL,Integer,Integer>
+public class TimeEntryDelete extends AsyncTask<URL,Integer,Integer>
 {
-    private int timeEntryId;
+    private final int timeEntryId;
+    private final OnTimeEntryDeleted listener;
 
-    public TimeEntryUpdate(JSONObject updatedTimeEntry)
+    public TimeEntryDelete(OnTimeEntryDeleted listener, int timeEntryId)
     {
-        // TimeEntry in, getJSON
-        try
-        {
-            this.timeEntryId = updatedTimeEntry.getInt("id");
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
+        this.listener = listener;
+        this.timeEntryId = timeEntryId;
     }
 
     // Identifier of an API resource
@@ -55,22 +48,21 @@ public class TimeEntryUpdate extends AsyncTask<URL,Integer,Integer>
         return "Basic " + encodedString;
     }
 
-    private int requestUpdate()
+    private int requestDeletion()
     {
         AndroidHttpClient httpClient = AndroidHttpClient.newInstance("Extrabrain android client");
 
-        HttpPatch httpPatch = new HttpPatch(getRequestUri());
-        httpPatch.setHeader("Authorization", getAuthorizationToken());
+        HttpDelete httpDelete = new HttpDelete(getRequestUri());
+        httpDelete.setHeader("Authorization", getAuthorizationToken());
         // Apparently required by the Ruby on Rails server, gives "HTTP Error 406 Not acceptable" without it.
-        httpPatch.setHeader("Accept","application/json");
-        httpPatch.setHeader("Content-Type","application/json");
+        httpDelete.setHeader("Accept","*/*");
 
         HttpResponse response;
         int statusCode = 0;
 
         try
         {
-            response = httpClient.execute(httpPatch);
+            response = httpClient.execute(httpDelete);
             statusCode = response.getStatusLine().getStatusCode();
             Log.d("status code", String.valueOf(statusCode));
         }
@@ -89,7 +81,7 @@ public class TimeEntryUpdate extends AsyncTask<URL,Integer,Integer>
     @Override
     protected Integer doInBackground(URL... params)
     {
-        return requestUpdate();
+        return requestDeletion();
     }
 
     @Override
@@ -97,7 +89,6 @@ public class TimeEntryUpdate extends AsyncTask<URL,Integer,Integer>
     {
         super.onPostExecute(statusCode);
         // TODO Delete object from local list
-        Log.d("Statuscode from HttpPatch", String.valueOf(statusCode));
-
+        listener.onTimeEntryDeleted(timeEntryId);
     }
 }

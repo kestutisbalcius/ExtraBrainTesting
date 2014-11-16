@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Fragment.Content.TimeFragment;
+import com.example.alexander.extrabraintesting.Models.PagerDate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 
 import java.sql.Time;
@@ -24,40 +25,44 @@ import java.util.List;
  * Edited by Haris on 2014-11-13
  */
 
-public class TimePagerAdapter extends FragmentStatePagerAdapter implements OnTimeEntriesReady, ViewPager.OnPageChangeListener
+public class TimePagerAdapter extends FragmentStatePagerAdapter implements OnTimeEntriesReady
 {
-    ArrayList<ArrayList<TimeEntry>> timeEntryArrayList;
+    private List<PagerDate> _pageDateList;
 
-    public TimePagerAdapter(FragmentManager fm, ArrayList<TimeEntry> timeEntryList)
+    public TimePagerAdapter(FragmentManager fm, List<PagerDate> pageDateList)
     {
         super(fm);
-
-        timeEntryArrayList = sortIntoLists(timeEntryList);
+        this._pageDateList = pageDateList;
+        //timeEntryArrayList = sortIntoLists(timeEntryList);
     }
 
     // Credit to Albert for learning me HashMap
-    private ArrayList<ArrayList<TimeEntry>> sortIntoLists(ArrayList<TimeEntry> allTimeEntries)
-    {
-        HashMap<String, ArrayList<TimeEntry>> hashMap = new HashMap<String, ArrayList<TimeEntry>>();
+//    private ArrayList<ArrayList<TimeEntry>> sortIntoLists(List<PagerDate> PageDates)
+//    {
+//        HashMap<String, ArrayList<PagerDate>> hashMap = new HashMap<String, ArrayList<PagerDate>>();
+//
+//        ArrayList<PagerDate> dailyEntries;
+//
+//        for(PagerDate pageDate : PageDates){
+//            for (TimeEntry timeEntry : pageDate)
+//            {
+//                if (hashMap.containsKey(timeEntry.getDay()))
+//                {
+//                    dailyEntries = hashMap.get(timeEntry.getDay());
+//                }
+//                else
+//                {
+//                    dailyEntries = new ArrayList<PagerDate>();
+//                    hashMap.put(timeEntry.getDay(), dailyEntries);
+//                }
+//
+//                dailyEntries.add(pageDate);
+//            }
+//        }
 
-        ArrayList<TimeEntry> dailyEntries;
-        for (TimeEntry timeEntry : allTimeEntries)
-        {
-            if (hashMap.containsKey(timeEntry.getDay()))
-            {
-                dailyEntries = hashMap.get(timeEntry.getDay());
-            }
-            else
-            {
-                dailyEntries = new ArrayList<TimeEntry>();
-                hashMap.put(timeEntry.getDay(), dailyEntries);
-            }
 
-            dailyEntries.add(timeEntry);
-        }
-
-        return new ArrayList<ArrayList<TimeEntry>>(hashMap.values());
-    }
+//        return new ArrayList<ArrayList<TimeEntry>>(hashMap.values());
+//    }
 
    @Override
     public Fragment getItem(int i)
@@ -65,7 +70,7 @@ public class TimePagerAdapter extends FragmentStatePagerAdapter implements OnTim
         Log.d("Pager Item", String.valueOf(i));
         TimeFragment frag = new TimeFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(TimeFragment.PARCEL_TIME_ENTRY_LIST, timeEntryArrayList.get(i));
+        bundle.putParcelable(TimeFragment.PARCEL_TIME_ENTRY_LIST, _pageDateList.get(i));
         frag.setArguments(bundle);
 
         return frag;
@@ -74,47 +79,27 @@ public class TimePagerAdapter extends FragmentStatePagerAdapter implements OnTim
     @Override
     public int getCount()
     {
-        if (timeEntryArrayList == null)
+        if (_pageDateList == null)
             return 0;
         else
-            return 2;//timeEntries.size();
+           return _pageDateList.size();
     }
 
-    public void swapList(ArrayList<ArrayList<TimeEntry>> entries) {
-        if (timeEntryArrayList == entries)
+    public void swapList(List<PagerDate> pageDateList) {
+        if (_pageDateList == pageDateList)
             return;
 
-        this.timeEntryArrayList = entries;
+        this._pageDateList = pageDateList;
         notifyDataSetChanged();
     }
 
-    public List<ArrayList<TimeEntry>> getTimeEntries() {
-        return timeEntryArrayList;
+    public List<PagerDate> getPageDates() {
+        return _pageDateList;
     }
-
 
     @Override
     public void onTimeEntriesReady(ArrayList<TimeEntry> timeEntryList)
     {
-        timeEntryArrayList.add(timeEntryList);
-    }
-
-
-    @Override
-    public void onPageScrolled(int i, float v, int i2)
-    {
-
-    }
-
-    @Override
-    public void onPageSelected(int i)
-    {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int i)
-    {
-
+        //_pageDateList.add(timeEntryList);
     }
 }
