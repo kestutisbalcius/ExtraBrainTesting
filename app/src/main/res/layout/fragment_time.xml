@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -41,18 +42,17 @@
             android:id="@+id/nextDayBtn"/>
 
     </RelativeLayout>
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipe_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <ListView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@android:id/list"
-                android:layout_gravity="center"
-                tools:listitem="@layout/time_list_item"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/ptrListView"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_gravity="center"
+        tools:listitem="@layout/time_list_item"
+        ptr:ptrHeaderTextColor="@android:color/black"
+        ptr:ptrPullLabel="Drag to add time entry"
+        ptr:ptrReleaseLabel="Release to add hours"
+        ptr:ptrRefreshLabel=""
+     />
 
  </LinearLayout>

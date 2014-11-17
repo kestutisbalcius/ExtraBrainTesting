@@ -24,4 +24,5 @@ dependencies {
     compile files('lib/org.json-20120521.jar')
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.navercorp.pulltorefresh:library:3.2.0@aar'
 }
