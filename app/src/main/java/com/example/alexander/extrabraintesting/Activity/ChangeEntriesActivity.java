@@ -3,6 +3,7 @@ package com.example.alexander.extrabraintesting.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -22,15 +23,15 @@ import java.util.ArrayList;
 public class ChangeEntriesActivity extends Activity implements OnTimeEntryDeleted {
     EditText changeTitle, changeTask;
     Spinner changeProject, changeCharging;
-    NumberPicker changeDays, changeHours, changeMinutes;
+    NumberPicker changeDays;
+    NumberPicker changeHours;
+    NumberPicker changeMinutes;
+    int changeDuration;
     TimeEntry activityEntry;
     public static final int EDIT_OR_REMOVE_TIME_ENTRY = 77;
-
     public static final String PARCELABLE_TIME_ENTRY = "Is a parcelable TimeEntry";
-
     public static final String REMOVING_TIME_ENTRY = "Removing the timeEntry";
     public static final String EDITING_TIME_ENTRY = "Editing the timeEntry";
-
     public static final String TIME_ENTRY_ID = "Remove this TimeEntry";
 
 
@@ -43,21 +44,20 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         // EditText
         changeTitle = (EditText) findViewById(R.id.changeTitle);            // findViewById EditText ChangeTitle
         changeTask = (EditText) findViewById(R.id.changeTask);              // findViewById EditText ChangeTask
+        changeCharging = (Spinner) findViewById(R.id.changeCharging);       // findViewById Spinner ChangeCharging
 
         // timeDurationConversion "method"
-        timeDurationConversion(activityEntry.getDuration());
+        getTimeDuration(activityEntry.getDuration());
 
-        // Spinner
-        chargingArrayList(activityEntry.getCharging(), activityEntry.getCharging());
+        // Spinner chargingArrayList "method"
+        getChargingArrayList(activityEntry.getCharging());
 
-        // edits
+        // EditText
         changeTitle.setText(activityEntry.getTitle());
 
 
     }
-
-    private void chargingArrayList(String chargingListBETA, String chargingSelection) {
-        changeCharging = (Spinner) findViewById(R.id.changeCharging);       // findViewById Spinner ChangeCharging
+    private Object setChargingArrayList(Object selectedItem) {
         ArrayList<String> chargingList = new ArrayList<String>();
         chargingList.add("according to project");
         chargingList.add("Pay per hour");
@@ -69,20 +69,34 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
-        changeCharging.setSelection(dataAdapter.getPosition(chargingSelection));
+        changeCharging.setSelection(dataAdapter.getPosition(String.valueOf(selectedItem)));
+        return selectedItem;
     }
 
+    private void getChargingArrayList(String chargingSelection) {
+        ArrayList<String> chargingList = new ArrayList<String>();
+        chargingList.add("according to project");
+        chargingList.add("Pay per hour");
+        chargingList.add("Fixed price");
+        chargingList.add("Internal");
+        chargingList.add("Not chargeable");
+        chargingList.add("Internal: Sales");
+        chargingList.add("Internal: Support");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        changeCharging.setAdapter(dataAdapter);
+        changeCharging.setSelection(dataAdapter.getPosition(String.valueOf(chargingSelection)));
+    }
 
-    private void timeDurationConversion(int seconds) {
+    private void getTimeDuration(int seconds) {
         final int HOUR_IN_AN_Days = 24;
         final int MINUTES_IN_AN_HOUR = 60;
         final int SECONDS_IN_A_MINUTE = 60;
 
         int minutes = seconds / SECONDS_IN_A_MINUTE;
-//        seconds -= minutes * SECONDS_IN_A_MINUTE;
+        seconds -= minutes * SECONDS_IN_A_MINUTE;
         int hours = minutes / MINUTES_IN_AN_HOUR;
         minutes -= hours * MINUTES_IN_AN_HOUR;
-
         int days = hours / HOUR_IN_AN_Days;
         hours -= days * HOUR_IN_AN_Days;
 
@@ -90,6 +104,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         changeDays = (NumberPicker) findViewById(R.id.changeDays);          // findViewById NumberPicker ChangeDays
         changeHours = (NumberPicker) findViewById(R.id.changeHours);        // findViewById NumberPicker ChangeHours
         changeMinutes = (NumberPicker) findViewById(R.id.changeMinutes);    // findViewById NumberPicker ChangeMinutes
+
         // setMaxValue maybe change it to 23-24 and 59-60
         changeDays.setMaxValue(365);                                        // setMaxValue(365); NumberPicker ChangeDays
         changeHours.setMaxValue(23);                                        // setMaxValue(23); NumberPicker ChangeHours
@@ -99,6 +114,15 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         changeMinutes.setValue(minutes);
     }
 
+    private int setTimeDuration(int changeDays, int changeHours, int changeMinutes) {
+        final int SECONDS_IN_AN_Days = 60 * 60 * 24;
+        final int SECONDS_IN_AN_HOUR = 60 * 60;
+        final int SECONDS_IN_A_MINUTE = 60;
+        int durationOfDays = changeDays * SECONDS_IN_AN_Days;
+        int durationOfHours = changeHours * SECONDS_IN_AN_HOUR;
+        int durationOfMinutes = changeMinutes * SECONDS_IN_A_MINUTE;
+        return + durationOfDays + durationOfHours + durationOfMinutes;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -107,7 +131,22 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
+
+                // editText
                 activityEntry.setTitle(changeTitle.getText().toString());
+
+                // Spinner setChargingArrayList "method"
+                String Charging = (String) setChargingArrayList(changeCharging.getSelectedItem());
+                activityEntry.setCharging(Charging);
+                Log.v("Charging = ", String.valueOf(Charging));
+
+                // NumberPicker setTimeDuration "method"
+                int timeDuration = setTimeDuration(changeDays.getValue(), changeHours.getValue(), changeMinutes.getValue());
+                activityEntry.setDuration(timeDuration);
+                Log.v("Duration = ", String.valueOf(timeDuration));
+
+
+
                 sendBackResult();
                 return true;
             case R.id.remove_entry:
@@ -125,6 +164,10 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
