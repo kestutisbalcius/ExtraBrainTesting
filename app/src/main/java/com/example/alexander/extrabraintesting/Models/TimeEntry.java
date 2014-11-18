@@ -100,7 +100,6 @@ public class TimeEntry implements Parcelable
     {
         return id;
     }
-
     public String getDay()
     {
         return day;
@@ -199,4 +198,5 @@ public class TimeEntry implements Parcelable
         }
         return container;
     }
+
 }
