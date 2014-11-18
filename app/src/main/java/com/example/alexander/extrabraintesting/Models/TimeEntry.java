@@ -2,6 +2,7 @@ package com.example.alexander.extrabraintesting.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,23 +13,23 @@ public class TimeEntry implements Parcelable
     public static final String DAY = "day";
     private String day;
     private int id;
-    private String title;
+    private String description;
+    private String project;
     private int duration;
     private String charging;
-    private String project;
 
     private static final String ID = "id";
     private static final String DURATION = "duration";
     private static final String PROJECT_TITLE = "project";
-    private static final String TITLE = "title";
+    private static final String DESCRIPTION = "description";
     private static final String CHARGING = "charging";
 
     public static final String PARCELABLE_TIME_ENTRY ="PARCELABLE_TIME_ENTRY";
 
-    public TimeEntry(int id, String title, int duration, String charging, String project)
+    public TimeEntry(int id, String description, int duration, String charging, String project)
     {
         this.id = id;
-        this.title = title;
+        this.description = description;
         this.duration = duration;
         this.charging = charging;
         this.project = project;
@@ -39,7 +40,7 @@ public class TimeEntry implements Parcelable
         try
         {
             id = timeEntry.getInt(ID);
-            title = timeEntry.getString(TITLE);
+            description = timeEntry.getString(DESCRIPTION);
             duration = timeEntry.getInt(DURATION);
             charging = timeEntry.getString(CHARGING);
             day = timeEntry.getString(DAY);
@@ -87,9 +88,9 @@ public class TimeEntry implements Parcelable
     {
         return project;
     }
-    public String getTitle()
+    public String getDescription()
     {
-        return title;
+        return description;
     }
     public int getDuration()
     {
@@ -117,9 +118,9 @@ public class TimeEntry implements Parcelable
     {
         this.project = project;
     }
-    public void setTitle(String title)
+    public void setDescription(String description)
     {
-        this.title = title;
+        this.description = description;
     }
     public void setCharging(String charging)
     {
@@ -144,7 +145,7 @@ public class TimeEntry implements Parcelable
     {
         dest.writeInt(getId());
         dest.writeInt(getDuration());
-        dest.writeString(getTitle());
+        dest.writeString(getDescription());
         dest.writeString(getProject());
         dest.writeString(getCharging());
         dest.writeString(getDay());
@@ -155,7 +156,7 @@ public class TimeEntry implements Parcelable
     {
         setId(in.readInt());
         setDuration(in.readInt());
-        setTitle(in.readString());
+        setDescription(in.readString());
         setProject(in.readString());
         setCharging(in.readString());
         setDay(in.readString());
@@ -174,4 +175,28 @@ public class TimeEntry implements Parcelable
             return new TimeEntry[size];
         }
     };
+
+    public JSONObject getJSON()
+    {
+        JSONObject container = new JSONObject();
+        JSONObject time_entry = new JSONObject();
+        try
+        {
+            time_entry.put(ID, id);
+            // Preferably the API should only deliver a description independent of where it's from (like task or project)
+            time_entry.put(DESCRIPTION, description);
+            time_entry.put(DURATION, duration);
+            time_entry.put(CHARGING, charging);
+            time_entry.put(PROJECT_TITLE, project);
+
+            container.put("time_entry",time_entry);
+
+            Log.d("TimeEntry JSON", time_entry.toString());
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return container;
+    }
 }

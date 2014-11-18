@@ -85,7 +85,6 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
         nextDayBtn.setOnClickListener(this);
 
         return timeFragmentView;
-
     }
 
     public static Comparator<String> StringDescComparator = new Comparator<String>() {
@@ -108,6 +107,7 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
         position--;
 
         TimeEntry selectedTimeEntry = pagerDate.getTimeEntries().get(position);
+        Log.d("TimeEntry JSON", selectedTimeEntry.getJSON().toString());
 
         Log.v("index=", String.valueOf(position));
         // Removes entry from the list locally

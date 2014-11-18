@@ -12,14 +12,17 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
+import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryUpdated;
 import com.example.alexander.extrabraintesting.Handler.TimeEntryDelete;
+import com.example.alexander.extrabraintesting.Handler.TimeEntryUpdate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
 import java.util.ArrayList;
 
-public class ChangeEntriesActivity extends Activity implements OnTimeEntryDeleted {
+public class ChangeEntriesActivity extends Activity implements OnTimeEntryDeleted, OnTimeEntryUpdated
+{
     EditText changeTitle, changeTask;
     Spinner changeProject, changeCharging;
     NumberPicker changeDays, changeHours, changeMinutes;
@@ -51,7 +54,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         chargingArrayList(activityEntry.getCharging(), activityEntry.getCharging());
 
         // edits
-        changeTitle.setText(activityEntry.getTitle());
+        changeTitle.setText(activityEntry.getDescription());
 
 
     }
@@ -107,8 +110,9 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
-                activityEntry.setTitle(changeTitle.getText().toString());
-                sendBackResult();
+                activityEntry.setDescription(changeTitle.getText().toString());
+                TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(this, activityEntry);
+                timeEntryUpdate.execute();
                 return true;
             case R.id.remove_entry:
                 TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
@@ -149,5 +153,11 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         deletedResult.putExtra(TIME_ENTRY_ID, deleted);
         setResult(RESULT_OK, deletedResult);
         finish();
+    }
+
+    @Override
+    public void onTimeEntryUpdated()
+    {
+        sendBackResult();
     }
 }

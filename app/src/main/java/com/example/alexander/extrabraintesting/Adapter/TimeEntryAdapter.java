@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.alexander.extrabraintesting.Models.PagerDate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.R;
 
@@ -51,7 +50,7 @@ public class TimeEntryAdapter extends ArrayAdapter<TimeEntry>
 
         TimeEntry timeEntry = timeEntryList.get(position);
 
-        viewHolder.title.setText(timeEntry.getTitle());
+        viewHolder.title.setText(timeEntry.getDescription());
         viewHolder.project.setText(timeEntry.getProject());
         viewHolder.duration.setText(timeEntry.getFormattedDuration());
         viewHolder.charging.setText(timeEntry.getCharging());
