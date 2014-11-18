@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
 import com.example.alexander.extrabraintesting.Handler.TimeEntryDelete;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
-
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
@@ -24,41 +23,55 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
     EditText changeTitle, changeTask;
     Spinner changeProject, changeCharging;
     NumberPicker changeDays, changeHours, changeMinutes;
+    TimeEntry activityEntry;
     public static final int EDIT_OR_REMOVE_TIME_ENTRY = 77;
+
+    public static final String PARCELABLE_TIME_ENTRY = "Is a parcelable TimeEntry";
+
     public static final String REMOVING_TIME_ENTRY = "Removing the timeEntry";
-    public static final String REMOVED_THIS_TIME_ENTRY_ID = "Remove this TimeEntry";
+    public static final String EDITING_TIME_ENTRY = "Editing the timeEntry";
+
+    public static final String TIME_ENTRY_ID = "Remove this TimeEntry";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TimeEntry activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
+        activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
         setContentView(R.layout.activity_entries_change);
         // EditText
         changeTitle = (EditText) findViewById(R.id.changeTitle);            // findViewById EditText ChangeTitle
         changeTask = (EditText) findViewById(R.id.changeTask);              // findViewById EditText ChangeTask
-        // Spinner
-        changeProject = (Spinner) findViewById(R.id.changeProject);         // findViewById Spinner ChangeProject
-        changeCharging = (Spinner) findViewById(R.id.changeCharging);       // findViewById Spinner ChangeCharging
 
+        // timeDurationConversion "method"
         timeDurationConversion(activityEntry.getDuration());
-        changeTitle.setText(activityEntry.getTitle());
-        activityEntry.setTitle(changeTitle.getText().toString());
 
+        // Spinner
+        chargingArrayList(activityEntry.getCharging(), activityEntry.getCharging());
+
+        // edits
+        changeTitle.setText(activityEntry.getTitle());
+
+
+    }
+
+    private void chargingArrayList(String chargingListBETA, String chargingSelection) {
+        changeCharging = (Spinner) findViewById(R.id.changeCharging);       // findViewById Spinner ChangeCharging
         ArrayList<String> chargingList = new ArrayList<String>();
-        chargingList.add("Project 1");
-        chargingList.add("Project 2");
-        chargingList.add("Project 3");
+        chargingList.add("according to project");
+        chargingList.add("Pay per hour");
+        chargingList.add("Fixed price");
+        chargingList.add("Internal");
+        chargingList.add("Not chargeable");
+        chargingList.add("Internal: Sales");
+        chargingList.add("Internal: Support");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
-
-        ArrayList<String> projectList = new ArrayList<String>();
-        projectList.add("Project 1");
-        projectList.add("Project 2");
-        projectList.add("Project 3");
-        dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, projectList);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        changeProject.setAdapter(dataAdapter);
+        changeCharging.setSelection(dataAdapter.getPosition(chargingSelection));
     }
+
 
     private void timeDurationConversion(int seconds) {
         final int HOUR_IN_AN_Days = 24;
@@ -94,10 +107,10 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
-                    finish();
-
+                activityEntry.setTitle(changeTitle.getText().toString());
+                sendBackResult();
+                return true;
             case R.id.remove_entry:
-                TimeEntry activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
                 TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
                 timeEntryDelete.execute();
                 return true;
@@ -119,12 +132,21 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         return true;
     }
 
+    public void sendBackResult()
+    {
+        Intent editedTimeEntry = getIntent();
+        editedTimeEntry.putExtra(EDITING_TIME_ENTRY, true);
+        editedTimeEntry.putExtra(PARCELABLE_TIME_ENTRY, activityEntry);
+        setResult(RESULT_OK, editedTimeEntry);
+        finish();
+    }
+
     @Override
     public void onTimeEntryDeleted(int deleted)
     {
         Intent deletedResult = getIntent();
         deletedResult.putExtra(REMOVING_TIME_ENTRY, true);
-        deletedResult.putExtra(REMOVED_THIS_TIME_ENTRY_ID, deleted);
+        deletedResult.putExtra(TIME_ENTRY_ID, deleted);
         setResult(RESULT_OK, deletedResult);
         finish();
     }

@@ -2,26 +2,21 @@ package com.example.alexander.extrabraintesting.Fragment.Content;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.alexander.extrabraintesting.Activity.ChangeEntriesActivity;
 import com.example.alexander.extrabraintesting.Activity.MainActivity;
 import com.example.alexander.extrabraintesting.Adapter.TimeEntryAdapter;
-import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
 import com.example.alexander.extrabraintesting.Helper.DateHelper;
 import com.example.alexander.extrabraintesting.Models.PagerDate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
@@ -29,11 +24,8 @@ import com.example.alexander.extrabraintesting.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 
 public class TimeFragment extends ListFragment implements View.OnClickListener, PullToRefreshBase.OnRefreshListener {
     public static final String PARCEL_TIME_ENTRY_LIST = "time entry list";
@@ -55,17 +47,16 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
         // Get the timeEntryList sent in with arguments
         pagerDate = getArguments().getParcelable(PARCEL_TIME_ENTRY_LIST);
         timeEntryAdapter = new TimeEntryAdapter(getActivity(), pagerDate.getTimeEntries());
-
-        // Sort list desc
-        timeEntryAdapter.sort(new Comparator<TimeEntry>() {
-            @Override
-            public int compare(TimeEntry lhs, TimeEntry rhs) {
-                TimeEntry stringName1 = lhs;
-                TimeEntry stringName2 = rhs;
-
-                return stringName1.getId() - stringName2.getId();
-            }
-        });
+//        // Sort list desc
+//        timeEntryAdapter.sort(new Comparator<TimeEntry>() {
+//            @Override
+//            public int compare(TimeEntry lhs, TimeEntry rhs) {
+//                TimeEntry stringName1 = lhs;
+//                TimeEntry stringName2 = rhs;
+//
+//                return stringName1.getId() - stringName2.getId();
+//            }
+//        });
 
         // Get the pager to change page when user clicks on listener.
         viewPager  = ((MainActivity)getActivity()).getPager();
@@ -94,6 +85,7 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
         nextDayBtn.setOnClickListener(this);
 
         return timeFragmentView;
+
     }
 
     public static Comparator<String> StringDescComparator = new Comparator<String>() {
@@ -111,8 +103,13 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id){
         super.onListItemClick(l, v, position, id);
+
+        // Ugly fix because first item position is 1 and not 0 as expected.
+        position--;
+
         TimeEntry selectedTimeEntry = pagerDate.getTimeEntries().get(position);
 
+        Log.v("index=", String.valueOf(position));
         // Removes entry from the list locally
         Intent changeEntry = new Intent(getActivity(), ChangeEntriesActivity.class);
         changeEntry.putExtra(TimeEntry.PARCELABLE_TIME_ENTRY, selectedTimeEntry);
@@ -125,7 +122,9 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
 
         // default values Don't Trust
         Boolean shouldBeRemoved;
-        int myTimeEntry;
+        Boolean shouldBeEdited;
+        TimeEntry newTimeEntry;
+        int timeEntryId;
 
         // Check with request we responding to
         if (requestCode == ChangeEntriesActivity.EDIT_OR_REMOVE_TIME_ENTRY)
@@ -134,17 +133,43 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
             if (resultCode == Activity.RESULT_OK)
             {
                 shouldBeRemoved = data.getBooleanExtra(ChangeEntriesActivity.REMOVING_TIME_ENTRY, false);
+                shouldBeEdited = data.getBooleanExtra(ChangeEntriesActivity.EDITING_TIME_ENTRY, false);
+
                 if (shouldBeRemoved)
                 {
-                    myTimeEntry = data.getIntExtra(ChangeEntriesActivity.REMOVED_THIS_TIME_ENTRY_ID, -1);
-                    removeTimeEntryFromListById(myTimeEntry);
+                    timeEntryId = data.getIntExtra(ChangeEntriesActivity.TIME_ENTRY_ID, -1);
+                    int oldPosition = getLocalTimeEntryIndexById(timeEntryId);
+                    pagerDate.getTimeEntries().remove(oldPosition);
+                    timeEntryAdapter.notifyDataSetChanged();
+                }
+                else if (shouldBeEdited)
+                {
+                    newTimeEntry = data.getParcelableExtra(ChangeEntriesActivity.PARCELABLE_TIME_ENTRY);
+                    int oldPosition = getLocalTimeEntryIndexById(newTimeEntry.getId());
+                    pagerDate.getTimeEntries().set(oldPosition, newTimeEntry);
+                    timeEntryAdapter.notifyDataSetChanged();
                 }
             }
         }
     }
 
-    public void removeTimeEntryFromListById(int id){
+
+    private int getLocalTimeEntryIndexById(int timeEntryId){
+        for (TimeEntry localTimeEntry : pagerDate.getTimeEntries())
+        {
+            if (timeEntryId == localTimeEntry.getId())
+            {
+                return pagerDate.getTimeEntries().indexOf(localTimeEntry);
+            }
+        }
+        return -1;
+    }
+
+    public void removeLocalTimeEntryFromListById(int id)
+    {
+
         for (TimeEntry timeEntry : pagerDate.getTimeEntries())
+
         {
             if (id == timeEntry.getId())
             {

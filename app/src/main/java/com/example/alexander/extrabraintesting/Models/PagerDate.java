@@ -1,14 +1,10 @@
 package com.example.alexander.extrabraintesting.Models;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
