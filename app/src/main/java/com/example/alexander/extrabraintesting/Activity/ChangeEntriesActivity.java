@@ -135,6 +135,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
+                // editText setDescription "Text"
                 activityEntry.setDescription(changeTitle.getText().toString());
 
                 // Spinner setChargingArrayList "method"
@@ -151,6 +152,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
                 timeEntryUpdate.execute();
 
                 // sendBackResult();
+
                 return true;
             case R.id.remove_entry:
                 TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
