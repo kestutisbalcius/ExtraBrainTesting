@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
@@ -21,15 +22,14 @@ public class CreateEntriesActivity extends Activity {
     EditText CreateTitle, CreateTask;
     Spinner CreateProject, CreateCharging;
     NumberPicker days, hours, minutes;
-
+    TimeEntry activityEntry;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_entries_create);
-        RelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        setContentView(R.layout.activity_entries_create);
+        activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
         CreateTitle = (EditText) findViewById(R.id.changeTitle);            // Input createTitle
         CreateTask = (EditText) findViewById(R.id.changeTask);              // Input createTask
-        CreateProject = (Spinner) findViewById(R.id.changeProject);         // Spinner createProject
         CreateCharging = (Spinner) findViewById(R.id.changeCharging);       // Spinner createCharging
         days = (NumberPicker) findViewById(R.id.changeDays);                // NumberPicker Days
         hours = (NumberPicker) findViewById(R.id.changeHours);              // NumberPicker Hours
