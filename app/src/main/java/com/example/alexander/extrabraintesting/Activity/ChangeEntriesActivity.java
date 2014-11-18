@@ -59,6 +59,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
 
 
 
+
     }
     private Object setChargingArrayList(Object selectedItem) {
         ArrayList<String> chargingList = new ArrayList<String>();
@@ -136,6 +137,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
             case R.id.save_changes_entries:
                 // editText setDescription "Text"
                 activityEntry.setDescription(changeTitle.getText().toString());
+
 
                 // Spinner setChargingArrayList "method"
                 String Charging = (String) setChargingArrayList(changeCharging.getSelectedItem());
