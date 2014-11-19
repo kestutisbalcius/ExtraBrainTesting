@@ -20,7 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="30dp" />
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +34,9 @@
         android:layout_alignTop="@+id/changeDescription"
         android:layout_toLeftOf="@+id/changeDescription"
         android:layout_toStartOf="@+id/changeDescription"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="left|center_vertical|center_horizontal"
+        android:textSize="16dp"
+        android:layout_marginLeft="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,13 +44,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Charging"
         android:id="@+id/TextCharging"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:gravity="left|center_vertical|center_horizontal"
         android:layout_alignTop="@+id/changeCharging"
         android:layout_alignBottom="@+id/changeCharging"
         android:layout_toLeftOf="@+id/changeCharging"
-        android:layout_toStartOf="@+id/changeCharging" />
+        android:layout_toStartOf="@+id/changeCharging"
+        android:textSize="16dp"
+        android:layout_alignLeft="@+id/TextTask"
+        android:layout_alignStart="@+id/TextTask" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -69,10 +72,11 @@
         android:layout_toStartOf="@+id/changeTask"
         android:layout_alignBottom="@+id/changeTask"
         android:layout_toLeftOf="@+id/changeTask"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/changeTask"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="left|center_vertical|center_horizontal"
+        android:textSize="16dp"
+        android:layout_alignLeft="@+id/TextTitle"
+        android:layout_alignStart="@+id/TextTitle" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

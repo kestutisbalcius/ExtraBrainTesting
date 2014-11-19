@@ -11,7 +11,9 @@
         android:layout_alignLeft="@+id/createDescription"
         android:layout_alignStart="@+id/createDescription"
         android:layout_marginTop="30dp"
-        android:inputType="number" />
+        android:inputType="number"
+        android:layout_alignRight="@+id/createDescription"
+        android:layout_alignEnd="@+id/createDescription" />
     <EditText
         android:layout_width="230dp"
         android:layout_height="wrap_content"
@@ -19,8 +21,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp" />
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +37,9 @@
         android:layout_alignTop="@+id/createDescription"
         android:layout_toLeftOf="@+id/createDescription"
         android:layout_toStartOf="@+id/createDescription"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="left|center_vertical|center_horizontal"
+        android:textSize="16dp"
+        android:layout_marginLeft="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,13 +47,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Charging"
         android:id="@+id/TextCharging"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:gravity="left|center_vertical|center_horizontal"
         android:layout_alignTop="@+id/createCharging"
         android:layout_alignBottom="@+id/createCharging"
         android:layout_toLeftOf="@+id/createCharging"
-        android:layout_toStartOf="@+id/createCharging" />
+        android:layout_toStartOf="@+id/createCharging"
+        android:textSize="16dp"
+        android:layout_alignLeft="@+id/TextTask"
+        android:layout_alignStart="@+id/TextTask" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -69,10 +76,11 @@
         android:layout_toStartOf="@+id/createTask"
         android:layout_alignBottom="@+id/createTask"
         android:layout_toLeftOf="@+id/createTask"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/createTask"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="left|center_vertical|center_horizontal"
+        android:textSize="16dp"
+        android:layout_alignLeft="@+id/tv_Description"
+        android:layout_alignStart="@+id/tv_Description" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
