@@ -54,6 +54,22 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryDelete
         createMinutes = (NumberPicker) findViewById(R.id.createMinutes);    // findViewById NumberPicker ChangeMinutes
 
 
+        // NumberPicker
+        createDays = (NumberPicker) findViewById(R.id.createDays);          // findViewById NumberPicker ChangeDays
+        createHours = (NumberPicker) findViewById(R.id.createHours);        // findViewById NumberPicker ChangeHours
+        createMinutes = (NumberPicker) findViewById(R.id.createMinutes);    // findViewById NumberPicker ChangeMinutes
+
+        // setMaxValue maybe change it to 23-24 and 59-60
+        createDays.setMaxValue(365);                                        // setMaxValue(365); NumberPicker ChangeDays
+        createHours.setMaxValue(23);                                        // setMaxValue(23); NumberPicker ChangeHours
+        createMinutes.setMaxValue(59);                                      // setMaxValue(59); NumberPicker ChangeMinutes
+        createDays.setValue(0);
+        createHours.setValue(0);
+        createMinutes.setValue(0);
+
+        // Spinner chargingArrayList "method"
+        setChargingArrayList("inherit_from_project");
+
     }
     private Object setChargingArrayList(Object selectedItem) {
         ArrayList<String> chargingList = new ArrayList<String>();
@@ -79,8 +95,8 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryDelete
         int durationOfHours = changeHours * SECONDS_IN_AN_HOUR;
         int durationOfMinutes = changeMinutes * SECONDS_IN_A_MINUTE;
         return + durationOfDays + durationOfHours + durationOfMinutes;
-
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -91,7 +107,6 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryDelete
             case R.id.save_changes_entries:
                 // editText setDescription "Text"
                 activityEntry.setDescription(createDescription.getText().toString());
-
 
                 // Spinner setChargingArrayList "method"
                 String Charging = (String) setChargingArrayList(createCharging.getSelectedItem());
