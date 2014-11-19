@@ -49,6 +49,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         changeTask = (EditText) findViewById(R.id.changeTask);                          // findViewById EditText ChangeTask
         changeCharging = (Spinner) findViewById(R.id.changeCharging);                   // findViewById Spinner ChangeCharging
 
+
         // timeDurationConversion "method"
         getTimeDuration(activityEntry.getDuration());
 
@@ -56,13 +57,10 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         getChargingArrayList(activityEntry.getCharging());
 
         // edits
-<<<<<<< HEAD
-        changeTitle.setText(activityEntry.getDescription());
 
-
-=======
         changeDescription.setText(activityEntry.getDescription());
->>>>>>> Fix sets Charging ArrayList So that it will give the api right strings still work in progress. and a fix for the CreateEntriesActivity and its layout.
+
+
 
     }
     private Object setChargingArrayList(Object selectedItem) {
@@ -155,6 +153,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
                 TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(this, activityEntry);
                 timeEntryUpdate.execute();
                 // sendBackResult();
+
                 return true;
             case R.id.remove_entry:
                 TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
