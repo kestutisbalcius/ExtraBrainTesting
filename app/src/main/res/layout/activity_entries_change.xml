@@ -7,15 +7,15 @@
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:id="@+id/changeTask"
-        android:layout_below="@+id/changeTitle"
-        android:layout_alignLeft="@+id/changeTitle"
-        android:layout_alignStart="@+id/changeTitle"
+        android:layout_below="@+id/changeDescription"
+        android:layout_alignLeft="@+id/changeDescription"
+        android:layout_alignStart="@+id/changeDescription"
         android:layout_marginTop="30dp"
         android:inputType="number" />
     <EditText
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:id="@+id/changeTitle"
+        android:id="@+id/changeDescription"
 
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -28,12 +28,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Description"
         android:id="@+id/TextTitle"
-        android:layout_alignBottom="@+id/changeTitle"
+        android:layout_alignBottom="@+id/changeDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/changeTitle"
-        android:layout_toLeftOf="@+id/changeTitle"
-        android:layout_toStartOf="@+id/changeTitle"
+        android:layout_alignTop="@+id/changeDescription"
+        android:layout_toLeftOf="@+id/changeDescription"
+        android:layout_toStartOf="@+id/changeDescription"
         android:gravity="center_vertical|center_horizontal" />
 
     <TextView

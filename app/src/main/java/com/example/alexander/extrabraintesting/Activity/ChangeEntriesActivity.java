@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class ChangeEntriesActivity extends Activity implements OnTimeEntryDeleted, OnTimeEntryUpdated
 {
-    EditText changeTitle, changeTask;
+    EditText changeDescription, changeTask;
     Spinner changeProject, changeCharging;
     NumberPicker changeDays;
     NumberPicker changeHours;
@@ -45,9 +45,9 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
         setContentView(R.layout.activity_entries_change);
         // EditText
-        changeTitle = (EditText) findViewById(R.id.changeTitle);            // findViewById EditText ChangeTitle
-        changeTask = (EditText) findViewById(R.id.changeTask);              // findViewById EditText ChangeTask
-        changeCharging = (Spinner) findViewById(R.id.changeCharging);       // findViewById Spinner ChangeCharging
+        changeDescription = (EditText) findViewById(R.id.changeDescription);            // findViewById EditText ChangeTitle
+        changeTask = (EditText) findViewById(R.id.changeTask);                          // findViewById EditText ChangeTask
+        changeCharging = (Spinner) findViewById(R.id.changeCharging);                   // findViewById Spinner ChangeCharging
 
         // timeDurationConversion "method"
         getTimeDuration(activityEntry.getDuration());
@@ -56,20 +56,24 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         getChargingArrayList(activityEntry.getCharging());
 
         // edits
+<<<<<<< HEAD
         changeTitle.setText(activityEntry.getDescription());
 
 
+=======
+        changeDescription.setText(activityEntry.getDescription());
+>>>>>>> Fix sets Charging ArrayList So that it will give the api right strings still work in progress. and a fix for the CreateEntriesActivity and its layout.
 
     }
     private Object setChargingArrayList(Object selectedItem) {
         ArrayList<String> chargingList = new ArrayList<String>();
-        chargingList.add("according to project");
-        chargingList.add("Pay per hour");
-        chargingList.add("Fixed price");
-        chargingList.add("Internal");
-        chargingList.add("Not chargeable");
-        chargingList.add("Internal: Sales");
-        chargingList.add("Internal: Support");
+        chargingList.add("inherit_from_project");
+        chargingList.add("pay_per_hour");
+        chargingList.add("fixed");
+        chargingList.add("internal");
+        chargingList.add("not_chargeable");
+        chargingList.add("sales");
+        chargingList.add("support");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
@@ -79,13 +83,13 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
 
     private void getChargingArrayList(String chargingSelection) {
         ArrayList<String> chargingList = new ArrayList<String>();
-        chargingList.add("according to project");
-        chargingList.add("Pay per hour");
-        chargingList.add("Fixed price");
-        chargingList.add("Internal");
-        chargingList.add("Not chargeable");
-        chargingList.add("Internal: Sales");
-        chargingList.add("Internal: Support");
+        chargingList.add("inherit_from_project");
+        chargingList.add("pay_per_hour");
+        chargingList.add("fixed");
+        chargingList.add("internal");
+        chargingList.add("not_chargeable");
+        chargingList.add("sales");
+        chargingList.add("support");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
@@ -136,7 +140,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
                 // editText setDescription "Text"
-                activityEntry.setDescription(changeTitle.getText().toString());
+                activityEntry.setDescription(changeDescription.getText().toString());
 
                 // Spinner setChargingArrayList "method"
                 String Charging = (String) setChargingArrayList(changeCharging.getSelectedItem());
@@ -150,9 +154,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
 
                 TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(this, activityEntry);
                 timeEntryUpdate.execute();
-
                 // sendBackResult();
-
                 return true;
             case R.id.remove_entry:
                 TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
