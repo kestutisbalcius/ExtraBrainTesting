@@ -3,83 +3,70 @@
     android:layout_height="fill_parent"
     android:id="@+id/relativeLayout"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <EditText
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:id="@+id/createTask"
-        android:layout_below="@+id/createTitle"
-        android:layout_alignLeft="@+id/createTitle"
-        android:layout_alignStart="@+id/createTitle"
-        android:layout_marginTop="30dp" />
+        android:layout_below="@+id/createDescription"
+        android:layout_alignLeft="@+id/createDescription"
+        android:layout_alignStart="@+id/createDescription"
+        android:layout_marginTop="30dp"
+        android:inputType="number"
+        android:layout_alignRight="@+id/createDescription"
+        android:layout_alignEnd="@+id/createDescription" />
     <EditText
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:id="@+id/createTitle"
+        android:id="@+id/createDescription"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp" />
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Title:"
-        android:id="@+id/TextTitle"
-        android:layout_alignBottom="@+id/createTitle"
+        android:text="Description"
+        android:id="@+id/tv_Description"
+        android:layout_alignBottom="@+id/createDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/createTitle"
-        android:layout_toLeftOf="@+id/createTitle"
-        android:layout_toStartOf="@+id/createTitle"
-        android:gravity="center_vertical|center_horizontal" />
+        android:layout_alignTop="@+id/createDescription"
+        android:layout_toLeftOf="@+id/createDescription"
+        android:layout_toStartOf="@+id/createDescription"
+        android:gravity="left|center_vertical|center_horizontal"
+        android:textSize="16dp"
+        android:layout_marginLeft="20dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Charging"
         android:id="@+id/TextCharging"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:gravity="left|center_vertical|center_horizontal"
         android:layout_alignTop="@+id/createCharging"
         android:layout_alignBottom="@+id/createCharging"
         android:layout_toLeftOf="@+id/createCharging"
-        android:layout_toStartOf="@+id/createCharging" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Project:"
-        android:id="@+id/TextProject"
-        android:layout_toStartOf="@+id/createProject"
-        android:layout_alignTop="@+id/createProject"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/createProject"
-        android:layout_toLeftOf="@+id/createProject"
-        android:gravity="center_vertical|center_horizontal" />
+        android:layout_toStartOf="@+id/createCharging"
+        android:textSize="16dp"
+        android:layout_alignLeft="@+id/TextTask"
+        android:layout_alignStart="@+id/TextTask" />
+
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/createCharging"
-        android:layout_below="@+id/createProject"
         android:layout_marginTop="20dp"
-        android:layout_toRightOf="@+id/TextProject"
-        android:layout_toEndOf="@+id/TextProject"
         android:layout_alignRight="@+id/createTask"
-        android:layout_alignEnd="@+id/createTask" />
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/createProject"
+        android:layout_alignEnd="@+id/createTask"
         android:layout_below="@+id/createTask"
         android:layout_toRightOf="@+id/TextTask"
-        android:layout_toEndOf="@+id/TextTask"
-        android:layout_marginTop="20dp"
-        android:layout_alignRight="@+id/createTask"
-        android:layout_alignEnd="@+id/createTask" />
+        android:layout_toEndOf="@+id/TextTask" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,11 +76,11 @@
         android:layout_toStartOf="@+id/createTask"
         android:layout_alignBottom="@+id/createTask"
         android:layout_toLeftOf="@+id/createTask"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/createTask"
-        android:gravity="center_vertical|center_horizontal" />
-
+        android:gravity="left|center_vertical|center_horizontal"
+        android:textSize="16dp"
+        android:layout_alignLeft="@+id/tv_Description"
+        android:layout_alignStart="@+id/tv_Description" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,9 +88,9 @@
         android:text="D"
         android:id="@+id/textView"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_above="@+id/Days"
-        android:layout_alignLeft="@+id/Days"
-        android:layout_alignStart="@+id/Days"
+        android:layout_above="@+id/createDays"
+        android:layout_alignLeft="@+id/createDays"
+        android:layout_alignStart="@+id/createDays"
         android:layout_toStartOf="@+id/textView2"
         android:layout_toLeftOf="@+id/textView2" />
 
@@ -114,11 +101,12 @@
         android:text="H"
         android:id="@+id/textView2"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_above="@+id/Hours"
-        android:layout_alignLeft="@+id/Hours"
-        android:layout_alignStart="@+id/Hours"
-        android:layout_alignRight="@+id/Hours"
-        android:layout_alignEnd="@+id/Hours" />
+        android:layout_above="@+id/createHours"
+        android:layout_alignLeft="@+id/createHours"
+        android:layout_alignStart="@+id/createHours"
+        android:layout_alignRight="@+id/createHours"
+        android:layout_alignEnd="@+id/createHours" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,17 +114,17 @@
         android:text="M"
         android:id="@+id/textView3"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_above="@+id/Minutes"
-        android:layout_alignLeft="@+id/Minutes"
-        android:layout_alignStart="@+id/Minutes"
-        android:layout_alignRight="@+id/Minutes"
-        android:layout_alignEnd="@+id/Minutes" />
+        android:layout_above="@+id/createMinutes"
+        android:layout_alignLeft="@+id/createMinutes"
+        android:layout_alignStart="@+id/createMinutes"
+        android:layout_alignRight="@+id/createMinutes"
+        android:layout_alignEnd="@+id/createMinutes" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Duration on project"
+        android:text="Duration on Entry"
         android:id="@+id/textView4"
         android:gravity="center_vertical|center_horizontal"
         android:layout_above="@+id/textView"
@@ -144,29 +132,27 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
     <NumberPicker
-        android:id="@+id/Hours"
+        android:id="@+id/createHours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="200dip"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
     <NumberPicker
-        android:id="@+id/Minutes"
+        android:id="@+id/createMinutes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="200dip"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/Hours"
-        android:layout_toEndOf="@+id/Hours" />
-
+        android:layout_toRightOf="@+id/createHours"
+        android:layout_toEndOf="@+id/createHours" />
     <NumberPicker
-        android:id="@+id/Days"
+        android:id="@+id/createDays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="200dip"
-        android:layout_alignTop="@+id/Hours"
-        android:layout_toLeftOf="@+id/Hours"
-        android:layout_toStartOf="@+id/Hours" />
+        android:layout_alignTop="@+id/createHours"
+        android:layout_toLeftOf="@+id/createHours"
+        android:layout_toStartOf="@+id/createHours" />
 </RelativeLayout>

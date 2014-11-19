@@ -3,7 +3,6 @@ package com.example.alexander.extrabraintesting.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -100,7 +99,6 @@ public class TimeEntry implements Parcelable
     {
         return id;
     }
-
     public String getDay()
     {
         return day;
@@ -199,4 +197,5 @@ public class TimeEntry implements Parcelable
         }
         return container;
     }
+
 }
