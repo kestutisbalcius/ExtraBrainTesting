@@ -7,4 +7,6 @@
     <color name="standoutBlue">#148cd3</color>
     <color name="standoutBlack">#303642</color>
     <color name="standoutGrayh">#cfd4da</color>
+    <color name="standoutGradiantBackground">#1d1d1d</color>
+    <color name="standoutWhite">#ffffff</color>
 </resources>
