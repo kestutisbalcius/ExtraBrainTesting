@@ -5,7 +5,7 @@
     <application
         android:allowBackup="false"
         android:icon="@drawable/ic_eb_logo"
-        android:label="@string/app_name"
+        android:label=""
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.LoginActivity"

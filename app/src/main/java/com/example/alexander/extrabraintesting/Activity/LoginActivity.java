@@ -61,7 +61,7 @@ public class LoginActivity extends Activity{
         }
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mLoginFormView = findViewById(R.id.login_form);
+        mLoginFormView = findViewById(R.id.email_login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
