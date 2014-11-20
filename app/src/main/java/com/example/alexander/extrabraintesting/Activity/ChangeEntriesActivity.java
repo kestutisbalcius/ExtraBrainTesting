@@ -31,7 +31,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
     NumberPicker changeMinutes;
     int changeDuration;
     TimeEntry activityEntry;
-    public static final int EDIT_OR_REMOVE_TIME_ENTRY = 77;
+    public static final int REQUEST_EDIT_OR_REMOVE_TIME_ENTRY = 77;
     public static final String PARCELABLE_TIME_ENTRY = "Is a parcelable TimeEntry";
     public static final String REMOVING_TIME_ENTRY = "Removing the timeEntry";
     public static final String EDITING_TIME_ENTRY = "Editing the timeEntry";

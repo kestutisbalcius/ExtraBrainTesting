@@ -10,9 +10,9 @@ import java.util.List;
 /**
  * Created by devHaris on 2014-11-15.
  */
-public class PagerDate implements Parcelable {
+public class PagerDay implements Parcelable {
 
-    public PagerDate(Date date, ArrayList<TimeEntry> timeEntries){
+    public PagerDay(Date date, ArrayList<TimeEntry> timeEntries){
         _day = date;
         _timeEntries = timeEntries;
     }
@@ -50,23 +50,23 @@ public class PagerDate implements Parcelable {
     }
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
-    private PagerDate(Parcel in)
+    private PagerDay(Parcel in)
     {
         setDay(new Date(in.readLong()));
         _timeEntries  = new ArrayList<TimeEntry>();
         in.readTypedList(_timeEntries, TimeEntry.CREATOR);
     }
 
-    public static final Parcelable.Creator<PagerDate> CREATOR = new Parcelable.Creator<PagerDate>()
+    public static final Parcelable.Creator<PagerDay> CREATOR = new Parcelable.Creator<PagerDay>()
     {
         @Override
-        public PagerDate createFromParcel(Parcel source) {
-            return new PagerDate(source);
+        public PagerDay createFromParcel(Parcel source) {
+            return new PagerDay(source);
         }
 
         @Override
-        public PagerDate[] newArray(int size) {
-            return new PagerDate[size];
+        public PagerDay[] newArray(int size) {
+            return new PagerDay[size];
         }
     };
 }

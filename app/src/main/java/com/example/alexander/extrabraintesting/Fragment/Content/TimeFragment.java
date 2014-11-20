@@ -15,10 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.alexander.extrabraintesting.Activity.ChangeEntriesActivity;
+import com.example.alexander.extrabraintesting.Activity.CreateEntriesActivity;
 import com.example.alexander.extrabraintesting.Activity.MainActivity;
 import com.example.alexander.extrabraintesting.Adapter.TimeEntryAdapter;
 import com.example.alexander.extrabraintesting.Helper.DateHelper;
-import com.example.alexander.extrabraintesting.Models.PagerDate;
+import com.example.alexander.extrabraintesting.Models.PagerDay;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -29,7 +30,7 @@ import java.util.Comparator;
 
 public class TimeFragment extends ListFragment implements View.OnClickListener, PullToRefreshBase.OnRefreshListener {
     public static final String PARCEL_TIME_ENTRY_LIST = "time entry list";
-    private PagerDate pagerDate;
+    private PagerDay pagerDay;
     private TimeEntryAdapter timeEntryAdapter;
     private SimpleDateFormat formatter;
 
@@ -45,8 +46,8 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
 
         formatter = new SimpleDateFormat("EEE, d MMM yyyy");
         // Get the timeEntryList sent in with arguments
-        pagerDate = getArguments().getParcelable(PARCEL_TIME_ENTRY_LIST);
-        timeEntryAdapter = new TimeEntryAdapter(getActivity(), pagerDate.getTimeEntries());
+        pagerDay = getArguments().getParcelable(PARCEL_TIME_ENTRY_LIST);
+        timeEntryAdapter = new TimeEntryAdapter(getActivity(), pagerDay.getTimeEntries());
 //        // Sort list desc
 //        timeEntryAdapter.sort(new Comparator<TimeEntry>() {
 //            @Override
@@ -73,9 +74,9 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
 
 
         TextView dateTv = (TextView)timeFragmentView.findViewById(R.id.dateTv);
-        String formattedDay = DateHelper.isOneDayNear(pagerDate.getDay());
+        String formattedDay = DateHelper.isOneDayNear(pagerDay.getDay());
         if(formattedDay == "") {
-            formattedDay = formatter.format(pagerDate.getDay());
+            formattedDay = formatter.format(pagerDay.getDay());
         }
         dateTv.setText(formattedDay);
 
@@ -106,47 +107,51 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
         // Ugly fix because first item position is 1 and not 0 as expected.
         position--;
 
-        TimeEntry selectedTimeEntry = pagerDate.getTimeEntries().get(position);
+        TimeEntry selectedTimeEntry = pagerDay.getTimeEntries().get(position);
         Log.d("TimeEntry JSON", selectedTimeEntry.getJSON().toString());
 
         Log.v("index=", String.valueOf(position));
         // Removes entry from the list locally
         Intent changeEntry = new Intent(getActivity(), ChangeEntriesActivity.class);
         changeEntry.putExtra(TimeEntry.PARCELABLE_TIME_ENTRY, selectedTimeEntry);
-        startActivityForResult(changeEntry, ChangeEntriesActivity.EDIT_OR_REMOVE_TIME_ENTRY);
+        startActivityForResult(changeEntry, ChangeEntriesActivity.REQUEST_EDIT_OR_REMOVE_TIME_ENTRY);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // default values Don't Trust
-        Boolean shouldBeRemoved;
-        Boolean shouldBeEdited;
-        TimeEntry newTimeEntry;
-        int timeEntryId;
-
-        // Check with request we responding to
-        if (requestCode == ChangeEntriesActivity.EDIT_OR_REMOVE_TIME_ENTRY)
+        // Check which request we responding to
+        if (requestCode == CreateEntriesActivity.REQUEST_CREATE_TIME_ENTRY)
+        {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                TimeEntry createdTimeEntry = data.getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
+//                pagerDay.getTimeEntries().add(createdTimeEntry);
+                timeEntryAdapter.insert(createdTimeEntry,0);
+                timeEntryAdapter.notifyDataSetChanged();
+            }
+        }
+        else if (requestCode == ChangeEntriesActivity.REQUEST_EDIT_OR_REMOVE_TIME_ENTRY)
         {
             // make sure the request was successful
             if (resultCode == Activity.RESULT_OK)
             {
-                shouldBeRemoved = data.getBooleanExtra(ChangeEntriesActivity.REMOVING_TIME_ENTRY, false);
-                shouldBeEdited = data.getBooleanExtra(ChangeEntriesActivity.EDITING_TIME_ENTRY, false);
+                Boolean shouldBeRemoved = data.getBooleanExtra(ChangeEntriesActivity.REMOVING_TIME_ENTRY, false);
+                Boolean shouldBeEdited = data.getBooleanExtra(ChangeEntriesActivity.EDITING_TIME_ENTRY, false);
 
                 if (shouldBeRemoved)
                 {
-                    timeEntryId = data.getIntExtra(ChangeEntriesActivity.TIME_ENTRY_ID, -1);
+                    int timeEntryId = data.getIntExtra(ChangeEntriesActivity.TIME_ENTRY_ID, -1);
                     int oldPosition = getLocalTimeEntryIndexById(timeEntryId);
-                    pagerDate.getTimeEntries().remove(oldPosition);
+                    pagerDay.getTimeEntries().remove(oldPosition);
                     timeEntryAdapter.notifyDataSetChanged();
                 }
                 else if (shouldBeEdited)
                 {
-                    newTimeEntry = data.getParcelableExtra(ChangeEntriesActivity.PARCELABLE_TIME_ENTRY);
-                    int oldPosition = getLocalTimeEntryIndexById(newTimeEntry.getId());
-                    pagerDate.getTimeEntries().set(oldPosition, newTimeEntry);
+                    TimeEntry editedTimeEntry = data.getParcelableExtra(ChangeEntriesActivity.PARCELABLE_TIME_ENTRY);
+                    int oldPosition = getLocalTimeEntryIndexById(editedTimeEntry.getId());
+                    pagerDay.getTimeEntries().set(oldPosition, editedTimeEntry);
                     timeEntryAdapter.notifyDataSetChanged();
                 }
             }
@@ -155,11 +160,11 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
 
 
     private int getLocalTimeEntryIndexById(int timeEntryId){
-        for (TimeEntry localTimeEntry : pagerDate.getTimeEntries())
+        for (TimeEntry localTimeEntry : pagerDay.getTimeEntries())
         {
             if (timeEntryId == localTimeEntry.getId())
             {
-                return pagerDate.getTimeEntries().indexOf(localTimeEntry);
+                return pagerDay.getTimeEntries().indexOf(localTimeEntry);
             }
         }
         return -1;
@@ -168,12 +173,12 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
     public void removeLocalTimeEntryFromListById(int id)
     {
 
-        for (TimeEntry timeEntry : pagerDate.getTimeEntries())
+        for (TimeEntry timeEntry : pagerDay.getTimeEntries())
 
         {
             if (id == timeEntry.getId())
             {
-                pagerDate.getTimeEntries().remove(timeEntry);
+                pagerDay.getTimeEntries().remove(timeEntry);
                 timeEntryAdapter.notifyDataSetChanged();
 
                 // Breaks the loop when done. Prevents crash on next loop because the list is modified...
@@ -199,9 +204,11 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
     public void onRefresh(final PullToRefreshBase pullToRefreshBase) {
         pullToRefreshBase.getRefreshableView().setBackgroundColor(getResources().getColor(R.color.standoutGreen));
         // Do work to refresh the list here.
-        timeEntryAdapter.insert(new TimeEntry(0, "New time entry", 0, "internal", ""), 0);
+//        timeEntryAdapter.insert(new TimeEntry(0, "New time entry", 0, "internal", ""), 0);
+//        timeEntryAdapter.notifyDataSetChanged();
 
-        timeEntryAdapter.notifyDataSetChanged();
+        Intent createTimeEntry = new Intent(getActivity(), CreateEntriesActivity.class);
+        startActivityForResult(createTimeEntry, CreateEntriesActivity.REQUEST_CREATE_TIME_ENTRY);
 
         // TODO: Init a view to set the newly created time entry.
 

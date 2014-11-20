@@ -12,37 +12,28 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
-import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryUpdated;
-import com.example.alexander.extrabraintesting.Handler.TimeEntryDelete;
-import com.example.alexander.extrabraintesting.Handler.TimeEntryUpdate;
+import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryCreated;
+import com.example.alexander.extrabraintesting.Handler.TimeEntryCreate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
 import java.util.ArrayList;
 
-public class CreateEntriesActivity extends Activity implements OnTimeEntryDeleted, OnTimeEntryUpdated
+public class CreateEntriesActivity extends Activity implements OnTimeEntryCreated
 {
     EditText createDescription, createTask;
     Spinner createCharging;
     NumberPicker createDays;
     NumberPicker createHours;
     NumberPicker createMinutes;
-    int changeDuration;
-    TimeEntry activityEntry;
-    public static final int EDIT_OR_REMOVE_TIME_ENTRY = 77;
-    public static final String PARCELABLE_TIME_ENTRY = "Is a parcelable TimeEntry";
-    public static final String REMOVING_TIME_ENTRY = "Removing the timeEntry";
-    public static final String EDITING_TIME_ENTRY = "Editing the timeEntry";
-    public static final String TIME_ENTRY_ID = "Remove this TimeEntry";
-
+    public static final int REQUEST_CREATE_TIME_ENTRY = 88;
+    private TimeEntry timeEntryNew;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
         setContentView(R.layout.activity_entries_create);
         // EditText
         createDescription = (EditText) findViewById(R.id.createDescription);            // findViewById EditText ChangeTitle
@@ -105,26 +96,30 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryDelete
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.save_changes_entries:
+
+                timeEntryNew = new TimeEntry();
                 // editText setDescription "Text"
-                activityEntry.setDescription(createDescription.getText().toString());
+                timeEntryNew.setDescription(createDescription.getText().toString());
 
                 // Spinner setChargingArrayList "method"
                 String Charging = (String) setChargingArrayList(createCharging.getSelectedItem());
-                activityEntry.setCharging(Charging);
+                timeEntryNew.setCharging(Charging);
                 Log.v("Charging = ", String.valueOf(Charging));
 
                 // NumberPicker setTimeDuration "method"
                 int timeDuration = setTimeDuration(createDays.getValue(), createHours.getValue(), createMinutes.getValue());
-                activityEntry.setDuration(timeDuration);
+                timeEntryNew.setDuration(timeDuration);
                 Log.v("Duration = ", String.valueOf(timeDuration));
 
-                TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(this, activityEntry);
-                timeEntryUpdate.execute();
+                TimeEntryCreate timeEntryCreate = new TimeEntryCreate(this, timeEntryNew);
+                timeEntryCreate.execute();
+//                TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(this, activityEntry);
+//                timeEntryUpdate.execute();
                 // sendBackResult();
                 return true;
             case R.id.remove_entry:
-                TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
-                timeEntryDelete.execute();
+//                TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
+//                timeEntryDelete.execute();
                 return true;
             case R.id.Logout:
                 // LogOut from the app to get back to the login screen.
@@ -148,28 +143,18 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryDelete
         return true;
     }
 
-    public void sendBackResult()
+    public void sendBackResult(TimeEntry timeEntry)
     {
-        Intent editedTimeEntry = getIntent();
-        editedTimeEntry.putExtra(EDITING_TIME_ENTRY, true);
-        editedTimeEntry.putExtra(PARCELABLE_TIME_ENTRY, activityEntry);
-        setResult(RESULT_OK, editedTimeEntry);
+        Intent createTimeEntry = getIntent();
+        createTimeEntry.putExtra(TimeEntry.PARCELABLE_TIME_ENTRY, timeEntry);
+        setResult(RESULT_OK, createTimeEntry);
         finish();
     }
 
     @Override
-    public void onTimeEntryDeleted(int deleted)
+    public void onTimeEntryCreated(TimeEntry timeEntryFromApi)
     {
-        Intent deletedResult = getIntent();
-        deletedResult.putExtra(REMOVING_TIME_ENTRY, true);
-        deletedResult.putExtra(TIME_ENTRY_ID, deleted);
-        setResult(RESULT_OK, deletedResult);
-        finish();
-    }
-
-    @Override
-    public void onTimeEntryUpdated()
-    {
-        sendBackResult();
+        Log.d("onTimeEntryCreated: ","success!");
+        sendBackResult(timeEntryFromApi);
     }
 }

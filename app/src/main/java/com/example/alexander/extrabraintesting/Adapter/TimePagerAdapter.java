@@ -4,20 +4,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Fragment.Content.TimeFragment;
-import com.example.alexander.extrabraintesting.Models.PagerDate;
+import com.example.alexander.extrabraintesting.Models.PagerDay;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -27,9 +22,9 @@ import java.util.List;
 
 public class TimePagerAdapter extends FragmentStatePagerAdapter implements OnTimeEntriesReady
 {
-    private List<PagerDate> _pageDateList;
+    private List<PagerDay> _pageDateList;
 
-    public TimePagerAdapter(FragmentManager fm, List<PagerDate> pageDateList)
+    public TimePagerAdapter(FragmentManager fm, List<PagerDay> pageDateList)
     {
         super(fm);
         this._pageDateList = pageDateList;
@@ -85,7 +80,7 @@ public class TimePagerAdapter extends FragmentStatePagerAdapter implements OnTim
            return _pageDateList.size();
     }
 
-    public void swapList(List<PagerDate> pageDateList) {
+    public void swapList(List<PagerDay> pageDateList) {
         if (_pageDateList == pageDateList)
             return;
 
@@ -93,7 +88,7 @@ public class TimePagerAdapter extends FragmentStatePagerAdapter implements OnTim
         notifyDataSetChanged();
     }
 
-    public List<PagerDate> getPageDates() {
+    public List<PagerDay> getPageDates() {
         return _pageDateList;
     }
 

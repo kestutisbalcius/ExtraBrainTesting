@@ -53,6 +53,11 @@ public class TimeEntry implements Parcelable
         }
     }
 
+    public TimeEntry()
+    {
+
+    }
+
     public String getFormattedDuration()
     {
         // Minute in seconds

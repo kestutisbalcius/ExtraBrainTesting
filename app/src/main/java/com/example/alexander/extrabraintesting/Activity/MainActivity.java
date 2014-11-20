@@ -16,13 +16,11 @@ import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
 import com.example.alexander.extrabraintesting.Handler.TimeEntriesReadMulti;
 import com.example.alexander.extrabraintesting.Helper.DateHelper;
-import com.example.alexander.extrabraintesting.Models.PagerDate;
+import com.example.alexander.extrabraintesting.Models.PagerDay;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
-import com.example.alexander.extrabraintesting.Transformation.ZoomOutPageTransformer;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,7 +76,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         //viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
         DateHelper dateHelper = new DateHelper();
-        List<PagerDate> pagerDates = null;
+        List<PagerDay> pagerDates = null;
         pagerDates = dateHelper.CalculateDayFromToday(timeEntries);
 
         int center = pagerDates.size() / 2;
