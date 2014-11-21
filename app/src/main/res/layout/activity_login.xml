@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LoginActivity"
-    android:background="@drawable/radical_eb">
+    android:background="@drawable/bg_gradient_eb_login">
 
     <!-- Login progress -->
     <ProgressBar
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:src="@drawable/ic_eb_login_logo"
+        android:src="@drawable/logo_eb"
         android:layout_alignTop="@+id/login_progress"
         android:layout_centerHorizontal="true" />
 
