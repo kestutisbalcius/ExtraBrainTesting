@@ -37,8 +37,6 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
     public static final String EDITING_TIME_ENTRY = "Editing the timeEntry";
     public static final String TIME_ENTRY_ID = "Remove this TimeEntry";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

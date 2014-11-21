@@ -1,14 +1,18 @@
 package com.example.alexander.extrabraintesting.Activity;
 
 import android.app.ActionBar;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
@@ -31,7 +35,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
 {
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
-
+    // Our created menu to use
+    private Menu mymenu;
     Date currentDate = new Date();
     private ViewPager viewPager;
 
@@ -82,6 +87,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         int center = pagerDates.size() / 2;
         viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager(), pagerDates));
         viewPager.setCurrentItem(center);
+        resetUpdating();
     }
 
     public ViewPager getPager(){
@@ -95,8 +101,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         switch (position)
         {
             case 0:
-                requestTimeEntries(getDayList());
-                break;
+            requestTimeEntries(getDayList());
+            break;
             case 8:
                 User.logOut();
                 Intent IntentSuccess = new Intent(this, LoginActivity.class);
@@ -120,6 +126,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
+            // We should save our menu so we can use it to reset our updater.
+            mymenu = menu;
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -134,6 +142,17 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
             case R.id.action_add:
                 Intent IntentSuccess = new Intent(this, CreateEntriesActivity.class);
                 startActivity(IntentSuccess);
+                return true;
+
+            case R.id.action_refresh:
+                // Do animation start
+                requestTimeEntries(getDayList());
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
+                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
+                rotation.setRepeatCount(Animation.INFINITE);
+                iv.startAnimation(rotation);
+                item.setActionView(iv);
                 return true;
 
             case R.id.Profile:
@@ -152,6 +171,18 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void resetUpdating()
+    {
+        // Get our refresh item from the menu
+        MenuItem m = mymenu.findItem(R.id.action_refresh);
+        if(m.getActionView()!=null)
+        {
+            // Remove the animation.
+            m.getActionView().clearAnimation();
+            m.setActionView(null);
         }
     }
 
