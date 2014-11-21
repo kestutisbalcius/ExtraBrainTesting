@@ -95,8 +95,8 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         switch (position)
         {
             case 0:
-                requestTimeEntries(getDayList());
-                break;
+            requestTimeEntries(getDayList());
+            break;
             case 8:
                 User.logOut();
                 Intent IntentSuccess = new Intent(this, LoginActivity.class);
