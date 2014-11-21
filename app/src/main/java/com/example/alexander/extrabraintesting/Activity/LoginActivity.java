@@ -87,12 +87,11 @@ public class LoginActivity extends Activity{
         ScrollViewContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if (!hasFocus) {
                     hideKeyboard(v);
                 }
             }
         });
-
         mPasswordView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -105,12 +104,10 @@ public class LoginActivity extends Activity{
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
+                    hideKeyboard(v);
                 }
                 }
-
         });
-
-
     }
 
     public void hideKeyboard(View view) {
