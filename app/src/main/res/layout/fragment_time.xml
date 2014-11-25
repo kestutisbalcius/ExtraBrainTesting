@@ -9,13 +9,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:background="@color/standoutGray"
+        android:background="@color/ebGray"
         android:layout_height="40dp">
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/standoutGray"
+            android:background="@color/ebGray"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_action_previous_item"
             android:clickable="true"
@@ -26,14 +26,15 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Sat, 15 Nov 2014"
-            android:textColor="@color/standoutSelectedBlack"
+            android:textColor="@color/ebWhite"
             android:layout_centerInParent="true"
-            android:id="@+id/dateTv" />
+            android:id="@+id/dateTv"
+            android:textSize="20dp" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/standoutGray"
+            android:background="@color/ebGray"
             android:src="@drawable/ic_action_next_item"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

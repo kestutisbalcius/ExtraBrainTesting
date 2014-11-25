@@ -69,7 +69,7 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
 
         pullToRefreshView = (PullToRefreshListView)timeFragmentView.findViewById(R.id.ptrListView);
         pullToRefreshView.setOnRefreshListener(this);
-        pullToRefreshView.getRefreshableView().setBackgroundColor(getResources().getColor(R.color.standoutGreen));
+        pullToRefreshView.getRefreshableView().setBackground(getResources().getDrawable(R.drawable.bg_gradient_eb_top));
         pullToRefreshView.setAdapter(timeEntryAdapter);
 
 
@@ -202,7 +202,7 @@ public class TimeFragment extends ListFragment implements View.OnClickListener, 
 
     @Override
     public void onRefresh(final PullToRefreshBase pullToRefreshBase) {
-        pullToRefreshBase.getRefreshableView().setBackgroundColor(getResources().getColor(R.color.standoutGreen));
+        pullToRefreshBase.getRefreshableView().setBackground(getResources().getDrawable(R.drawable.bg_gradient_eb_top));
         // Do work to refresh the list here.
 //        timeEntryAdapter.insert(new TimeEntry(0, "New time entry", 0, "internal", ""), 0);
 //        timeEntryAdapter.notifyDataSetChanged();

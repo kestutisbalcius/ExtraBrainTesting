@@ -22,9 +22,7 @@ public class TimeEntry implements Parcelable
     private static final String PROJECT_TITLE = "project";
     private static final String DESCRIPTION = "description";
     private static final String CHARGING = "charging";
-
     public static final String PARCELABLE_TIME_ENTRY ="PARCELABLE_TIME_ENTRY";
-
     public TimeEntry(int id, String description, int duration, String charging, String project)
     {
         this.id = id;
