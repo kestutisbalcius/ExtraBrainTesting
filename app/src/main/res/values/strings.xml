@@ -12,16 +12,16 @@
     <string name="title_activity_main">Time Entries</string>
 
 
-    <string name="title_Time">Time 1</string>
-    <string name="title_Tasks">Tasks 2</string>
-    <string name="title_Projects">Projects 3</string>
-    <string name="title_Contacts">Contacts 4</string>
-    <string name="title_Invoices">Invoices 5</string>
-    <string name="title_Statistics">Statistics 6</string>
-    <string name="title_Estimates">Estimates 7</string>
-    <string name="title_Team">Team 8</string>
-    <string name="title_Logout">title_Logout 9</string>
-    <string name="title_Profile">Profile 10</string>
+    <string name="title_Time">Time: 1</string>
+    <string name="title_Tasks">Tasks: 2</string>
+    <string name="title_Projects">Projects: 3</string>
+    <string name="title_Contacts">Contacts: 4</string>
+    <string name="title_Invoices">Invoices: 5</string>
+    <string name="title_Statistics">Statistics: 6</string>
+    <string name="title_Estimates">Estimates: 7</string>
+    <string name="title_Team">Team: 8</string>
+    <string name="title_Logout">Logout: 9</string>
+    <string name="title_Profile">Profile: 10</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -30,7 +30,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_item_list">Items</string>
-    <string name="title_item_detail">Item Detail</string>
+    <string name="title_item_detail">Items Detail</string>
 
     <string name="action_sign_out">Logout</string>
     <string name="action_Profile">Profile</string>

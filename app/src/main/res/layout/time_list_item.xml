@@ -8,6 +8,7 @@
               android:background="@drawable/bg_tile"
               android:weightSum="1">
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -15,7 +16,6 @@
         android:weightSum="1"
         android:gravity="center_vertical"
         android:minWidth="130dp">
-
 
         <TextView
             android:layout_width="match_parent"
