@@ -86,10 +86,6 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         int center = pagerDates.size() / 2;
         viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager(), pagerDates));
         viewPager.setCurrentItem(center);
-
-
-
-
     }
 
     public ViewPager getPager(){

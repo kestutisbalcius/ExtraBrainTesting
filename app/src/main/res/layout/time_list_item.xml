@@ -1,58 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/standoutGreen">
+              android:orientation="horizontal"
+              android:minHeight="100dp"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/bg_tile"
+              android:weightSum="1">
+
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:layout_marginRight="?android:attr/listPreferredItemPaddingRight"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:gravity="center_vertical"
+        android:minWidth="130dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="03:25"
+            android:text="333:24:25"
             android:textAppearance="?android:attr/textAppearanceListItem"
-            android:id="@+id/textViewDuration"/>
+            android:id="@+id/textViewDuration"
+            android:gravity="center"
+            android:textIsSelectable="false"
+            android:textSize="25dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Fixed Price"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/textViewCharging"
-            android:background="@android:color/holo_orange_light" />
+            android:background="@color/ebGray"
+            android:textColor="@color/ebWhite"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxWidth="120dp"
+            android:textSize="10dp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
-        android:layout_marginLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:clickable="true"
+        android:layout_margin="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="Gtech Sweden Interactive"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textViewTitle"/>
+            android:id="@+id/textViewTitle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Consultant, Alexander Ross"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textViewProjectName"
-            android:textColor="@android:color/secondary_text_light"/>
+            android:textColor="@color/ebWhite"
+            android:layout_below="@+id/textViewTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/textViewTitle"
+            android:layout_alignEnd="@+id/textViewTitle" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
