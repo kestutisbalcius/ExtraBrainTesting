@@ -50,7 +50,6 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
 
-        requestTimeEntries(getDayList());
     }
 
     private ArrayList<Date> getDayList()
@@ -87,7 +86,10 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         int center = pagerDates.size() / 2;
         viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager(), pagerDates));
         viewPager.setCurrentItem(center);
-        resetUpdating();
+
+
+
+
     }
 
     public ViewPager getPager(){
@@ -128,6 +130,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
             restoreActionBar();
             // We should save our menu so we can use it to reset our updater.
             mymenu = menu;
+            requestTimeEntries(getDayList());
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -139,20 +142,16 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_add:
-                Intent IntentSuccess = new Intent(this, CreateEntriesActivity.class);
-                startActivity(IntentSuccess);
-                return true;
-
             case R.id.action_refresh:
                 // Do animation start
-                requestTimeEntries(getDayList());
                 LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
                 Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
                 rotation.setRepeatCount(Animation.INFINITE);
                 iv.startAnimation(rotation);
                 item.setActionView(iv);
+                resetUpdating();
+                requestTimeEntries(getDayList());
                 return true;
 
             case R.id.Profile:

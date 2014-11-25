@@ -105,5 +105,6 @@ public class TimeEntriesReadMulti extends AsyncTask<URL, Integer, ArrayList<Time
     {
         super.onPostExecute(timeEntries);
         listener.onTimeEntriesReady(timeEntries);
+
     }
 }

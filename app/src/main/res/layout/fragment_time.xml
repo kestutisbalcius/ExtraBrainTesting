@@ -49,10 +49,9 @@
         android:layout_width="fill_parent"
         android:layout_gravity="center"
         tools:listitem="@layout/time_list_item"
-        ptr:ptrHeaderTextColor="@android:color/black"
+        ptr:ptrHeaderTextColor="@android:color/white"
         ptr:ptrPullLabel="Drag to add time entry"
         ptr:ptrReleaseLabel="Release to add hours"
-        ptr:ptrRefreshLabel=""
-     />
+        ptr:ptrRefreshLabel=""/>
 
  </LinearLayout>
