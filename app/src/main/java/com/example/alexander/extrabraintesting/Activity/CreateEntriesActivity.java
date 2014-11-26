@@ -20,8 +20,7 @@ import com.example.alexander.extrabraintesting.R;
 
 import java.util.ArrayList;
 
-public class CreateEntriesActivity extends Activity implements OnTimeEntryCreated
-{
+public class CreateEntriesActivity extends Activity implements OnTimeEntryCreated{
     EditText createDescription, createTask;
     Spinner createCharging;
     NumberPicker createDays;
@@ -43,13 +42,10 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
         createDays = (NumberPicker) findViewById(R.id.createDays);          // findViewById NumberPicker ChangeDays
         createHours = (NumberPicker) findViewById(R.id.createHours);        // findViewById NumberPicker ChangeHours
         createMinutes = (NumberPicker) findViewById(R.id.createMinutes);    // findViewById NumberPicker ChangeMinutes
-
-
         // NumberPicker
         createDays = (NumberPicker) findViewById(R.id.createDays);          // findViewById NumberPicker ChangeDays
         createHours = (NumberPicker) findViewById(R.id.createHours);        // findViewById NumberPicker ChangeHours
         createMinutes = (NumberPicker) findViewById(R.id.createMinutes);    // findViewById NumberPicker ChangeMinutes
-
         // setMaxValue maybe change it to 23-24 and 59-60
         createDays.setMaxValue(365);                                        // setMaxValue(365); NumberPicker ChangeDays
         createHours.setMaxValue(23);                                        // setMaxValue(23); NumberPicker ChangeHours
@@ -57,7 +53,6 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
         createDays.setValue(0);
         createHours.setValue(0);
         createMinutes.setValue(0);
-
         // Spinner chargingArrayList "method"
         setChargingArrayList("inherit_from_project");
 
@@ -100,12 +95,10 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
                 timeEntryNew = new TimeEntry();
                 // editText setDescription "Text"
                 timeEntryNew.setDescription(createDescription.getText().toString());
-
                 // Spinner setChargingArrayList "method"
                 String Charging = (String) setChargingArrayList(createCharging.getSelectedItem());
                 timeEntryNew.setCharging(Charging);
                 Log.v("Charging = ", String.valueOf(Charging));
-
                 // NumberPicker setTimeDuration "method"
                 int timeDuration = setTimeDuration(createDays.getValue(), createHours.getValue(), createMinutes.getValue());
                 timeEntryNew.setDuration(timeDuration);
@@ -113,13 +106,13 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
 
                 TimeEntryCreate timeEntryCreate = new TimeEntryCreate(this, timeEntryNew);
                 timeEntryCreate.execute();
-//                TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(this, activityEntry);
-//                timeEntryUpdate.execute();
+                // TimeEntryUpdate timeEntryUpdate = new TimeEntryUpdate(this, activityEntry);
+                // timeEntryUpdate.execute();
                 // sendBackResult();
                 return true;
             case R.id.remove_entry:
-//                TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
-//                timeEntryDelete.execute();
+                // TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
+                // timeEntryDelete.execute();
                 return true;
             case R.id.Logout:
                 // LogOut from the app to get back to the login screen.
@@ -133,13 +126,10 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
         }
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.entries, menu);
+        getMenuInflater().inflate(R.menu.create_entries, menu);
         return true;
     }
 

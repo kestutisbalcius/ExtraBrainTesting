@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/radical_eb"
+    android:background="@drawable/bg_gradient_eb_top"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:clickable="true"
@@ -21,7 +21,6 @@
     android:clickable="true"
     android:focusableInTouchMode="true">
 
-
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
@@ -39,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:src="@drawable/ic_eb_login_logo"
+        android:src="@drawable/logo_eb"
         android:layout_alignTop="@+id/login_progress"
         android:layout_alignLeft="@+id/button2"
         android:layout_alignStart="@+id/button2"
@@ -68,7 +67,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_toRightOf="@+id/TextView1"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp" />
 
         <EditText
             android:id="@+id/password"
@@ -86,7 +86,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignLeft="@+id/email"
             android:layout_alignStart="@+id/email"
-            android:textColorLink="#ffffff" />
+            android:textColorLink="#ffffff"
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -99,7 +100,7 @@
             android:textSize="16dp"
             android:layout_alignBottom="@+id/password"
             android:gravity="center_vertical"
-            android:textColor="@color/standoutWhite" />
+            android:textColor="@color/ebWhite" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -112,7 +113,7 @@
             android:textSize="16dp"
             android:layout_alignBottom="@+id/email"
             android:gravity="center_vertical"
-            android:textColor="@color/standoutWhite"
+            android:textColor="@color/ebWhite"
             android:layout_alignRight="@+id/textView"
             android:layout_alignEnd="@+id/textView" />
 
@@ -135,7 +136,7 @@
             android:text="Create account"
             android:id="@+id/button"
             android:textColor="#ffffff"
-            android:background="#3c8db1"
+            android:background="@drawable/btn_login"
             android:layout_alignTop="@+id/email_sign_in_button"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -149,7 +150,7 @@
             android:text="@string/action_login_account"
             android:id="@+id/email_sign_in_button"
             android:textColor="#ffffff"
-            android:background="#3c8db1"
+            android:background="@drawable/btn_login"
             android:layout_below="@+id/email_login_form"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -162,10 +163,10 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Forgot your password?"
+        android:text="Forgot your account information?"
         android:id="@+id/button2"
         android:textColor="#ffffff"
-        android:background="#3c8db1"
+        android:background="@drawable/btn_login"
         android:layout_weight="1"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tableRow"

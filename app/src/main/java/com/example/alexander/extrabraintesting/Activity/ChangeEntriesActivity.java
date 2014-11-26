@@ -29,13 +29,19 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
     NumberPicker changeDays;
     NumberPicker changeHours;
     NumberPicker changeMinutes;
-    int changeDuration;
     TimeEntry activityEntry;
     public static final int REQUEST_EDIT_OR_REMOVE_TIME_ENTRY = 77;
     public static final String PARCELABLE_TIME_ENTRY = "Is a parcelable TimeEntry";
     public static final String REMOVING_TIME_ENTRY = "Removing the timeEntry";
     public static final String EDITING_TIME_ENTRY = "Editing the timeEntry";
     public static final String TIME_ENTRY_ID = "Remove this TimeEntry";
+    String inherit_from_project = "According to project";
+    String pay_per_hour = "Pay per hour";
+    String fixed = "Fixed price";
+    String internal = "Internal";
+    String not_chargeable = "Not chargeable";
+    String sales = "Internal: Sales";
+    String support = "Internal: Support";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,30 +52,24 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         changeDescription = (EditText) findViewById(R.id.changeDescription);            // findViewById EditText ChangeTitle
         changeTask = (EditText) findViewById(R.id.changeTask);                          // findViewById EditText ChangeTask
         changeCharging = (Spinner) findViewById(R.id.changeCharging);                   // findViewById Spinner ChangeCharging
-
-
         // timeDurationConversion "method"
         getTimeDuration(activityEntry.getDuration());
-
         // Spinner chargingArrayList "method"
         getChargingArrayList(activityEntry.getCharging());
-
-        // edits
-
+        // edits "Getter"
         changeDescription.setText(activityEntry.getDescription());
-
-
-
     }
-    private Object setChargingArrayList(Object selectedItem) {
+
+    private Object setChargingArrayList(Object selectedItem)
+    {
         ArrayList<String> chargingList = new ArrayList<String>();
-        chargingList.add("inherit_from_project");
-        chargingList.add("pay_per_hour");
-        chargingList.add("fixed");
-        chargingList.add("internal");
-        chargingList.add("not_chargeable");
-        chargingList.add("sales");
-        chargingList.add("support");
+        chargingList.add("According to project");
+        chargingList.add("Pay per hour");
+        chargingList.add("Fixed price");
+        chargingList.add("Internal");
+        chargingList.add("Not chargeable");
+        chargingList.add("Internal: Sales");
+        chargingList.add("Internal: Support");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
@@ -77,15 +77,16 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         return selectedItem;
     }
 
-    private void getChargingArrayList(String chargingSelection) {
+    private void getChargingArrayList(String chargingSelection)
+    {
         ArrayList<String> chargingList = new ArrayList<String>();
-        chargingList.add("inherit_from_project");
-        chargingList.add("pay_per_hour");
-        chargingList.add("fixed");
-        chargingList.add("internal");
-        chargingList.add("not_chargeable");
-        chargingList.add("sales");
-        chargingList.add("support");
+        chargingList.add("According to project");
+        chargingList.add("Pay per hour");
+        chargingList.add("Fixed price");
+        chargingList.add("Internal");
+        chargingList.add("Not chargeable");
+        chargingList.add("Internal: Sales");
+        chargingList.add("Internal: Support");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
@@ -118,7 +119,8 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         changeMinutes.setValue(minutes);
     }
 
-    private int setTimeDuration(int changeDays, int changeHours, int changeMinutes) {
+    private int setTimeDuration(int changeDays, int changeHours, int changeMinutes)
+    {
         final int SECONDS_IN_AN_Days = 60 * 60 * 24;
         final int SECONDS_IN_AN_HOUR = 60 * 60;
         final int SECONDS_IN_A_MINUTE = 60;
@@ -142,6 +144,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
                 String Charging = (String) setChargingArrayList(changeCharging.getSelectedItem());
                 activityEntry.setCharging(Charging);
                 Log.v("Charging = ", String.valueOf(Charging));
+
 
                 // NumberPicker setTimeDuration "method"
                 int timeDuration = setTimeDuration(changeDays.getValue(), changeHours.getValue(), changeMinutes.getValue());
@@ -170,12 +173,10 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.entries, menu);
+        getMenuInflater().inflate(R.menu.change_entries, menu);
         return true;
     }
 

@@ -151,6 +151,17 @@ public class LoginActivity extends Activity{
         } else {
         // Show a progress spinner, and kick off a background task to
         // perform the user login attempt.
+            setContentView(R.layout.activity_splash);
+
+            getWindow().getDecorView().setSystemUiVisibility(
+
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
