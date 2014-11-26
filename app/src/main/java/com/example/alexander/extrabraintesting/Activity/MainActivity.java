@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
@@ -71,6 +71,9 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
     {
         TimeEntriesReadMulti handler = new TimeEntriesReadMulti(this, dayList);
         handler.execute();
+
+//        MenuItem actionRefresh = (MenuItem) findViewById(R.id.action_refresh);
+
     }
 
     @Override
@@ -86,7 +89,10 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         int center = pagerDates.size() / 2;
         viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager(), pagerDates));
         viewPager.setCurrentItem(center);
+
     }
+
+
 
     public ViewPager getPager(){
         return viewPager;
@@ -101,13 +107,19 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
             case 0:
             requestTimeEntries(getDayList());
             break;
+            case 7:
+            Log.d("onclick: ", "switchTeam!");
+            Intent switchTeam = new Intent(this, TeamSwitcherActivity.class);
+            startActivity(switchTeam);
+            break;
             case 8:
-                User.logOut();
-                Intent IntentSuccess = new Intent(this, LoginActivity.class);
-                startActivity(IntentSuccess);
-                break;
+            User.logOut();
+            Intent IntentSuccess = new Intent(this, LoginActivity.class);
+            startActivity(IntentSuccess);
+            break;
         }
     }
+
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
@@ -146,24 +158,11 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
                 rotation.setRepeatCount(Animation.INFINITE);
                 iv.startAnimation(rotation);
                 item.setActionView(iv);
+
                 resetUpdating();
                 requestTimeEntries(getDayList());
                 return true;
 
-            case R.id.Profile:
-                Toast.makeText(getBaseContext(), "Example action Profile.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.action_switch_team:
-                Intent switchTeam = new Intent(this, TeamSwitcherActivity.class);
-                startActivity(switchTeam);
-                return true;
-
-            case R.id.Logout:
-                User.logOut();
-                Intent login = new Intent(this, LoginActivity.class);
-                startActivity(login);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

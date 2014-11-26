@@ -3,6 +3,7 @@ package com.example.alexander.extrabraintesting.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,14 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryUpdated;
 import com.example.alexander.extrabraintesting.Handler.TimeEntryDelete;
 import com.example.alexander.extrabraintesting.Handler.TimeEntryUpdate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
-import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
 import java.util.ArrayList;
@@ -35,13 +34,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
     public static final String REMOVING_TIME_ENTRY = "Removing the timeEntry";
     public static final String EDITING_TIME_ENTRY = "Editing the timeEntry";
     public static final String TIME_ENTRY_ID = "Remove this TimeEntry";
-    String inherit_from_project = "According to project";
-    String pay_per_hour = "Pay per hour";
-    String fixed = "Fixed price";
-    String internal = "Internal";
-    String not_chargeable = "Not chargeable";
-    String sales = "Internal: Sales";
-    String support = "Internal: Support";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +43,6 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         setContentView(R.layout.activity_entries_change);
         // EditText
         changeDescription = (EditText) findViewById(R.id.changeDescription);            // findViewById EditText ChangeTitle
-        changeTask = (EditText) findViewById(R.id.changeTask);                          // findViewById EditText ChangeTask
         changeCharging = (Spinner) findViewById(R.id.changeCharging);                   // findViewById Spinner ChangeCharging
         // timeDurationConversion "method"
         getTimeDuration(activityEntry.getDuration());
@@ -58,6 +50,10 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         getChargingArrayList(activityEntry.getCharging());
         // edits "Getter"
         changeDescription.setText(activityEntry.getDescription());
+        // Disabling of EditText in android
+        changeTask = (EditText) findViewById(R.id.changeTask);
+        changeTask.setEnabled(false);
+        changeTask.setInputType(InputType.TYPE_NULL);
     }
 
     private Object setChargingArrayList(Object selectedItem)
@@ -74,6 +70,40 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
         changeCharging.setSelection(dataAdapter.getPosition(String.valueOf(selectedItem)));
+        if (selectedItem == "According to project")
+        {
+            selectedItem = "inherit_from_project";
+        }
+
+        if (selectedItem == "Pay per hour")
+        {
+            selectedItem = "pay_per_hour";
+        }
+
+        if (selectedItem == "Fixed price")
+        {
+            selectedItem = "fixed";
+        }
+
+        if (selectedItem == "Internal")
+        {
+            selectedItem = "internal";
+        }
+
+        if (selectedItem == "Not chargeable")
+        {
+            selectedItem = "not_chargeable";
+        }
+
+        if (selectedItem == "Internal: Sales")
+        {
+            selectedItem = "sales";
+        }
+
+        if (selectedItem == "Internal: Support")
+        {
+            selectedItem = "support";
+        }
         return selectedItem;
     }
 
@@ -159,13 +189,6 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
             case R.id.remove_entry:
                 TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
                 timeEntryDelete.execute();
-                return true;
-            case R.id.Logout:
-                // LogOut from the app to get back to the login screen.
-                Toast.makeText(getBaseContext(), "LogOut from the app to get back to the login screen.", Toast.LENGTH_SHORT).show();
-                User.logOut();
-                Intent IntentlogOut = new Intent(this, LoginActivity.class);
-                startActivity(IntentlogOut);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

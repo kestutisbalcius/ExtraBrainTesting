@@ -51,6 +51,7 @@
         android:id="@+id/changeTask"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/changeDescription"
+        android:hint="Disabled"
         android:layout_toRightOf="@+id/TextTask"
         android:layout_alignRight="@+id/changeDescription"
         android:layout_alignEnd="@+id/changeDescription" />
