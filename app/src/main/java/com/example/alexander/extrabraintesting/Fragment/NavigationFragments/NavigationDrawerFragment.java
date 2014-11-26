@@ -20,7 +20,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
+
+import java.util.ArrayList;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -95,22 +98,29 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
+
+        ArrayList<String> drawerTitles = new ArrayList<String>();
+
+            drawerTitles.add(getString(R.string.title_Time));
+            drawerTitles.add(getString(R.string.title_Tasks));
+            drawerTitles.add(getString(R.string.title_Projects));
+            drawerTitles.add(getString(R.string.title_Contacts));
+            drawerTitles.add(getString(R.string.title_Invoices));
+            drawerTitles.add(getString(R.string.title_Statistics));
+            drawerTitles.add(getString(R.string.title_Estimates));
+        if (User.getTeamList() != null && User.getTeamList().size() > 1)
+        {
+            drawerTitles.add(getString(R.string.title_Team));
+        }
+            drawerTitles.add(getString(R.string.title_Logout));
+            drawerTitles.add(getString(R.string.title_Profile));
+
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_Time),
-                        getString(R.string.title_Tasks),
-                        getString(R.string.title_Projects),
-                        getString(R.string.title_Contacts),
-                        getString(R.string.title_Invoices),
-                        getString(R.string.title_Statistics),
-                        getString(R.string.title_Estimates),
-
-                        getString(R.string.title_Team),
-                        getString(R.string.title_Logout),
-                }));
+                drawerTitles
+                ));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
