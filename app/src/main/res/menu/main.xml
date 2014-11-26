@@ -5,14 +5,4 @@
         android:title="@string/action_refresh_entries"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="withText|ifRoom"/>
-<item
-    android:id="@+id/Profile"
-    android:title="My Profile"/>
-
-<item android:id="@+id/action_switch_team"
-      android:title="@string/action_switch_team" />
-
-<item
-    android:id="@+id/Logout"
-    android:title="Logout"/>
 </menu>

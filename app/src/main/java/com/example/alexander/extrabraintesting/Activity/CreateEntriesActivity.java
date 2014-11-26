@@ -3,6 +3,7 @@ package com.example.alexander.extrabraintesting.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,12 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryCreated;
 import com.example.alexander.extrabraintesting.Handler.TimeEntryCreate;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
-import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
 
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
         setContentView(R.layout.activity_entries_create);
         // EditText
         createDescription = (EditText) findViewById(R.id.createDescription);            // findViewById EditText ChangeTitle
-        createTask = (EditText) findViewById(R.id.createTask);                          // findViewById EditText ChangeTask
         createCharging = (Spinner) findViewById(R.id.createCharging);                   // findViewById Spinner ChangeCharging
         // NumberPicker
         createDays = (NumberPicker) findViewById(R.id.createDays);          // findViewById NumberPicker ChangeDays
@@ -54,22 +52,63 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
         createHours.setValue(0);
         createMinutes.setValue(0);
         // Spinner chargingArrayList "method"
-        setChargingArrayList("inherit_from_project");
+        setChargingArrayList("According to project");
+
+        // Disabling of EditText in android
+        createTask = (EditText) findViewById(R.id.createTask);
+        createTask.setEnabled(false);
+        createTask.setInputType(InputType.TYPE_NULL);
+
 
     }
     private Object setChargingArrayList(Object selectedItem) {
         ArrayList<String> chargingList = new ArrayList<String>();
-        chargingList.add("inherit_from_project");
-        chargingList.add("pay_per_hour");
-        chargingList.add("fixed");
-        chargingList.add("internal");
-        chargingList.add("not_chargeable");
-        chargingList.add("sales");
-        chargingList.add("support");
+        chargingList.add("According to project");
+        chargingList.add("Pay per hour");
+        chargingList.add("Fixed price");
+        chargingList.add("Internal");
+        chargingList.add("Not chargeable");
+        chargingList.add("Internal: Sales");
+        chargingList.add("Internal: Support");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, chargingList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         createCharging.setAdapter(dataAdapter);
         createCharging.setSelection(dataAdapter.getPosition(String.valueOf(selectedItem)));
+
+        if (selectedItem == "According to project")
+        {
+            selectedItem = "inherit_from_project";
+        }
+
+        if (selectedItem == "Pay per hour")
+        {
+            selectedItem = "pay_per_hour";
+        }
+
+        if (selectedItem == "Fixed price")
+        {
+            selectedItem = "fixed";
+        }
+
+        if (selectedItem == "Internal")
+        {
+            selectedItem = "internal";
+        }
+
+        if (selectedItem == "Not chargeable")
+        {
+            selectedItem = "not_chargeable";
+        }
+
+        if (selectedItem == "Internal: Sales")
+        {
+            selectedItem = "sales";
+        }
+
+        if (selectedItem == "Internal: Support")
+        {
+            selectedItem = "support";
+        }
         return selectedItem;
     }
 
@@ -113,13 +152,6 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
             case R.id.remove_entry:
                 // TimeEntryDelete timeEntryDelete = new TimeEntryDelete(this,activityEntry.getId());
                 // timeEntryDelete.execute();
-                return true;
-            case R.id.Logout:
-                // LogOut from the app to get back to the login screen.
-                Toast.makeText(getBaseContext(), "LogOut from the app to get back to the login screen.", Toast.LENGTH_SHORT).show();
-                User.logOut();
-                Intent IntentlogOut = new Intent(this, LoginActivity.class);
-                startActivity(IntentlogOut);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -131,6 +131,7 @@
         android:id="@+id/tableRow">
 
         <Button
+            android:clickable = "false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Create account"
@@ -163,6 +164,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable = "false"
         android:text="Forgot your account information?"
         android:id="@+id/button2"
         android:textColor="#ffffff"

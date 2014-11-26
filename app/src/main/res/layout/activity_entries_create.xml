@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/createTask"
         android:layout_marginTop="30dp"
+        android:hint="Disabled"
         android:layout_below="@+id/createDescription"
         android:layout_toRightOf="@+id/TextTask"
         android:layout_alignRight="@+id/createDescription"

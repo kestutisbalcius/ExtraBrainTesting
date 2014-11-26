@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -45,6 +46,7 @@ public class LoginActivity extends Activity{
     private View mProgressView;
     private View mLoginFormView;
     public ScrollView ScrollViewContent;
+    public Button mButton, mbutton2;
     private View v;
     private boolean hasFocus;
 
@@ -76,6 +78,16 @@ public class LoginActivity extends Activity{
                 return false;
             }
         });
+
+        // set Buttons that are not finished not Clickable
+        mbutton2 = (Button) findViewById(R.id.button2);
+        mbutton2.setClickable(false);
+        mbutton2.setBackgroundColor(Color.parseColor("#808080"));
+        mButton = (Button) findViewById(R.id.button);
+        mButton.setClickable(false);
+        mButton.setBackgroundColor(Color.parseColor("#808080"));
+        // end of setNotClickable
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
                 @Override
