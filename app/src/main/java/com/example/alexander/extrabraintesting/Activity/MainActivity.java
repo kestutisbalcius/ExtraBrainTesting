@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
 import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
@@ -23,6 +24,7 @@ import com.example.alexander.extrabraintesting.Models.PagerDay;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,7 +88,6 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         return viewPager;
     }
 
-
     @Override
     public void onNavigationDrawerItemSelected(int position)
     {
@@ -95,15 +96,17 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
             case 0:
             requestTimeEntries(getDayList());
             break;
-            case 7:
-            Log.d("onclick: ", "switchTeam!");
-            Intent switchTeam = new Intent(this, TeamSwitcherActivity.class);
-            startActivity(switchTeam);
+
+            case 1:
+                User.logOut();
+                Intent IntentSuccess = new Intent(this, LoginActivity.class);
+                startActivity(IntentSuccess);
             break;
-            case 8:
-            User.logOut();
-            Intent IntentSuccess = new Intent(this, LoginActivity.class);
-            startActivity(IntentSuccess);
+
+            case 2:
+                Log.d("onclick: ", "switchTeam!");
+                Intent switchTeam = new Intent(this, TeamSwitcherActivity.class);
+                startActivity(switchTeam);
             break;
         }
     }
