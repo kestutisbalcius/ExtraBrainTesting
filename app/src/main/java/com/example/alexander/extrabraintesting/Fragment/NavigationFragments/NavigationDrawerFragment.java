@@ -101,19 +101,22 @@ public class NavigationDrawerFragment extends Fragment {
 
         ArrayList<String> drawerTitles = new ArrayList<String>();
 
-            drawerTitles.add(getString(R.string.title_Time));
-            drawerTitles.add(getString(R.string.title_Tasks));
-            drawerTitles.add(getString(R.string.title_Projects));
-            drawerTitles.add(getString(R.string.title_Contacts));
-            drawerTitles.add(getString(R.string.title_Invoices));
-            drawerTitles.add(getString(R.string.title_Statistics));
-            drawerTitles.add(getString(R.string.title_Estimates));
-        if (User.getTeamList() != null && User.getTeamList().size() > 1)
-        {
+//            drawerTitles.add(getString(R.string.title_Profile));
+//            drawerTitles.add(getString(R.string.title_Tasks));
+//            drawerTitles.add(getString(R.string.title_Projects));
+//            drawerTitles.add(getString(R.string.title_Contacts));
+//            drawerTitles.add(getString(R.string.title_Invoices));
+//            drawerTitles.add(getString(R.string.title_Statistics));
+//            drawerTitles.add(getString(R.string.title_Estimates));
+        drawerTitles.add(getString(R.string.title_Time));
+        drawerTitles.add(getString(R.string.title_Logout));
+            if (User.getTeamList() != null && User.getTeamList().size() > 1)
+            {
             drawerTitles.add(getString(R.string.title_Team));
-        }
-            drawerTitles.add(getString(R.string.title_Logout));
-            drawerTitles.add(getString(R.string.title_Profile));
+            }
+
+
+
 
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),

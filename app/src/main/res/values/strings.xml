@@ -11,17 +11,18 @@
     <string name="app_name">ExtraBrain</string>
     <string name="title_activity_main">Time Entries</string>
 
+    <string name="title_Profile">Profile</string>
+    <string name="title_Time">Time</string>
 
-    <string name="title_Time">Time: 1</string>
-    <string name="title_Tasks">Tasks: 2</string>
-    <string name="title_Projects">Projects: 3</string>
-    <string name="title_Contacts">Contacts: 4</string>
-    <string name="title_Invoices">Invoices: 5</string>
-    <string name="title_Statistics">Statistics: 6</string>
-    <string name="title_Estimates">Estimates: 7</string>
-    <string name="title_Team">Team: 8</string>
-    <string name="title_Logout">Logout: 9</string>
-    <string name="title_Profile">Profile: 10</string>
+    <string name="title_Tasks">Tasks</string>
+    <string name="title_Projects">Projects</string>
+    <string name="title_Contacts">Contacts</string>
+    <string name="title_Invoices">Invoices</string>
+    <string name="title_Statistics">Statistics</string>
+    <string name="title_Estimates">Estimates</string>
+
+    <string name="title_Team">Team </string>
+    <string name="title_Logout">Logout </string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
