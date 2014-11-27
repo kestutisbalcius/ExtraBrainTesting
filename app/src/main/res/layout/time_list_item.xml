@@ -43,12 +43,12 @@
             android:textSize="10dp" />
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1"
-        android:clickable="true"
+        android:clickable="false"
         android:layout_margin="10dp">
 
         <TextView
@@ -76,6 +76,6 @@
             android:layout_alignRight="@+id/textViewTitle"
             android:layout_alignEnd="@+id/textViewTitle" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
