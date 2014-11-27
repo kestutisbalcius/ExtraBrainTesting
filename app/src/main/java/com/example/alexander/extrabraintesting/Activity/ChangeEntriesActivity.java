@@ -50,10 +50,11 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         getChargingArrayList(activityEntry.getCharging());
         // edits "Getter"
         changeDescription.setText(activityEntry.getDescription());
-        // Disabling of EditText in android
         changeTask = (EditText) findViewById(R.id.changeTask);
-        changeTask.setEnabled(false);
-        changeTask.setInputType(InputType.TYPE_NULL);
+        if (activityEntry.getTaskId() > 0)
+        {
+            changeTask.setText(String.valueOf(activityEntry.getTaskId()));
+        }
     }
 
     private Object setChargingArrayList(Object selectedItem)

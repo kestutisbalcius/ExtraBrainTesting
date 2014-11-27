@@ -9,19 +9,21 @@ import org.json.JSONObject;
 public class TimeEntry implements Parcelable
 {
 
-    public static final String DAY = "day";
     private String day;
     private int id;
     private String description;
     private String project;
     private int duration;
     private String charging;
+    private int taskId;
 
     private static final String ID = "id";
     private static final String DURATION = "duration";
     private static final String PROJECT_TITLE = "project";
+    public static final String TASK_ID = "task_id";
     private static final String DESCRIPTION = "description";
     private static final String CHARGING = "charging";
+    public static final String DAY = "day";
     public static final String PARCELABLE_TIME_ENTRY ="PARCELABLE_TIME_ENTRY";
     public TimeEntry(int id, String description, int duration, String charging, String project)
     {
@@ -44,6 +46,7 @@ public class TimeEntry implements Parcelable
 
             // Sets NULL if no value
             project = timeEntry.optString(PROJECT_TITLE);
+            taskId = timeEntry.optInt(TASK_ID);
         }
         catch (JSONException e)
         {
@@ -82,6 +85,35 @@ public class TimeEntry implements Parcelable
 
         return String.format("%02d:%02d:%02d", daysTotal, hours, minutes );
     }
+
+    public JSONObject getJSON()
+    {
+        JSONObject container = new JSONObject();
+        JSONObject time_entry = new JSONObject();
+        try
+        {
+            time_entry.put(ID, id);
+            // Preferably the API should only deliver a description independent of where it's from (like task or project)
+            time_entry.put(DESCRIPTION, description);
+            time_entry.put(DURATION, duration);
+            time_entry.put(CHARGING, charging);
+            time_entry.put(PROJECT_TITLE, project);
+            if (taskId > 0)
+            {
+                time_entry.put(TASK_ID, taskId);
+            }
+
+            container.put("time_entry",time_entry);
+
+            Log.d("TimeEntry JSON", time_entry.toString());
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return container;
+    }
+
     public String getCharging()
     {
         return charging;
@@ -105,6 +137,10 @@ public class TimeEntry implements Parcelable
     public String getDay()
     {
         return day;
+    }
+    public int getTaskId()
+    {
+        return taskId;
     }
 
     public void setId(int id)
@@ -131,6 +167,10 @@ public class TimeEntry implements Parcelable
     {
         this.day = day;
     }
+    public void setTaskId(int taskId)
+    {
+        this.taskId = taskId;
+    }
 
     /* everything below here is for implementing Parcelable */
     // 99.9% of the time you can just ignore this
@@ -150,6 +190,7 @@ public class TimeEntry implements Parcelable
         dest.writeString(getProject());
         dest.writeString(getCharging());
         dest.writeString(getDay());
+        dest.writeInt(getTaskId());
     }
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
@@ -161,6 +202,7 @@ public class TimeEntry implements Parcelable
         setProject(in.readString());
         setCharging(in.readString());
         setDay(in.readString());
+        setTaskId(in.readInt());
     }
 
     public static final Parcelable.Creator<TimeEntry> CREATOR = new Parcelable.Creator<TimeEntry>()
@@ -177,28 +219,6 @@ public class TimeEntry implements Parcelable
         }
     };
 
-    public JSONObject getJSON()
-    {
-        JSONObject container = new JSONObject();
-        JSONObject time_entry = new JSONObject();
-        try
-        {
-            time_entry.put(ID, id);
-            // Preferably the API should only deliver a description independent of where it's from (like task or project)
-            time_entry.put(DESCRIPTION, description);
-            time_entry.put(DURATION, duration);
-            time_entry.put(CHARGING, charging);
-            time_entry.put(PROJECT_TITLE, project);
 
-            container.put("time_entry",time_entry);
-
-            Log.d("TimeEntry JSON", time_entry.toString());
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-        return container;
-    }
 
 }
