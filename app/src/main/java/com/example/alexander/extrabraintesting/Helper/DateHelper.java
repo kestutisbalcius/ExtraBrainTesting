@@ -3,6 +3,8 @@ package com.example.alexander.extrabraintesting.Helper;
 import com.example.alexander.extrabraintesting.Models.PagerDay;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,13 +35,26 @@ public class DateHelper {
         futureDate.setTime(todayCalendar.getTime());
         futureDate.add(Calendar.DATE, 50);
 
+
         while (startDate.getTime().before(futureDate.getTime()))
         {
-            PagerDay result;
-            if(todayCalendar.compareTo(startDate) == 0)
-                result = new PagerDay(startDate.getTime(), timeEntries);
-            else
-                result = new PagerDay(startDate.getTime(), new ArrayList<TimeEntry>());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String date = dateFormat.format(startDate.getTime());
+            PagerDay result = new PagerDay();
+
+            for(TimeEntry entry : timeEntries){
+                if(date.equals(entry.getDay()) && result.getTimeEntries() == null){
+                    result = new PagerDay(startDate.getTime(), new ArrayList<TimeEntry>());
+                    result.getTimeEntries().add(entry);
+                }
+                else if(date.equals(entry.getDay())){
+                    result.getTimeEntries().add(entry);
+                }
+                else if(!date.equals(entry.getDay()) && result.getTimeEntries() == null){
+                    result = new PagerDay(startDate.getTime(), new ArrayList<TimeEntry>());
+                }
+
+            }
 
             pagerDates.add(result);
             startDate.add(Calendar.DATE, 1);

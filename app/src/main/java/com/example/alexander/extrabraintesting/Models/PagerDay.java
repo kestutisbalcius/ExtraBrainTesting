@@ -12,6 +12,10 @@ import java.util.List;
  */
 public class PagerDay implements Parcelable {
 
+    public PagerDay()
+    {
+
+    }
     public PagerDay(Date date, ArrayList<TimeEntry> timeEntries){
         _day = date;
         _timeEntries = timeEntries;

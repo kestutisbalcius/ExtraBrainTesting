@@ -54,8 +54,9 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
     {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(currentDate);
+        calendar.add(Calendar.DAY_OF_MONTH,-50);
         ArrayList<Date> dayList = new ArrayList<Date>();
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 100; i++)
         {
             dayList.add(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
