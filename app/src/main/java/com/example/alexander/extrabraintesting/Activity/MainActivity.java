@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-
 import com.example.alexander.extrabraintesting.Adapter.TimePagerAdapter;
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntriesReady;
 import com.example.alexander.extrabraintesting.Fragment.NavigationFragments.NavigationDrawerFragment;
@@ -24,7 +23,6 @@ import com.example.alexander.extrabraintesting.Models.PagerDay;
 import com.example.alexander.extrabraintesting.Models.TimeEntry;
 import com.example.alexander.extrabraintesting.Models.User;
 import com.example.alexander.extrabraintesting.R;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,24 +44,20 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         setContentView(R.layout.activity_main);
         mNavigationDrawerFragment = (NavigationDrawerFragment)getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
-
     }
 
     private ArrayList<Date> getDayList()
     {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(currentDate);
-
         ArrayList<Date> dayList = new ArrayList<Date>();
         for (int i = 0; i < 2; i++)
         {
             dayList.add(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-
         return dayList;
     }
 
@@ -71,9 +65,6 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
     {
         TimeEntriesReadMulti handler = new TimeEntriesReadMulti(this, dayList);
         handler.execute();
-
-//        MenuItem actionRefresh = (MenuItem) findViewById(R.id.action_refresh);
-
     }
 
     @Override
@@ -89,10 +80,7 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         int center = pagerDates.size() / 2;
         viewPager.setAdapter(new TimePagerAdapter(getSupportFragmentManager(), pagerDates));
         viewPager.setCurrentItem(center);
-
     }
-
-
 
     public ViewPager getPager(){
         return viewPager;
@@ -152,23 +140,25 @@ public class MainActivity extends FragmentActivity implements NavigationDrawerFr
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 // Do animation start
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
-                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
-                rotation.setRepeatCount(Animation.INFINITE);
-                iv.startAnimation(rotation);
-                item.setActionView(iv);
-
-                resetUpdating();
+                spinnerStartRefreshAnimation(item);
+                new UpdateRefreshAnimationTask(this).execute();
                 requestTimeEntries(getDayList());
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void resetUpdating()
+    private void spinnerStartRefreshAnimation(MenuItem item) {
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
+        rotation.setRepeatCount(Animation.INFINITE);
+        iv.startAnimation(rotation);
+        item.setActionView(iv);
+    }
+
+    public void spinnerStopRefreshAnimation()
     {
         // Get our refresh item from the menu
         MenuItem m = mymenu.findItem(R.id.action_refresh);

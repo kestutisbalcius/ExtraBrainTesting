@@ -7,9 +7,12 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryDeleted;
@@ -25,6 +28,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
 {
     EditText changeDescription, changeTask;
     Spinner changeProject, changeCharging;
+    RelativeLayout relativeLayoutColor;
     NumberPicker changeDays;
     NumberPicker changeHours;
     NumberPicker changeMinutes;
@@ -34,13 +38,15 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
     public static final String REMOVING_TIME_ENTRY = "Removing the timeEntry";
     public static final String EDITING_TIME_ENTRY = "Editing the timeEntry";
     public static final String TIME_ENTRY_ID = "Remove this TimeEntry";
-
+    private View v;
+    private boolean hasFocus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityEntry = getIntent().getParcelableExtra(TimeEntry.PARCELABLE_TIME_ENTRY);
         setContentView(R.layout.activity_entries_change);
+
         // EditText
         changeDescription = (EditText) findViewById(R.id.changeDescription);            // findViewById EditText ChangeTitle
         changeCharging = (Spinner) findViewById(R.id.changeCharging);                   // findViewById Spinner ChangeCharging
@@ -54,6 +60,40 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         changeTask = (EditText) findViewById(R.id.changeTask);
         changeTask.setEnabled(false);
         changeTask.setInputType(InputType.TYPE_NULL);
+
+        // Spinner setChargingArrayList "method"
+        String Charging = (String) setChargingArrayList(changeCharging.getSelectedItem());
+        activityEntry.setCharging(Charging);
+
+        relativeLayoutColor = (RelativeLayout) findViewById(R.id.relativeLayout);
+        relativeLayoutColor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        changeDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        changeTask.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private Object setChargingArrayList(Object selectedItem)
@@ -70,44 +110,32 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
         changeCharging.setSelection(dataAdapter.getPosition(String.valueOf(selectedItem)));
+
         if (selectedItem == "According to project")
-        {
-            selectedItem = "inherit_from_project";
-        }
+        {selectedItem = "inherit_from_project"; }
 
         if (selectedItem == "Pay per hour")
-        {
-            selectedItem = "pay_per_hour";
-        }
+        {selectedItem = "pay_per_hour";}
 
         if (selectedItem == "Fixed price")
-        {
-            selectedItem = "fixed";
-        }
+        {selectedItem = "fixed";}
 
         if (selectedItem == "Internal")
-        {
-            selectedItem = "internal";
-        }
+        {selectedItem = "internal"; }
 
         if (selectedItem == "Not chargeable")
-        {
-            selectedItem = "not_chargeable";
-        }
+        {selectedItem = "not_chargeable";}
 
         if (selectedItem == "Internal: Sales")
-        {
-            selectedItem = "sales";
-        }
+        {selectedItem = "sales";}
 
         if (selectedItem == "Internal: Support")
-        {
-            selectedItem = "support";
-        }
+        {selectedItem = "support";}
+
         return selectedItem;
     }
 
-    private void getChargingArrayList(String chargingSelection)
+    private String getChargingArrayList(String chargingSelection)
     {
         ArrayList<String> chargingList = new ArrayList<String>();
         chargingList.add("According to project");
@@ -121,6 +149,7 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         changeCharging.setAdapter(dataAdapter);
         changeCharging.setSelection(dataAdapter.getPosition(String.valueOf(chargingSelection)));
+        return chargingSelection;
     }
 
     private void getTimeDuration(int seconds) {

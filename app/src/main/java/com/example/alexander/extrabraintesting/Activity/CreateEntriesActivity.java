@@ -7,9 +7,12 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.alexander.extrabraintesting.Callbacks.OnTimeEntryCreated;
@@ -27,7 +30,9 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
     NumberPicker createMinutes;
     public static final int REQUEST_CREATE_TIME_ENTRY = 88;
     private TimeEntry timeEntryNew;
-
+    RelativeLayout relativeLayoutColor;
+    private View v;
+    private boolean hasFocus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +64,28 @@ public class CreateEntriesActivity extends Activity implements OnTimeEntryCreate
         createTask.setEnabled(false);
         createTask.setInputType(InputType.TYPE_NULL);
 
+        relativeLayoutColor = (RelativeLayout) findViewById(R.id.relativeLayout);
+        relativeLayoutColor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        createDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
 
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
     private Object setChargingArrayList(Object selectedItem) {
         ArrayList<String> chargingList = new ArrayList<String>();
