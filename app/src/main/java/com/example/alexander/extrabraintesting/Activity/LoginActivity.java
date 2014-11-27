@@ -99,7 +99,7 @@ public class LoginActivity extends Activity{
         ScrollViewContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
+                if (hasFocus) {
                     hideKeyboard(v);
                 }
             }
