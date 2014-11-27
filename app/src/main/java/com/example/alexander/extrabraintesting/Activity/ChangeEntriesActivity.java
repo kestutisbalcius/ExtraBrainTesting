@@ -3,7 +3,6 @@ package com.example.alexander.extrabraintesting.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,10 +55,11 @@ public class ChangeEntriesActivity extends Activity implements OnTimeEntryDelete
         getChargingArrayList(activityEntry.getCharging());
         // edits "Getter"
         changeDescription.setText(activityEntry.getDescription());
-        // Disabling of EditText in android
         changeTask = (EditText) findViewById(R.id.changeTask);
-        changeTask.setEnabled(false);
-        changeTask.setInputType(InputType.TYPE_NULL);
+        if (activityEntry.getTaskId() > 0)
+        {
+            changeTask.setText(String.valueOf(activityEntry.getTaskId()));
+        }
 
         // Spinner setChargingArrayList "method"
         String Charging = (String) setChargingArrayList(changeCharging.getSelectedItem());
