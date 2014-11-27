@@ -86,6 +86,17 @@ public class TimeEntry implements Parcelable
         return String.format("%02d:%02d:%02d", daysTotal, hours, minutes );
     }
 
+    public String getFormattedCharging()
+    {
+        String apiValue = getCharging();
+
+        apiValue = apiValue.replace("_"," ");
+        // Initial letter uppercase, rest should be lowercase
+        apiValue = apiValue.substring(0,1).toUpperCase() + apiValue.substring(1).toLowerCase();
+
+        return apiValue;
+    }
+
     public JSONObject getJSON()
     {
         JSONObject container = new JSONObject();

@@ -50,13 +50,17 @@ public class TimeEntryAdapter extends ArrayAdapter<TimeEntry>
 
         TimeEntry timeEntry = timeEntryList.get(position);
 
+
+
         viewHolder.title.setText(timeEntry.getDescription());
         viewHolder.project.setText(timeEntry.getProject());
         viewHolder.duration.setText(timeEntry.getFormattedDuration());
-        viewHolder.charging.setText(timeEntry.getCharging());
+        viewHolder.charging.setText(timeEntry.getFormattedCharging());
 
         return convertView;
     }
+
+
 
     private static class ViewHolder
     {
@@ -65,4 +69,5 @@ public class TimeEntryAdapter extends ArrayAdapter<TimeEntry>
         public TextView duration;
         public TextView charging;
     }
+
 }
