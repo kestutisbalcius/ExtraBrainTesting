@@ -5,81 +5,89 @@
               android:minHeight="100dp"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:background="@color/ebBlueDarker"
-              android:weightSum="1">
+    android:weightSum="1">
 
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:weightSum="1"
-        android:gravity="center_vertical"
-        android:minWidth="130dp"
-        android:background="#2a7da2">
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:background="@color/ebBlueDarker">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="333:24:25"
-            android:textAppearance="?android:attr/textAppearanceListItem"
-            android:id="@+id/textViewDuration"
-            android:gravity="center"
-            android:textIsSelectable="false"
-            android:textSize="25dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fixed price"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/textViewCharging"
-            android:background="@color/ebGray"
-            android:textColor="@color/ebWhite"
-            android:gravity="center_vertical|center_horizontal"
-            android:textSize="12dp"
-            android:layout_below="@+id/textViewProjectName"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="10dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1"
-        android:clickable="false"
-        android:layout_margin="10dp">
-
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gtech Sweden Interactive"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textViewTitle"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:gravity="center_vertical"
+            android:minWidth="130dp"
+            android:background="#2a7da2">
 
-        <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="333:24:25"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:id="@+id/textViewDuration"
+                android:gravity="center"
+                android:textIsSelectable="false"
+                android:textSize="25dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fixed price"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/textViewCharging"
+                android:background="@color/ebGray"
+                android:textColor="@color/ebWhite"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="12dp"
+                android:layout_below="@+id/textViewProjectName"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Consultant, Alexander Ross"
-            android:id="@+id/textViewProjectName"
-            android:textColor="@color/ebWhite"
-            android:layout_below="@+id/textViewTitle"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/textViewTitle"
-            android:layout_alignEnd="@+id/textViewTitle" />
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:clickable="false"
+            android:layout_margin="10dp"
+            android:layout_gravity="right|center_vertical">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gtech Sweden Interactive"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewTitle"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textSize="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consultant, Alexander Ross"
+                android:id="@+id/textViewProjectName"
+                android:textColor="@color/ebWhite"
+                android:layout_below="@+id/textViewTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/textViewTitle"
+                android:layout_alignEnd="@+id/textViewTitle" />
+
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
